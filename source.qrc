@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>pagedata/light.json</file>
+    </qresource>
+</RCC>
