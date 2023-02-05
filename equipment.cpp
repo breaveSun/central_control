@@ -6,21 +6,32 @@
 #include "space.h"
 #include "light.h"
 #include "curtain.h"
+#include <QMessageBox>
+#include <errno.h>
 equipment::equipment()
+{
+}
+
+bool equipment::init()
 {
     Json::Value root;
     Json::Reader reader;
-    std::ifstream jsonFile("source/light.json");//一定要运行目录
+    std::ifstream jsonFile("source/equipmentconf.json");//一定要运行目录
+    if(!jsonFile.is_open()){
+        QMessageBox::critical(nullptr,"启动失败","未找到配置文件");
+        return false;
+    }
     if(!reader.parse(jsonFile,root,true)){
-        std::cout<<"read err"<<std::endl;
-        return;
+        perror("read json err");
+        QMessageBox::critical(nullptr,"启动失败","读取配置文件失败");
+        return false;
     }
     int space_size = root.size();
     for(int i(0);i<space_size;i++){
         //设置空间数据
         QString name = QString::fromStdString(root[i]["name"].asString());
         QString id = QString::fromStdString(root[i]["id"].asString());
-        spaces[i] = new space(name,id);
+        spaces.append(new space(name,id));
         //解析灯数据
         Json::Value lights=root[i]["equipment"]["light"];
         for(unsigned int j(0);j<lights.size();j++){
@@ -57,5 +68,6 @@ equipment::equipment()
         }
 
     }
+    return true;
 
 }

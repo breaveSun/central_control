@@ -66,5 +66,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     json/CMakeLists.txt
 
-RESOURCES += \
-    source.qrc
+RESOURCES +=

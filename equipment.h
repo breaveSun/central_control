@@ -6,7 +6,8 @@ class equipment
 {
 public:
     equipment();
-    static QVector<space*> spaces;
+    bool init();
+    QVector<space*> spaces;
 };
 
 #endif // EQUIPMENT_H

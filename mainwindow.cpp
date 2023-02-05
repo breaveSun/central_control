@@ -1,5 +1,8 @@
 #include "mainwindow.h"
+#include "equipment.h"
+
 #include "ui_mainwindow.h"
+
 #include <QPushButton>
 #include <QMessageBox>
 #include <fstream>
@@ -35,40 +38,19 @@ MainWindow::~MainWindow()
     delete ui;
 }
 void MainWindow::switchPage(){
-
-
-#ifndef DEBUG
-//    Json::Value root;
-//    Json::Reader reader;
-//    std::ifstream jsonFile("source/light.json");//一定要运行目录
-//    if(!reader.parse(jsonFile,root,true)){
-//        std::cout<<"read err"<<std::endl;
-//        return;
-//    }
-//    int space_size = root.size();
-//    for(int i(0);i<space_size;i++){
-
-//    }
-//    Json::Value arrayValue = root;
-//    Json::Value my_encoding = root["my-encoding"];
-//    std::cout<<"read result:"<<my_encoding<<std::endl;
-
-#else
-    std::string str = "{\"content\": \"Hello JsonCpp\"}";
-
-    Json::Reader reader;
-    Json::Value root;
-    if (reader.parse(str, root)){
-    //           std::cout << root["content"].asString() << std::endl;
-        std::cout << root.get("content", "UTF-32" ).asString() << std::endl;
-        QMessageBox::information(NULL, "Title", QString::fromStdString(root.get("content", "UTF-32" ).asString()),QMessageBox::Yes);
-    }
-#endif
     QPushButton *button = qobject_cast<QPushButton*>(sender());
     if (button == ui->lightCntlr){
         ui->stackedWidget->setCurrentWidget(ui->lightPage);
     }
     if (button == ui->lightBack){
         ui->stackedWidget->setCurrentWidget(ui->mainPage);
+    }
+}
+
+void MainWindow::setData(){
+    pEqm_ = new equipment();
+    if(!pEqm_->init()){
+        QMessageBox::critical(nullptr,"启动失败","配置文件初始化失败");
+        return;
     }
 }
