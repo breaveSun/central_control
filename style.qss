@@ -1,0 +1,74 @@
+*{
+    color: white;
+    background-color:#171717;
+}
+#lightBack,#curtainBack{
+    border-style: none;
+}
+/*灯光控制*/
+
+#lightFrame{
+    border-radius: 20px;
+}
+#btnTwoSlider{
+    border-radius: 15px;
+}
+/*#lightTitleList{
+    border-radius: 10px;
+}*/
+#rgbEdit{
+    border-radius: 5px;
+}
+#closeAll{
+    color: #BBBBBB;
+    background-color: #333334;
+    border-radius: 12px;
+}
+#lightIcone{
+    width:20px;
+    height:20px;
+    margin-left: 20px;
+    background-size: cover;
+}
+#lightName{
+    font-size: 16px;
+    font-weight: 2px;
+}
+#lightListSwitch{
+    width:40px;
+    height:20px;
+}
+#rgbChange{
+    border-radius: 10px;
+}
+/*窗帘*/
+#curtainButtonW{
+    border-top:1px solid rgb(28,28,28);
+    border-bottom:1px solid rgb(28,28,28);
+}
+#curtainW1,#curtainW2{
+    background-color: rgb(28,28,28);
+}
+#icon,#txt{
+    border:0px solid rgb(28,28,28);
+}
+#curtainFrame{
+    border-radius: 20px;
+}
+#close{
+    border-right:1px solid #1C1C1C;
+}
+#curtainOpen{
+    background-color: #222222;
+}
+#openCloseSlider{
+    margin-top:30px;
+}
+/*测试使用
+#lightScrollArea{
+    border:2px solid red;
+}
+#scrollAreaWidgetContents{
+    border:2px solid green;
+}*/
+

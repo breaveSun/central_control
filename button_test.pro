@@ -18,21 +18,35 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     btntwoslider.cpp \
     curtain.cpp \
+    curtainThread.cpp \
+    curtainopen.cpp \
+    curtainpage.cpp \
     equipment.cpp \
     json/json_reader.cpp \
     json/json_value.cpp \
     json/json_writer.cpp \
     light.cpp \
+    lightpage.cpp \
     logindlg.cpp \
     main.cpp \
+    mainpage.cpp \
     mainwindow.cpp \
+    myscollarea.cpp \
     myslider.cpp \
-    space.cpp
+    rgbslider.cpp \
+    space.cpp \
+    switchbutton.cpp \
+    titleicon.cpp \
+    verticalicontext.cpp
 
 HEADERS += \
+    LoadQss.h \
     btntwoslider.h \
     common.h \
     curtain.h \
+    curtainThread.h \
+    curtainopen.h \
+    curtainpage.h \
     equipment.h \
     json/allocator.h \
     json/assertions.h \
@@ -47,16 +61,30 @@ HEADERS += \
     json/version.h \
     json/writer.h \
     light.h \
+    lightpage.h \
     logindlg.h \
+    mainpage.h \
     mainwindow.h \
+    myscollarea.h \
     myslider.h \
-    space.h
+    rgbslider.h \
+    space.h \
+    switchbutton.h \
+    titleicon.h \
+    verticalicontext.h
 
 FORMS += \
     btntwoslider.ui \
+    curtainopen.ui \
+    curtainpage.ui \
+    lightpage.ui \
     logindlg.ui \
+    mainpage.ui \
     mainwindow.ui \
-    myslider.ui
+    myslider.ui \
+    rgbslider.ui \
+    titleicon.ui \
+    verticalicontext.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -66,4 +94,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     json/CMakeLists.txt
 
-RESOURCES +=
+RESOURCES += \
+    resource.qrc

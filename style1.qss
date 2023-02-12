@@ -1,0 +1,14 @@
+*{
+    color: white;
+    font-size:12px;
+    background-color: #171717;
+}
+#titleLabel{
+    font-size:16px;
+}
+#closeAll{
+    color: #BBBBBB;
+    border:2px solid red;
+    border-radius: 15px;
+    background-color: #333334;
+}

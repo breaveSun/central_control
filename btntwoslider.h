@@ -6,6 +6,7 @@
 namespace Ui {
 class btnTwoSlider;
 }
+class titleIcon;
 
 class btnTwoSlider : public QWidget
 {
@@ -15,14 +16,31 @@ public:
     explicit btnTwoSlider(QWidget *parent = nullptr);
     ~btnTwoSlider();
     void setName(QString name);
-    void setbkColor(QString color);
-    void reSize(int width,int height);
+    void setIcon(QString icon);
+    //通过输入框修改颜色
+    void setColor(QString color);
+//    void reSize(int width,int height);
+    void shutOff();
 
     mySlider *brightness;
     mySlider *colorTem;
+signals:
+    void lightSwitch();
+private:
+    //10进制转16进制
+    std::string toHex(int num);
+    //字符串转数字
+    long hextonum(std::string str);
+    //16进制转字符串
+    void toRGB(int &red,int &green,int &blue,std::string color16);
 
 private:
     Ui::btnTwoSlider *ui;
+
+private slots:
+    void statusChanged(qint16 id,bool checked);
+    void rgbValueChanged();
+
 };
 
 #endif // BTNTWOSLIDER_H
