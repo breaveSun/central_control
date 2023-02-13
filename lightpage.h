@@ -16,8 +16,12 @@ public:
     explicit lightPage(QWidget *parent = nullptr);
     ~lightPage();
 
+    //设置页面组件数据
+    void setData(int buildId_,int spaceId,int roomId);
+
+
 signals:
-    void goBackSignal(PageBack);
+    void goBackSignal(PageBack pb,int index);
 
 private slots:
     void goBackSlot();
@@ -26,8 +30,8 @@ private slots:
 
 private:
     Ui::lightPage *ui;
-    btnTwoSlider *titleBtnShow1;
-    btnTwoSlider *titleBtnShow2;
+    QVector<btnTwoSlider *> lightWidgetList_;
+    QVariantMap* pRoomData_;
 };
 
 #endif // LIGHTPAGE_H

@@ -18,12 +18,14 @@ public:
 
 
 signals:
-    void goLightSignal(PageBack pb);
-    void goCurtainSignal(PageBack pb);
+    void goLightSignal(PageBack pb,int index);
+    void goCurtainSignal(PageBack pb,int index);
 
 private slots:
     void goLightSlot();
     void goCurtainSlot();
+    void goLightSlot2();
+    void goCurtainSlot2();
 
 private:
     Ui::mainPage *ui;

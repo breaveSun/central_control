@@ -2,72 +2,89 @@
 
 #include <fstream>
 #include <iostream>
-#include "json/json.h"
-#include "space.h"
-#include "light.h"
-#include "curtain.h"
+#include <QVariantList>
+#include <QFile>
+#include <QJsonParseError>
+#include <QJsonArray>
+#include <QDebug>
 #include <QMessageBox>
 #include <errno.h>
+
+QVariantList equipment::houses_ = QVariantList();
 equipment::equipment()
 {
 }
 
+QVariantList equipment::getEquipment(){
+    if (houses_.size() == 0){
+        init();
+    }
+    return houses_;
+}
+
+QVariantMap equipment::getRoom(int houseId,int spaceId,int roomId){
+    QVariantList houses = getEquipment();
+    QVariantList spaces;
+    for(int i = 0; i < houses.size(); ++i) {
+        QVariantMap houseMap = houses[i].toMap();
+        int id = houseMap["id"].toInt();
+        if (houseId == id){
+            spaces = houseMap["spaces"].toList();
+        }
+    }
+    QVariantList rooms;
+    for(int i = 0; i < spaces.size(); ++i) {
+        QVariantMap spaceMap = spaces[i].toMap();
+        int id = spaceMap["id"].toInt();
+        if (spaceId == id){
+            rooms = spaceMap["rooms"].toList();
+        }
+    }
+    QVariantMap room;
+    for(int i = 0; i < rooms.size(); ++i) {
+        room = rooms[i].toMap();
+        int id = room["id"].toInt();
+        if (roomId == id){
+            break;
+        }
+    }
+    return room;
+}
+
 bool equipment::init()
 {
-    Json::Value root;
-    Json::Reader reader;
-    std::ifstream jsonFile("source/equipmentconf.json");//一定要运行目录
-    if(!jsonFile.is_open()){
-        QMessageBox::critical(nullptr,"启动失败","未找到配置文件");
+    QFile file(":/resource/config.json");	//创建QFile对象，并指定json文件路径
+    //打开json文件并判断（不成功则返回0）
+    if(!file.open(QIODevice::ReadOnly)){
+        qDebug()<<"json file load err";
+        return 0;
+    }
+    //将文件内容读取到数组中
+    QByteArray data(file.readAll());
+    file.close();	//关闭文件
+    QJsonParseError jError;	//创建QJsonParseError对象
+    //使用QJsonDocument的fromJson函数读取json串，并将QJsonParseError对象传入获取错误值
+    QJsonDocument jDoc = QJsonDocument::fromJson(data, &jError);
+    //判断QJsonParseError对象获取的error是否包含错误，包含则返回0
+    if(jError.error != QJsonParseError::NoError)
+    {
+        qDebug()<<"json err";
         return false;
     }
-    if(!reader.parse(jsonFile,root,true)){
-        perror("read json err");
-        QMessageBox::critical(nullptr,"启动失败","读取配置文件失败");
+    if(!jDoc.isArray()){
+        qDebug()<<"json format err";
         return false;
     }
-    int space_size = root.size();
-    for(int i(0);i<space_size;i++){
-        //设置空间数据
-        QString name = QString::fromStdString(root[i]["name"].asString());
-        QString id = QString::fromStdString(root[i]["id"].asString());
-        spaces.append(new space(name,id));
-        //解析灯数据
-        Json::Value lights=root[i]["equipment"]["light"];
-        for(unsigned int j(0);j<lights.size();j++){
-            Light* l = new Light();
-            QString lightName = QString::fromStdString(lights[j]["name"].asString());
-            QString id = QString::fromStdString(lights[j]["id"].asString());
-            int es = lights[j]["status"].asInt();
-            int bn = lights[j]["brightness"].asInt();
-            int ct = lights[j]["color_temp"].asInt();
-            int c = lights[j]["color"].asInt();
-            l->setId(id);
-            l->setName(name);
-            l->setSwitchStatus(es);
-            l->setBrightness(bn);
-            l->setColorTemp(ct);
-            l->setColor(c);
-            spaces[i]->addLight(l);
-        }
 
-        //解析窗帘数据
-        Json::Value curtain=root[i]["equipment"]["curtain"];
-        for(unsigned int j(0);j<curtain.size();j++){
-            Curtain* ctn = new Curtain();
-            QString ctnName = QString::fromStdString(curtain[j]["name"].asString());
-            QString id = QString::fromStdString(curtain[j]["id"].asString());
-            int es = curtain[j]["status"].asInt();
-            int sa = curtain[j]["shading_area"].asInt();
+    //获取QJsonObject，并读取Json串中各类型的值
+    QJsonArray jArray = jDoc.array();
+    //将QJsonArray转QVariantList
+    QVariantList list = jArray.toVariantList();
 
-            ctn->setId(id);
-            ctn->setName(name);
-            ctn->setSwitchStatus(es);
-            ctn->setShadingArea(sa);
-            spaces[i]->addCurtain(ctn);
-        }
-
+    if(list.size()<=0){
+        qDebug()<<"no json data";
+        return false;
     }
+    houses_ = list;
     return true;
-
 }

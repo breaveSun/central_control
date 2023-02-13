@@ -27,9 +27,7 @@ void verticalIconText::setTxt(QString txt){
 }
 
 void verticalIconText::setIcon(QString icon){
-    ui->icon->setStyleSheet("font-family: iconfont");
-    ui->icon->setFont(Common::loadIcon(30));
-    ui->icon->setText(icon);
+    Common::setButtonIcon(ui->icon,icon);
 }
 
 void verticalIconText::setIconColor(QString color){

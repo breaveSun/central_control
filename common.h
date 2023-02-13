@@ -5,6 +5,8 @@
 #include <qdebug.h>
 #include <QFont>
 #include <QFontDatabase>
+#include <QLabel>
+#include <QPushButton>
 
 enum  EquipmentSwitch {
     ES_LOST_CONTACT,  //断开连接
@@ -17,6 +19,7 @@ enum PageBack {
     PB_GO_LIGHT_PAGE,
     PB_GO_CURTAIN_PAGE
 };
+
 class Common{
 public:
     static QFont loadIcon(int size){
@@ -27,6 +30,21 @@ public:
         QFont iconFont = QFont(fontName);
         iconFont.setPixelSize(size);
         return iconFont;
+    }
+    static void setLabelIcon(QLabel * obj,QString icon,int size=30){
+        obj->setStyleSheet("font-family: iconfont");
+        obj->setFont(Common::loadIcon(size));
+        bool ok;
+        int dec = icon.toInt(&ok,16);
+        obj->setText(QChar(dec));
+    }
+
+    static void setButtonIcon(QPushButton * obj,QString icon,int size=30){
+        obj->setStyleSheet("font-family: iconfont");
+        obj->setFont(Common::loadIcon(size));
+        bool ok;
+        int dec = icon.toInt(&ok,16);
+        obj->setText(QChar(dec));
     }
 };
 

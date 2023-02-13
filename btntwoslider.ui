@@ -216,7 +216,7 @@
           <number>30</number>
          </property>
          <item>
-          <widget class="QWidget" name="splitLine_2" native="true">
+          <widget class="QWidget" name="splitLine" native="true">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -265,7 +265,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="mySlider" name="temNumSlider_2" native="true">
+             <widget class="mySlider" name="temNumSlider" native="true">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
                 <horstretch>0</horstretch>
@@ -275,7 +275,7 @@
              </widget>
             </item>
             <item>
-             <widget class="mySlider" name="lightNumSlider_2" native="true">
+             <widget class="mySlider" name="lightNumSlider" native="true">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
                 <horstretch>0</horstretch>
@@ -288,7 +288,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QWidget" name="colorCon_2" native="true">
+          <widget class="QWidget" name="colorCon" native="true">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
              <horstretch>0</horstretch>

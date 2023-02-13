@@ -19,8 +19,12 @@ public:
     void setIcon(QString icon);
     //通过输入框修改颜色
     void setColor(QString color);
-//    void reSize(int width,int height);
+    //关闭
     void shutOff();
+    //隐藏颜色配置
+    void hideColor();
+    //显示颜色配置
+    void showColor();
 
     mySlider *brightness;
     mySlider *colorTem;

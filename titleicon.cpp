@@ -19,7 +19,10 @@ void titleIcon::setText(QString name){
     ui->titleName->setText(name);
 }
 void titleIcon::setIcon(QString icon){
-    ui->titleIcone->setStyleSheet("font-family: iconfont");
-    ui->titleIcone->setFont(Common::loadIcon(30));
-    ui->titleIcone->setText(icon);
+    Common::setLabelIcon(ui->titleIcone,icon);
+//    ui->titleIcone->setStyleSheet("font-family: iconfont");
+//    ui->titleIcone->setFont(Common::loadIcon(30));
+//    bool ok;
+//    int dec = icon.toInt(&ok,16);
+//    ui->titleIcone->setText(QChar(dec));
 }

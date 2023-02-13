@@ -1,19 +1,19 @@
 #include "space.h"
 #include "light.h"
 
-space::space()
+room::room()
 {
 
 }
-space::space(QString name,QString id){
+room::room(QString name,QString id){
     name_= name;
     id_ = id;
 }
 
-void space::addLight(Light* l){
+void room::addLight(Light* l){
     lights.append(l);
 }
 
-void space::addCurtain(Curtain* c){
+void room::addCurtain(Curtain* c){
     curtains.append(c);
 }

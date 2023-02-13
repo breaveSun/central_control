@@ -1,13 +1,21 @@
 #ifndef EQUIPMENT_H
 #define EQUIPMENT_H
-#include <QVector>
-class space;
+#include <memory>
+#include <QVariant>
+
+typedef QList<QVariant> QVariantList;
 class equipment
 {
 public:
     equipment();
-    bool init();
-    QVector<space*> spaces;
+    static QVariantMap getRoom(int houseId,int spaceId,int roomId);
+
+private:
+    static bool init();
+    static QVariantList getEquipment();
+
+private:
+    static QVariantList houses_;
 };
 
 #endif // EQUIPMENT_H

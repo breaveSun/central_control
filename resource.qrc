@@ -1,13 +1,8 @@
 <RCC>
     <qresource prefix="/">
-        <file>icon/bideng.png</file>
-        <file>icon/dengdai.png</file>
-        <file>icon/diaodeng.png</file>
-        <file>icon/luodideng.png</file>
-        <file>icon/shedeng.png</file>
         <file>style.qss</file>
-        <file>icon/return.png</file>
         <file>resource/iconfont.ttf</file>
-        <file>resource/equipmentconf.json</file>
+        <file>resource/config.json</file>
+        <file>resource/iconfont.json</file>
     </qresource>
 </RCC>

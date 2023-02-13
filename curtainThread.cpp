@@ -30,6 +30,11 @@ void curtainThread::Func(){
 
     }
 }
+bool curtainThread::isRunning()
+{
+    QMutexLocker locker(&runMutex_);
+    return running_;
+}
 
 void curtainThread::stop()
 {

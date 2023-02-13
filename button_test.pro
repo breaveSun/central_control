@@ -22,6 +22,7 @@ SOURCES += \
     curtainopen.cpp \
     curtainpage.cpp \
     equipment.cpp \
+    icon.cpp \
     json/json_reader.cpp \
     json/json_value.cpp \
     json/json_writer.cpp \
@@ -48,6 +49,7 @@ HEADERS += \
     curtainopen.h \
     curtainpage.h \
     equipment.h \
+    icon.h \
     json/allocator.h \
     json/assertions.h \
     json/config.h \

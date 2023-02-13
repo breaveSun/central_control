@@ -1,15 +1,15 @@
 #ifndef SPACE_H
 #define SPACE_H
-//空间
+//房间
 #include <QString>
 #include <QVector>
 class Light;
 class Curtain;
-class space
+class room
 {
 public:
-    space();
-    space(QString name,QString id);
+    room();
+    room(QString name,QString id);
     void addLight(Light* l);
     void addCurtain(Curtain* c);
 private:

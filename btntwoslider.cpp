@@ -61,6 +61,14 @@ void btnTwoSlider::shutOff(){
     ui->lightListSwitch->setChecked(false);
 }
 
+void btnTwoSlider::hideColor(){
+    ui->colorCon->setVisible(false);
+}
+
+void btnTwoSlider::showColor(){
+    ui->colorCon->setVisible(true);
+}
+
 void btnTwoSlider::statusChanged(qint16 id,bool checked)
 {
     //灯光控制项展开和关闭

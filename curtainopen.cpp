@@ -1,6 +1,7 @@
 #include "curtainopen.h"
 #include "ui_curtainopen.h"
 #include "curtainThread.h"
+#include "icon.h"
 #include <qdebug.h>
 #include <unistd.h>
 #include <QThread>
@@ -15,14 +16,13 @@ curtainOpen::curtainOpen(QWidget *parent) :
     ui->setupUi(this);
     ui->curtainFrame->setStyleSheet("background-color:#222222;");
     ui->open->setTxt("打开");
-    ui->stop->setTxt("暂停");
+    ui->stop->setTxt("停止");
     ui->close->setTxt("关闭");
-    ui->stop->setIcon(QChar(0xe603));
+    ui->stop->setIcon(icon::getIcon("pause"));
     ui->openCloseSlider->setTitle("开合度");
     ui->openCloseSlider->setUnit("%");
     ui->angleSlider->setTitle("角度");
     ui->angleSlider->setUnit("°");
-//    ui->open->setIconColor("#D2AA74");
     connect(ui->open, SIGNAL(btnPressed()), this, SLOT(startOpen()));
     connect(ui->close, SIGNAL(btnPressed()), this, SLOT(startClose()));
     connect(ui->stop, SIGNAL(btnPressed()), this, SLOT(stopPressed()));
@@ -38,10 +38,8 @@ curtainOpen::~curtainOpen()
 
     if(pThTest_)
     {
-//        pThTest_->quit();
         pCurtainThread_->stop();
     }
-//    pThTest_->wait();
     qDebug() <<id_<< "end destroy widget";
     delete ui;
 }
@@ -52,6 +50,9 @@ void curtainOpen::setName(QString name){
     ui->curtainTitle->setText(name);
 }
 
+void curtainOpen::setIcon(QString icon){
+    ui->curtainTitle->setIcon(icon);
+}
 void curtainOpen::setOpenIcon(QChar icon){
     ui->open->setIcon(icon);
 }
@@ -62,8 +63,23 @@ void curtainOpen::setCloseIcon(QChar icon){
 
 void curtainOpen::hideAngle(){
     ui->angleSlider->setVisible(false);
-    ui->curtainFrame->setFixedHeight(ui->curtainFrame->sizeHint().height());
-    setFixedHeight(sizeHint().height());
+//    ui->curtainFrame->setFixedHeight(ui->curtainFrame->sizeHint().height());
+//    setFixedHeight(sizeHint().height());
+}
+void curtainOpen::showAngle(){
+    ui->angleSlider->setVisible(true);
+//    ui->curtainFrame->setFixedHeight(ui->curtainFrame->sizeHint().height());
+//    setFixedHeight(sizeHint().height());
+}
+
+void curtainOpen::setDirection(QString direction){
+    if(direction.compare("vertical")){
+        ui->open->setIcon(icon::getIcon("上下展开"));
+        ui->close->setIcon(icon::getIcon("ver_close"));
+    } else {
+        ui->open->setIcon(icon::getIcon("hor_open"));
+        ui->close->setIcon(icon::getIcon("hor_close"));
+    }
 }
 
 void curtainOpen::closeCurtain(){
@@ -153,12 +169,15 @@ void curtainOpen::startClose(){
 }
 
 void curtainOpen::stopPressed(){
-    ui->stop->setIconColor("#D2AA74");
-    pCurtainThread_->stop();
-    movingOpen_ = false;
-    movingClose_ = false;
-    ui->open->setIconColor("#FFFFFF");
-    ui->close->setIconColor("#FFFFFF");
+    qDebug()<<__FUNCTION__;
+    if (pCurtainThread_ && pCurtainThread_->isRunning()){
+        pCurtainThread_->stop();
+        ui->stop->setIconColor("#D2AA74");
+        movingOpen_ = false;
+        movingClose_ = false;
+        ui->open->setIconColor("#FFFFFF");
+        ui->close->setIconColor("#FFFFFF");
+    }
 }
 
 void curtainOpen::stopClicked(){

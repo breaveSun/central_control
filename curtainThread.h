@@ -12,6 +12,7 @@ public:
     ~curtainThread();
 
     void stop();
+    bool isRunning();
 
     void Func(void);
 

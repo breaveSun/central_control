@@ -16,8 +16,11 @@ public:
     explicit curtainPage(QWidget *parent = nullptr);
     ~curtainPage();
 
+    //设置页面组件数据
+    void setData(int buildId_,int spaceId,int roomId);
+
 signals:
-    void goBackSignal(PageBack);
+    void goBackSignal(PageBack pb,int index);
 
 private slots:
     void goBackSlot();
@@ -25,8 +28,8 @@ private slots:
 
 private:
     Ui::curtainPage *ui;
-    curtainOpen *open1;
-    curtainOpen *open2;
+    QVector<curtainOpen *> curtainWidgetList_;
+    QVariantMap* pRoomData_;
 };
 
 #endif // CURTAINPAGE_H

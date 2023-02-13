@@ -23,14 +23,28 @@
    <item>
     <widget class="QPushButton" name="lightCntlr">
      <property name="text">
-      <string>go light control</string>
+      <string>go light control     1</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="lightCntlr2">
+     <property name="text">
+      <string>go light control     2</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QPushButton" name="curtainCntlr">
      <property name="text">
-      <string>go curtain control</string>
+      <string>go curtain control     1</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="curtainCntlr2">
+     <property name="text">
+      <string>go curtain control      2</string>
      </property>
     </widget>
    </item>

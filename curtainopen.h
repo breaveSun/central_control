@@ -22,11 +22,16 @@ public:
 
     void setName(QString name);
 
+    void setIcon(QString icon);
+
     void setOpenIcon(QChar icon);
 
     void setCloseIcon(QChar icon);
 
     void hideAngle();
+    void showAngle();
+
+    void setDirection(QString direction);
 
     //外部类调用关闭窗帘
     void closeCurtain();

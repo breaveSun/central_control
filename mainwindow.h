@@ -9,7 +9,6 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-class equipment;
 class lightPage;
 class mainPage;
 class curtainPage;
@@ -22,18 +21,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    //设置数据
-    void setData();
 
 //    btnTwoSlider *titleBtnShow1;
 //    btnTwoSlider *titleBtnShow2;
 private slots:
     //页面跳转
-    void switchPage(PageBack pb);
+    void switchPage(PageBack pb,int index);
 
 private:
-    //数据
-    equipment *pEqm_;
     lightPage *pLightPage_;
     mainPage *pMainPage_;
     curtainPage *pCurtainPage_;
