@@ -3,26 +3,26 @@
 #include <QFile>
 #include <QJsonParseError>
 #include <QDebug>
-QMap<QString,QString> icon::iconMap = QMap<QString,QString>();
+QMap<QString,int> icon::iconMap = QMap<QString,int>();
 
 icon::icon()
 {
 
 }
-QMap<QString,QString> icon::getMap(){
+QMap<QString,int> icon::getMap(){
     if(iconMap.size()==0){
         init();
     }
     return iconMap;
 }
-QString icon::getIcon(QString name){
+int icon::getIcon(QString name){
     if(iconMap.size()==0){
         init();
     }
     if(iconMap.find(name)!=iconMap.end()){
         return iconMap[name];
     }
-    return "";
+    return 0;
 }
 void icon::init(){
     QFile file(":/resource/iconfont.json");	//创建QFile对象，并指定json文件路径
@@ -52,7 +52,7 @@ void icon::init(){
     for (int i=0;i<list.size();i++){
         QVariantMap iconVM = list[i].toMap();
         QString key = iconVM["name"].toString();
-        QString value = iconVM["unicode"].toString();
+        int value = iconVM["unicode_decimal"].toInt();
         iconMap[key] = value;
     }
 }

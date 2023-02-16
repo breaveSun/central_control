@@ -17,10 +17,10 @@ public:
     ~curtainPage();
 
     //设置页面组件数据
-    void setData(int buildId_,int spaceId,int roomId);
+    void setData(int houseId,int spaceId,int roomId);
 
 signals:
-    void goBackSignal(PageBack pb,int index);
+    void goBackSignal(PageBack pb,int buildId_,int spaceId,int roomId);
 
 private slots:
     void goBackSlot();
@@ -29,7 +29,10 @@ private slots:
 private:
     Ui::curtainPage *ui;
     QVector<curtainOpen *> curtainWidgetList_;
-    QVariantMap* pRoomData_;
+//    QVariantMap* pRoomData_;
+    int houseId_;
+    int spaceId_;
+    int roomId_;
 };
 
 #endif // CURTAINPAGE_H

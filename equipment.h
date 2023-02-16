@@ -9,6 +9,7 @@ class equipment
 public:
     equipment();
     static QVariantMap getRoom(int houseId,int spaceId,int roomId);
+    static QVariantMap getSpace(int houseId,int spaceId);
 
 private:
     static bool init();

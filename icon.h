@@ -6,11 +6,11 @@ class icon
 {
 public:
     icon();
-    static QMap<QString,QString> getMap();
-    static QString getIcon(QString name);
+    static QMap<QString,int> getMap();
+    static int getIcon(QString name);
 private:
     static void init();
-    static QMap<QString,QString> iconMap;
+    static QMap<QString,int> iconMap;
 };
 
 #endif // ICON_H

@@ -10,23 +10,14 @@
 
 int main(int argc, char *argv[])
 {
+    qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));//虚拟键盘调用
     QApplication a(argc, argv);
 
     //qss加载
     LoadQss::loadQss(":/style.qss");
 
-//    //数据
-//    equipment *pEqm_ = new equipment();
-//    if(!pEqm_->init()){
-//        QMessageBox::critical(nullptr,"启动失败","配置文件初始化失败");
-////        return;
-//    }
-
-
     MainWindow w;
 
-    //读取配置文件，初始化设备列表
-//    w.setData();
     //展示页面
     w.show();
 

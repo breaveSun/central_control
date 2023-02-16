@@ -50,6 +50,27 @@ QVariantMap equipment::getRoom(int houseId,int spaceId,int roomId){
     }
     return room;
 }
+QVariantMap equipment::getSpace(int houseId,int spaceId){
+    QVariantList houses = getEquipment();
+    QVariantList spaces;
+    for(int i = 0; i < houses.size(); ++i) {
+        QVariantMap houseMap = houses[i].toMap();
+        int id = houseMap["id"].toInt();
+        if (houseId == id){
+            spaces = houseMap["spaces"].toList();
+        }
+    }
+    QVariantMap spaceMap;
+    for(int i = 0; i < spaces.size(); ++i) {
+        spaceMap = spaces[i].toMap();
+        int id = spaceMap["id"].toInt();
+        if (spaceId == id){
+            break;
+        }
+    }
+
+    return spaceMap;
+}
 
 bool equipment::init()
 {

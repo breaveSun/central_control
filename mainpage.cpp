@@ -5,11 +5,10 @@ mainPage::mainPage(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::mainPage)
 {
+    setAttribute(Qt::WA_TranslucentBackground,true); //设置背景透明
     ui->setupUi(this);
-    connect(ui->lightCntlr,&QPushButton::clicked,this,&mainPage::goLightSlot);
-    connect(ui->curtainCntlr,&QPushButton::clicked,this,&mainPage::goCurtainSlot);
-    connect(ui->lightCntlr2,&QPushButton::clicked,this,&mainPage::goLightSlot2);
-    connect(ui->curtainCntlr2,&QPushButton::clicked,this,&mainPage::goCurtainSlot2);
+    connect(ui->ctrlList,&QPushButton::clicked,this,&mainPage::goCtrlListSlot);
+    connect(ui->homepage,&QPushButton::clicked,this,&mainPage::goHomeSlot);
 }
 
 mainPage::~mainPage()
@@ -17,17 +16,10 @@ mainPage::~mainPage()
     delete ui;
 }
 
-void mainPage::goLightSlot(){
-    emit goLightSignal(PB_GO_LIGHT_PAGE,1);
-}
-void mainPage::goCurtainSlot(){
-    emit goCurtainSignal(PB_GO_CURTAIN_PAGE,1);
+void mainPage::goCtrlListSlot(){
+    emit goCtrlListSignal(PB_GO_CTRLLIST_PAGR,1,1,1);
 }
 
-void mainPage::goLightSlot2(){
-    emit goLightSignal(PB_GO_LIGHT_PAGE,2);
+void mainPage::goHomeSlot(){
+    emit goHomeSignal(PB_GO_HOME,1,1,1);
 }
-void mainPage::goCurtainSlot2(){
-    emit goCurtainSignal(PB_GO_CURTAIN_PAGE,2);
-}
-

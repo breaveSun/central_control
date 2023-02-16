@@ -9,9 +9,11 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+class homePage;
 class lightPage;
 class mainPage;
 class curtainPage;
+class ctrlListPage;
 
 class MainWindow : public QMainWindow
 {
@@ -21,17 +23,16 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-
-//    btnTwoSlider *titleBtnShow1;
-//    btnTwoSlider *titleBtnShow2;
 private slots:
     //页面跳转
-    void switchPage(PageBack pb,int index);
+    void switchPage(enum PageBack pb,int houseId,int soaceId,int roomId);
 
 private:
+    homePage *pHomePage_;
     lightPage *pLightPage_;
     mainPage *pMainPage_;
     curtainPage *pCurtainPage_;
+    ctrlListPage *pCtrlListPage_;
 
     Ui::MainWindow *ui;
 private slots:

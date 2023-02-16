@@ -7,10 +7,8 @@ verticalIconText::verticalIconText(QWidget *parent) :
     ui(new Ui::verticalIconText)
 {
     ui->setupUi(this);
-
-    connect(ui->txt, &QPushButton::toggled, this,&verticalIconText::btnToggleSlot);
-    connect(ui->icon, &QPushButton::toggled, this,&verticalIconText::btnToggleSlot);
-
+    connect(ui->txt, SIGNAL(released()), SLOT(btnReleasedSlot()));
+    connect(ui->icon, SIGNAL(released()), SLOT(btnReleasedSlot()));
     connect(ui->txt, SIGNAL(pressed()), SLOT(btnPressedSlot()));
     connect(ui->icon, SIGNAL(pressed()), SLOT(btnPressedSlot()));
     connect(ui->txt, SIGNAL(clicked()), SLOT(btnClickedSlot()));
@@ -26,16 +24,12 @@ void verticalIconText::setTxt(QString txt){
     ui->txt->setText(txt);
 }
 
-void verticalIconText::setIcon(QString icon){
+void verticalIconText::setIcon(int icon){
     Common::setButtonIcon(ui->icon,icon);
 }
 
 void verticalIconText::setIconColor(QString color){
     setStyleSheet("#icon{color:"+color+"}");
-}
-void verticalIconText::btnToggleSlot(){
-//    qDebug()<<__FUNCTION__<<objectName();
-    emit btnToggle();
 }
 void verticalIconText::btnPressedSlot(){
 //    qDebug()<<__FUNCTION__<<objectName();
@@ -45,3 +39,8 @@ void verticalIconText::btnClickedSlot(){
 //    qDebug()<<__FUNCTION__<<objectName();
     emit btnClicked();
 }
+void verticalIconText::btnReleasedSlot(){
+//    qDebug()<<__FUNCTION__<<objectName();
+    emit btnReleased();
+}
+

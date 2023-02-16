@@ -6,6 +6,167 @@
   "description": "智能空间",
   "glyphs": [
     {
+      "icon_id": "34116446",
+      "name": "msg",
+      "font_class": "msg",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "34116447",
+      "name": "location",
+      "font_class": "location",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "34116448",
+      "name": "power",
+      "font_class": "power",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "34116449",
+      "name": "cloudy_to_clear",
+      "font_class": "cloudy_to_clear",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "34111827",
+      "name": "rightwards",
+      "font_class": "rightwards",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "34111830",
+      "name": "working",
+      "font_class": "working",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "34111815",
+      "name": "drop_down",
+      "font_class": "drop_down",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "34111816",
+      "name": "my",
+      "font_class": "my",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "34111817",
+      "name": "living_room",
+      "font_class": "living_room",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "34111818",
+      "name": "reception",
+      "font_class": "reception",
+      "unicode": "e61b",
+      "unicode_decimal": 58907
+    },
+    {
+      "icon_id": "34111821",
+      "name": "party",
+      "font_class": "party",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "34111822",
+      "name": "viewing",
+      "font_class": "viewing",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
+      "icon_id": "34111823",
+      "name": "slip_right",
+      "font_class": "slip_right",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
+    },
+    {
+      "icon_id": "34111824",
+      "name": "motion",
+      "font_class": "motion",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
+      "icon_id": "34111825",
+      "name": "slip_left",
+      "font_class": "slip_left",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "34111826",
+      "name": "restaurant",
+      "font_class": "restaurant",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "34104150",
+      "name": "shading_control",
+      "font_class": "shading_control",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "34102611",
+      "name": "lighting_control",
+      "font_class": "lighting_control",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "34102612",
+      "name": "av_control",
+      "font_class": "av_control",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "34102613",
+      "name": "household_electric_control",
+      "font_class": "household_electric_control",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "34102614",
+      "name": "security_control",
+      "font_class": "security_control",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "34102615",
+      "name": "temperature_control",
+      "font_class": "temperature_control",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "34101580",
+      "name": "more",
+      "font_class": "more",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
       "icon_id": "34064502",
       "name": "上下展开",
       "font_class": "shangxiazhankai",

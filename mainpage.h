@@ -16,16 +16,13 @@ public:
     explicit mainPage(QWidget *parent = nullptr);
     ~mainPage();
 
-
 signals:
-    void goLightSignal(PageBack pb,int index);
-    void goCurtainSignal(PageBack pb,int index);
+    void goCtrlListSignal(enum PageBack pb,int houseId,int spaceId,int roomId);
+    void goHomeSignal(enum PageBack pb,int houseId,int spaceId,int roomId);
 
 private slots:
-    void goLightSlot();
-    void goCurtainSlot();
-    void goLightSlot2();
-    void goCurtainSlot2();
+    void goCtrlListSlot();
+    void goHomeSlot();
 
 private:
     Ui::mainPage *ui;

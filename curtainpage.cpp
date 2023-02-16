@@ -17,11 +17,19 @@ curtainPage::curtainPage(QWidget *parent) :
 
 }
 
-void curtainPage::setData(int buildId_,int spaceId,int roomId)
+
+curtainPage::~curtainPage()
 {
-    QVariantMap room = equipment::getRoom(buildId_,spaceId,roomId);
+    delete ui;
+}
+
+void curtainPage::setData(int houseId,int spaceId,int roomId)
+{
+    houseId_ = houseId;
+    spaceId_ = spaceId;
+    roomId_ = roomId;
+    QVariantMap room = equipment::getRoom(houseId,spaceId,roomId);
     QVariantList curtains = room["curtain"].toList();
-    qDebug()<<"curtains.size()"<<curtains.size();
     int curtainSize = curtains.size();
     int curtainWidgetSize = curtainWidgetList_.size();
 
@@ -29,9 +37,7 @@ void curtainPage::setData(int buildId_,int spaceId,int roomId)
         while(curtainSize>curtainWidgetSize){
             curtainOpen* bts = new curtainOpen(this);
             curtainWidgetList_.append(bts);
-            qDebug()<<"curtainWidgetList_.append()";
             ui->scrollAreaWidgetContents->layout()->addWidget(bts);
-//            connect(bts, SIGNAL(lightSwitch()), this,SLOT(ligthSwitch()));
             curtainWidgetSize++;
         }
     }
@@ -51,7 +57,7 @@ void curtainPage::setData(int buildId_,int spaceId,int roomId)
         //名称
         curtain->setName(curtainM["name"].toString());
         //icon
-        QString icon = icon::getIcon(curtainM["icon"].toString());
+        int icon = icon::getIcon(curtainM["icon"].toString());
         curtain->setIcon(icon);
 
         QVariantMap func = curtainM["function"].toMap();
@@ -73,14 +79,9 @@ void curtainPage::setData(int buildId_,int spaceId,int roomId)
     ui->scrollAreaWidgetContents->setFixedHeight(ui->scrollAreaWidgetContents->sizeHint().height());
 }
 
-curtainPage::~curtainPage()
-{
-    delete ui;
-}
-
 void curtainPage::goBackSlot()
 {
-    emit goBackSignal(PB_GO_HOME,0);
+    emit goBackSignal(PB_GO_CTRLLIST_PAGR,houseId_,spaceId_,roomId_);
 }
 
 void curtainPage::closeAllSlot()

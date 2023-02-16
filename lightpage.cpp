@@ -23,9 +23,12 @@ lightPage::~lightPage()
     delete ui;
 }
 
-void lightPage::setData(int buildId_,int spaceId,int roomId)
+void lightPage::setData(int houseId,int spaceId,int roomId)
 {
-    QVariantMap room = equipment::getRoom(buildId_,spaceId,roomId);
+    houseId_ = houseId;
+    spaceId_ = spaceId;
+    roomId_ = roomId;
+    QVariantMap room = equipment::getRoom(houseId,spaceId,roomId);
     QVariantList lightings = room["lighting"].toList();
     int lightSize = lightings.size();
     int lightWidgetSize = lightWidgetList_.size();
@@ -56,7 +59,7 @@ void lightPage::setData(int buildId_,int spaceId,int roomId)
         //名称
         light->setName(lighting["name"].toString());
         //icon
-        QString icon = icon::getIcon(lighting["icon"].toString());
+        int icon = icon::getIcon(lighting["icon"].toString());
         light->setIcon(icon);
 
         QVariantMap func = lighting["function"].toMap();
@@ -75,7 +78,7 @@ void lightPage::setData(int buildId_,int spaceId,int roomId)
 
 void lightPage::goBackSlot()
 {
-    emit goBackSignal(PB_GO_HOME,0);
+    emit goBackSignal(PB_GO_CTRLLIST_PAGR,houseId_,spaceId_,roomId_);
 }
 
 void lightPage::closeAllSlot()

@@ -22,11 +22,11 @@ public:
 
     void setName(QString name);
 
-    void setIcon(QString icon);
+    void setIcon(int icon);
 
-    void setOpenIcon(QChar icon);
+    void setOpenIcon(int icon);
 
-    void setCloseIcon(QChar icon);
+    void setCloseIcon(int icon);
 
     void hideAngle();
     void showAngle();

@@ -8,11 +8,81 @@
                 "project_id": 1,
                 "build_id": 1,
                 "rooms": [{
-                        "name": "大厅",
+                        "name": "客厅",
                         "id": 1,
                         "project_id": 1,
                         "build_id": 1,
                         "space_id": 1,
+                        "icon": "living_room",
+                        "param": [{
+                            "name":"temp",
+                            "title":"温度",
+                            "value":"26",
+                            "unit":"°C"
+                            },{
+                            "name":"humidity",
+                            "title":"湿度",
+                            "value":"52",
+                            "unit":"%rh"
+                            },{
+                            "name":"CO₂",
+                            "title":"CO₂",
+                            "value":"560",
+                            "unit":"ppm"
+                            },{
+                            "name":"PM25",
+                            "title":"PM2.5",
+                            "value":"28",
+                            "unit":"μg/m³"
+                            },{
+                            "name":"air_quality",
+                            "title":"空气质量",
+                            "value":"优",
+                            "unit":""
+                        }],
+                        "scene":[{
+                            "name":"会客",
+                            "icon":"reception"
+                            },{
+                            "name":"观影",
+                            "icon":"viewing"
+                            },{
+                            "name":"派对",
+                            "icon":"party"
+                            },{
+                            "name":"运动",
+                            "icon":"motion"
+                            },{
+                            "name":"户外",
+                            "icon":"cloudy_to_clear"
+                            },{
+                            "name":"派对1",
+                            "icon":"party"
+                            },{
+                            "name":"运动2",
+                            "icon":"motion"
+                            },{
+                            "name":"户外3",
+                            "icon":"cloudy_to_clear"
+                            },{
+                            "name":"派对4",
+                            "icon":"party"
+                            },{
+                            "name":"运动5",
+                            "icon":"motion"
+                            },{
+                            "name":"户外6",
+                            "icon":"cloudy_to_clear"
+                            },{
+                            "name":"派对7",
+                            "icon":"party"
+                            },{
+                            "name":"运动8",
+                            "icon":"motion"
+                            },{
+                            "name":"户外9",
+                            "icon":"cloudy_to_clear"
+                        }],
                         "lighting": [{
                                 "name": "吊灯",
                                 "id": 1,
@@ -246,11 +316,38 @@
                                 "stop": "3/2/1"
                         }]
                 },{
-                "name": "地下室",
+                "name": "餐厅",
                 "id": 2,
                 "project_id": 1,
                 "build_id": 1,
                 "space_id": 1,
+                "icon": "restaurant",
+                "param": [{
+                    "name":"temp",
+                    "title":"温度",
+                    "value":"26",
+                    "unit":"°C"
+                    },{
+                    "name":"humidity",
+                    "title":"湿度",
+                    "value":"52",
+                    "unit":"%rh"
+                    },{
+                    "name":"air_quality",
+                    "title":"空气质量",
+                    "value":"优",
+                    "unit":""
+                }],
+                "scene":[{
+                    "name":"会客",
+                    "icon":"reception"
+                    },{
+                    "name":"观影",
+                    "icon":"viewing"
+                    },{
+                    "name":"派对",
+                    "icon":"party"
+                }],
                 "lighting": [{
                         "name": "吊灯",
                         "id": 1,

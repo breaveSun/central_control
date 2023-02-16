@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>281</width>
-    <height>91</height>
+    <height>172</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -294,12 +294,6 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>mySlider</class>
-   <extends>QWidget</extends>
-   <header>myslider.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>titleIcon</class>
    <extends>QWidget</extends>
    <header>titleicon.h</header>
@@ -309,6 +303,12 @@
    <class>verticalIconText</class>
    <extends>QWidget</extends>
    <header>verticalicontext.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>mySlider</class>
+   <extends>QWidget</extends>
+   <header>myslider.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

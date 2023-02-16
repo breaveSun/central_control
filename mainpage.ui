@@ -21,30 +21,16 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QPushButton" name="lightCntlr">
+    <widget class="QPushButton" name="ctrlList">
      <property name="text">
-      <string>go light control     1</string>
+      <string>Control List</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="lightCntlr2">
+    <widget class="QPushButton" name="homepage">
      <property name="text">
-      <string>go light control     2</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="curtainCntlr">
-     <property name="text">
-      <string>go curtain control     1</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="curtainCntlr2">
-     <property name="text">
-      <string>go curtain control      2</string>
+      <string>home page</string>
      </property>
     </widget>
    </item>

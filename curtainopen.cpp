@@ -50,14 +50,14 @@ void curtainOpen::setName(QString name){
     ui->curtainTitle->setText(name);
 }
 
-void curtainOpen::setIcon(QString icon){
+void curtainOpen::setIcon(int icon){
     ui->curtainTitle->setIcon(icon);
 }
-void curtainOpen::setOpenIcon(QChar icon){
+void curtainOpen::setOpenIcon(int icon){
     ui->open->setIcon(icon);
 }
 
-void curtainOpen::setCloseIcon(QChar icon){
+void curtainOpen::setCloseIcon(int icon){
     ui->close->setIcon(icon);
 }
 

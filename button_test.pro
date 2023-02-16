@@ -17,15 +17,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     btntwoslider.cpp \
+    btntxticon.cpp \
+    changespace.cpp \
+    ctrllistitem.cpp \
+    ctrllistpage.cpp \
     curtain.cpp \
     curtainThread.cpp \
     curtainopen.cpp \
     curtainpage.cpp \
     equipment.cpp \
+    homepage.cpp \
+    horizontalbtn.cpp \
     icon.cpp \
-    json/json_reader.cpp \
-    json/json_value.cpp \
-    json/json_writer.cpp \
     light.cpp \
     lightpage.cpp \
     logindlg.cpp \
@@ -35,33 +38,30 @@ SOURCES += \
     myscollarea.cpp \
     myslider.cpp \
     rgbslider.cpp \
+    roomcard.cpp \
     space.cpp \
     switchbutton.cpp \
     titleicon.cpp \
-    verticalicontext.cpp
+    verticalicontext.cpp \
+    verticalicontextbk.cpp \
+    verticaltxtunit.cpp
 
 HEADERS += \
     LoadQss.h \
     btntwoslider.h \
+    btntxticon.h \
+    changespace.h \
     common.h \
+    ctrllistitem.h \
+    ctrllistpage.h \
     curtain.h \
     curtainThread.h \
     curtainopen.h \
     curtainpage.h \
     equipment.h \
+    homepage.h \
+    horizontalbtn.h \
     icon.h \
-    json/allocator.h \
-    json/assertions.h \
-    json/config.h \
-    json/forwards.h \
-    json/json.h \
-    json/json_features.h \
-    json/json_tool.h \
-    json/json_valueiterator.inl \
-    json/reader.h \
-    json/value.h \
-    json/version.h \
-    json/writer.h \
     light.h \
     lightpage.h \
     logindlg.h \
@@ -70,23 +70,35 @@ HEADERS += \
     myscollarea.h \
     myslider.h \
     rgbslider.h \
+    roomcard.h \
     space.h \
     switchbutton.h \
     titleicon.h \
-    verticalicontext.h
+    verticalicontext.h \
+    verticalicontextbk.h \
+    verticaltxtunit.h
 
 FORMS += \
     btntwoslider.ui \
+    btntxticon.ui \
+    changespace.ui \
+    ctrllistitem.ui \
+    ctrllistpage.ui \
     curtainopen.ui \
     curtainpage.ui \
+    homepage.ui \
+    horizontalbtn.ui \
     lightpage.ui \
     logindlg.ui \
     mainpage.ui \
     mainwindow.ui \
     myslider.ui \
     rgbslider.ui \
+    roomcard.ui \
     titleicon.ui \
-    verticalicontext.ui
+    verticalicontext.ui \
+    verticalicontextbk.ui \
+    verticaltxtunit.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

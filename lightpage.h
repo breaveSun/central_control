@@ -17,11 +17,11 @@ public:
     ~lightPage();
 
     //设置页面组件数据
-    void setData(int buildId_,int spaceId,int roomId);
+    void setData(int houseId,int spaceId,int roomId);
 
 
 signals:
-    void goBackSignal(PageBack pb,int index);
+    void goBackSignal(PageBack pb,int houseId,int spaceId,int roomId);
 
 private slots:
     void goBackSlot();
@@ -32,6 +32,9 @@ private:
     Ui::lightPage *ui;
     QVector<btnTwoSlider *> lightWidgetList_;
     QVariantMap* pRoomData_;
+    int houseId_;
+    int spaceId_;
+    int roomId_;
 };
 
 #endif // LIGHTPAGE_H

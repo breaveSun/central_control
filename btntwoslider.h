@@ -15,8 +15,11 @@ class btnTwoSlider : public QWidget
 public:
     explicit btnTwoSlider(QWidget *parent = nullptr);
     ~btnTwoSlider();
+
     void setName(QString name);
-    void setIcon(QString icon);
+
+    void setIcon(int icon);
+
     //通过输入框修改颜色
     void setColor(QString color);
     //关闭

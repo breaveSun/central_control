@@ -36,8 +36,10 @@ bool myScollArea::eventFilter(QObject *obj, QEvent *evt)
 
                 QScrollBar *scrollBarx = horizontalScrollBar();
                 QScrollBar *scrollBary = verticalScrollBar();
-
+//                qDebug()<<"x:"<<scrollBarx<<" y:"<<scrollBary;
                 QPoint p = me->globalPos();
+//                qDebug()<<"a:"<<p.x()<<" b:"<<p.y();
+//                qDebug()<<"a:"<<p.x()<<" b:"<<p.y();
                 int offsetx = p.x() - mMousePoint.x();
                 int offsety = p.y() - mMousePoint.y();
                 if(!mContinuousMove && (offsetx > -10 && offsetx < 10) && (offsety > -10 && offsety < 10))

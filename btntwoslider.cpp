@@ -41,7 +41,7 @@ btnTwoSlider::~btnTwoSlider()
 void btnTwoSlider::setName(QString name){
     ui->lightTitle->setText(name);
 }
-void btnTwoSlider::setIcon(QString icon){
+void btnTwoSlider::setIcon(int icon){
     ui->lightTitle->setIcon(icon);
 }
 void btnTwoSlider::setColor(QString color){

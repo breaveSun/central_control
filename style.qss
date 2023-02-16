@@ -1,8 +1,11 @@
 *{
-    color: white;
+    color: #BCBCBC;
     background-color:#171717;
 }
-#lightBack,#curtainBack{
+#titleName{
+    color:#FFFFFF;
+}
+#lightBack,#curtainBack,#ctrlListpageBack{
     border-style: none;
 }
 /*灯光控制*/
@@ -64,11 +67,61 @@
 #openCloseSlider{
     margin-top:30px;
 }
+/*控制列表*/
+#goPage{
+    border-style: none;
+}
+/*主页*/
+#msg,#personalCenter,#spaceComboBox,#spaceComboBoxBtn,#oneClickClose QPushButton,#sceneConf *{
+    border-style: none;
+}
+#roomCardFrame{
+    background-color: #222222;
+    border-radius: 18px;
+}
+#roomCardFrame *{
+    background-color: #222222;
+}
+
+#locationWeather{
+    color: #BBBBBB;
+    border-radius: 12px;
+    background-color: #222222;
+}
+#locationWeather *{
+    background-color: #222222;
+}
+
+#closeAllDevices{
+    color: #BBBBBB;
+    background-color: #2F2F31;
+    border-radius: 14px;
+}
+
+/*半圆图标+文字按钮*/
+#oneClickClose>QFrame,#editScene>QFrame,#checkDevice>QFrame{
+    border-radius: 14px;
+}
+#oneClickClose *,#editScene *,#checkDevice *{
+    font-size:9pt;
+    color: #BBBBBB;
+    background-color: #353638;
+}
+
+#enabledNum{
+    color:#D2AA74;
+}
+
+#sceneConf #frame{
+    border-radius: 10px;
+}
+
+
 /*测试使用
 #lightScrollArea{
-    border:2px solid red;
+    border:1px solid red;
 }
-#scrollAreaWidgetContents{
-    border:2px solid green;
-}*/
 
+#scrollAreaWidgetContents{
+    border:1px solid green;
+}*/

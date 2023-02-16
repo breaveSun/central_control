@@ -15,16 +15,16 @@ public:
     explicit verticalIconText(QWidget *parent = nullptr);
     ~verticalIconText();
     void setTxt(QString txt);
-    void setIcon(QString icon);
+    void setIcon(int icon);
     void setIconColor(QString color);
 signals:
-        void btnToggle();
         void btnPressed();
         void btnClicked();
+        void btnReleased();
 private slots:
-        void btnToggleSlot();
         void btnPressedSlot();
         void btnClickedSlot();
+        void btnReleasedSlot();
 private:
     Ui::verticalIconText *ui;
 };

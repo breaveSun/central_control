@@ -7,6 +7,7 @@
 namespace Ui {
 class homePage;
 }
+class roomCard;
 
 class homePage : public QWidget
 {
@@ -16,14 +17,19 @@ public:
     explicit homePage(QWidget *parent = nullptr);
     ~homePage();
 
+    //设置页面组件数据
+    void setData(int houseId,int spaceId);
 signals:
-    void goLightSignal(PageBack pb);
-
+    void goPage(PageBack pb, int houseId,int spaceId,int roomId);
 private slots:
-    void goLightSlot();
-
+    void spacesChange(bool clicked);
 private:
     Ui::homePage *ui;
+    QWidget* pSpacesChange_;
+    QVector<roomCard *> roomCardWidgetList_;
+    QVariantMap spaceData_;
+    int houseId_;
+    int spaceId_;
 };
 
 #endif // HOMEPAGE_H

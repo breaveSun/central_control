@@ -15,9 +15,11 @@ enum  EquipmentSwitch {
 };
 
 enum PageBack {
-    PB_GO_HOME,
-    PB_GO_LIGHT_PAGE,
-    PB_GO_CURTAIN_PAGE
+    PB_GO_MAIN, //主页（测试）
+    PB_GO_HOME, //主页
+    PB_GO_LIGHT_PAGE, //照明控制
+    PB_GO_CURTAIN_PAGE, //遮光控制
+    PB_GO_CTRLLIST_PAGR //设备控制
 };
 
 class Common{
@@ -31,20 +33,17 @@ public:
         iconFont.setPixelSize(size);
         return iconFont;
     }
-    static void setLabelIcon(QLabel * obj,QString icon,int size=30){
+
+    static void setLabelIcon(QLabel * obj,int icon,int size=30){
         obj->setStyleSheet("font-family: iconfont");
         obj->setFont(Common::loadIcon(size));
-        bool ok;
-        int dec = icon.toInt(&ok,16);
-        obj->setText(QChar(dec));
+        obj->setText(QChar(icon));
     }
 
-    static void setButtonIcon(QPushButton * obj,QString icon,int size=30){
+    static void setButtonIcon(QPushButton * obj,int icon,int size=30){
         obj->setStyleSheet("font-family: iconfont");
         obj->setFont(Common::loadIcon(size));
-        bool ok;
-        int dec = icon.toInt(&ok,16);
-        obj->setText(QChar(dec));
+        obj->setText(QChar(icon));
     }
 };
 
