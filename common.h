@@ -7,6 +7,10 @@
 #include <QFontDatabase>
 #include <QLabel>
 #include <QPushButton>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <equipment.h>
+#include <icon.h>
 
 enum  EquipmentSwitch {
     ES_LOST_CONTACT,  //断开连接
@@ -45,6 +49,24 @@ public:
         obj->setFont(Common::loadIcon(size));
         obj->setText(QChar(icon));
     }
+
+    static QVariantMap StringToVariantMap(const QString& str)
+        {
+            QByteArray njba = str.toUtf8();
+            QJsonObject nobj = QJsonObject(QJsonDocument::fromJson(njba).object());
+            QVariantMap query = nobj.toVariantMap();
+            return query;
+        }
+
+    static QString ListToString(QVariantList vtmap)
+    {
+        QJsonDocument doc = QJsonDocument::fromVariant(QVariant(vtmap));
+        //QByteArray jba = doc.toJson();
+        QByteArray jba = doc.toJson(QJsonDocument::Compact);
+        QString jsonString = QString(jba);
+        return jsonString;
+    }
+
 };
 
 #endif // COMMON_H

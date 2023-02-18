@@ -4,6 +4,7 @@
 #include "common.h"
 #include "verticaltxtunit.h"
 #include "verticalicontextbk.h"
+#include "equipment.h"
 #include <QScrollBar>
 
 roomCard::roomCard(QWidget *parent) :
@@ -44,15 +45,16 @@ void roomCard::setIcon(int icon){
     ui->roomTitle->setIcon(icon);
 }
 
-void roomCard::setData(int houseId,int spaceId,int roomId){
-    houseId_ = houseId;
-    spaceId_ = spaceId;
-    roomId_ = roomId;
+void roomCard::setData(roomStruct room){
+    room_ = room;
+    setName(room_.name);
+    setIcon(icon::getIcon(room_.icon));
+    setParams(room.params);
+    setScenes(room.scene);
 }
 
-void roomCard::setParams(QVariantList params){
+void roomCard::setParams(QVector<roomParamStruct> params){
     int paramsSize = params.size();
-    qDebug()<<"poaram:"<<paramsSize;
     int paramsWidgetSize = paramsWidgetList_.size();
 
     if(paramsWidgetSize<paramsSize){
@@ -75,24 +77,22 @@ void roomCard::setParams(QVariantList params){
 
     for (int i=0;i<paramsSize;i++) {
         verticalTxtUnit * vtu = paramsWidgetList_[i];
-        QVariantMap paramM = params[i].toMap();
+        roomParamStruct paramM = params.value(i);
         //名称
-        vtu->setTitle(paramM["title"].toString());
+        vtu->setTitle(paramM.title);
         //单位
-        QString unit = paramM["unit"].toString();
+        QString unit = paramM.unit;
         if (unit.isEmpty()){
             vtu->setUnitVisiable(false);
         }else{
             vtu->setUnit(unit);
         }
         //值
-        vtu->setNum(paramM["value"].toString());
-
-        qDebug()<<"poaram:"<<i<<":"<<paramM["title"].toString()<<paramM["unit"].toString();
+        vtu->setNum(paramM.value);
     }
 }
 
-void roomCard::setScenes(QVariantList scenes){
+void roomCard::setScenes(QVector<roomSceneStruct> scenes){
 
     int scenesSize = scenes.size();
     int scenesWidgetSize = scenesWidgetList_.size();
@@ -119,11 +119,11 @@ void roomCard::setScenes(QVariantList scenes){
         verticalicontextBK * vit = scenesWidgetList_[i];
         vit->setColor("#BCBCBC");
         vit->setBKColor("#353638");
-        QVariantMap sceneM = scenes[i].toMap();
+        roomSceneStruct sceneM = scenes[i];
         //名称
-        vit->setTxt(sceneM["name"].toString());
+        vit->setTxt(sceneM.name);
         //icon
-        vit->setIcon(icon::getIcon(sceneM["icon"].toString()));
+        vit->setIcon(icon::getIcon(sceneM.icon));
     }
     ui->scrollAreaWidgetContents->setFixedWidth(ui->scrollAreaWidgetContents->sizeHint().width());
 
@@ -146,11 +146,11 @@ void roomCard::slipRight(){
 }
 
 void roomCard::checkDevice(){
-    emit goPage(PB_GO_CTRLLIST_PAGR,houseId_,spaceId_,roomId_);
+    emit goPage(PB_GO_CTRLLIST_PAGR,room_.build_id,room_.space_id,room_.id);
 }
 
 void roomCard::editScene(){
-//    emit goPage(PB_GO_CTRLLIST_PAGR,houseId_,spaceId_,roomId_);
+//    emit goPage(PB_GO_CTRLLIST_PAGR,room_.build_id,room_.space_id,room_.id);
 }
 
 void roomCard::onClickClose(){

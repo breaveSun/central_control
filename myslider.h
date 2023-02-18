@@ -23,6 +23,9 @@ public:
     int getNum();
     int max();
     int min();
+signals:
+    void valueChanged();
+
 
 private slots:
     void move(int value);

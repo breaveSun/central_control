@@ -83,7 +83,7 @@
       <item>
        <widget class="QWidget" name="lightTitleList" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+         <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -108,13 +108,13 @@
           <number>20</number>
          </property>
          <property name="topMargin">
-          <number>0</number>
+          <number>20</number>
          </property>
          <property name="rightMargin">
           <number>20</number>
          </property>
          <property name="bottomMargin">
-          <number>0</number>
+          <number>20</number>
          </property>
          <item>
           <widget class="titleIcon" name="lightTitle" native="true">
@@ -179,7 +179,7 @@
       <item>
        <widget class="QWidget" name="lightSet" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -243,10 +243,16 @@
          <item>
           <widget class="QWidget" name="widget_5" native="true">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <property name="spacing">
@@ -265,7 +271,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="mySlider" name="temNumSlider" native="true">
+             <widget class="mySlider" name="lightNumSlider" native="true">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
                 <horstretch>0</horstretch>
@@ -275,7 +281,7 @@
              </widget>
             </item>
             <item>
-             <widget class="mySlider" name="lightNumSlider" native="true">
+             <widget class="mySlider" name="temNumSlider" native="true">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
                 <horstretch>0</horstretch>

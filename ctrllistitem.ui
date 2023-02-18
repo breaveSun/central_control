@@ -43,6 +43,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -57,13 +60,13 @@
        <number>14</number>
       </property>
       <property name="topMargin">
-       <number>5</number>
+       <number>20</number>
       </property>
       <property name="rightMargin">
        <number>14</number>
       </property>
       <property name="bottomMargin">
-       <number>5</number>
+       <number>20</number>
       </property>
       <item>
        <widget class="QWidget" name="ctrlListTitleList" native="true">
@@ -99,7 +102,7 @@
           <number>20</number>
          </property>
          <property name="bottomMargin">
-          <number>30</number>
+          <number>0</number>
          </property>
          <item>
           <widget class="titleIcon" name="ctrlListTitle" native="true">

@@ -40,7 +40,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 //    pMainPage_ = new mainPage;
     pHomePage_ = new homePage;
-    pHomePage_->setData(1,1);
     pCtrlListPage_ = new ctrlListPage;
     pLightPage_ = new lightPage;
     pCurtainPage_ = new curtainPage;

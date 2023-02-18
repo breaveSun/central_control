@@ -119,8 +119,27 @@ void SwitchButton::paintEvent(QPaintEvent *ev)
 void SwitchButton::resizeEvent(QResizeEvent *event)
 {
     //qDebug("resizeEvent:%d  w:%d  h:%d  %d",m_ID,width(),height(),m_space);
-    m_checked = !m_checked;
-    mousePressEvent(NULL);
+//    m_checked = !m_checked;
+//    mousePressEvent(NULL);
+
+    //Calculate step long
+    m_step = width() / 10;
+
+    //Calculate the X-pos end point for slider
+    if (m_checked) {
+        m_endX = width() - height();
+    } else {
+        m_endX = 0;
+    }
+    //qDebug("%d step:%d  w:%d(%d)  h:%d(%d)  endX:%d",m_ID,m_step,width(),minimumWidth(),height(),minimumHeight(),m_endX);
+
+    //use animation or not
+    if (m_animation) {
+        m_timer->start();
+    } else{
+        m_startX = m_endX;
+        update();
+    }
 }
 
 void SwitchButton::mousePressEvent(QMouseEvent *ev)

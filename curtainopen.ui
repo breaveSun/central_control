@@ -90,7 +90,7 @@
           <number>20</number>
          </property>
          <property name="topMargin">
-          <number>0</number>
+          <number>30</number>
          </property>
          <property name="rightMargin">
           <number>20</number>
@@ -294,6 +294,12 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>mySlider</class>
+   <extends>QWidget</extends>
+   <header>myslider.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>titleIcon</class>
    <extends>QWidget</extends>
    <header>titleicon.h</header>
@@ -303,12 +309,6 @@
    <class>verticalIconText</class>
    <extends>QWidget</extends>
    <header>verticalicontext.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>mySlider</class>
-   <extends>QWidget</extends>
-   <header>myslider.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

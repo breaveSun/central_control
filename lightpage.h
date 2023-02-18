@@ -7,7 +7,7 @@ class btnTwoSlider;
 namespace Ui {
 class lightPage;
 }
-
+struct lightingStruct;
 class lightPage : public QWidget
 {
     Q_OBJECT
@@ -32,6 +32,7 @@ private:
     Ui::lightPage *ui;
     QVector<btnTwoSlider *> lightWidgetList_;
     QVariantMap* pRoomData_;
+    QVector<lightingStruct> lightings_;
     int houseId_;
     int spaceId_;
     int roomId_;

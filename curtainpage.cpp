@@ -28,8 +28,8 @@ void curtainPage::setData(int houseId,int spaceId,int roomId)
     houseId_ = houseId;
     spaceId_ = spaceId;
     roomId_ = roomId;
-    QVariantMap room = equipment::getRoom(houseId,spaceId,roomId);
-    QVariantList curtains = room["curtain"].toList();
+    roomStruct room = equipment::getRoom(houseId,spaceId,roomId);
+    QVector<curtainStruct> curtains = room.curtain;
     int curtainSize = curtains.size();
     int curtainWidgetSize = curtainWidgetList_.size();
 
@@ -53,28 +53,8 @@ void curtainPage::setData(int houseId,int spaceId,int roomId)
 
     for (int i=0;i<curtainSize;i++) {
         curtainOpen * curtain = curtainWidgetList_[i];
-        QVariantMap curtainM = curtains[i].toMap();
-        //名称
-        curtain->setName(curtainM["name"].toString());
-        //icon
-        int icon = icon::getIcon(curtainM["icon"].toString());
-        curtain->setIcon(icon);
-
-        QVariantMap func = curtainM["function"].toMap();
-        //开关
-        if(func["switch"].toInt()==0){}
-        //位置
-        if(func["position"].toInt()==0){}
-        //角度
-        if(func["angle"].toInt()==0){
-            curtain->hideAngle();
-        } else {
-            curtain->showAngle();
-        }
-
-        //窗帘方向
-        QString direction = curtainM["direction"].toString();
-        curtain->setDirection(direction);
+        curtainStruct curtainS = curtains[i];
+        curtain->setData(curtainS);
     }
     ui->scrollAreaWidgetContents->setFixedHeight(ui->scrollAreaWidgetContents->sizeHint().height());
 }

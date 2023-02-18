@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>160</width>
-    <height>32</height>
+    <width>192</width>
+    <height>43</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -67,6 +67,9 @@
         <property name="text">
          <string>查看设备</string>
         </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item>
@@ -91,6 +94,9 @@
         </property>
         <property name="text">
          <string>icon</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
         </property>
        </widget>
       </item>

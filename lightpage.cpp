@@ -28,16 +28,15 @@ void lightPage::setData(int houseId,int spaceId,int roomId)
     houseId_ = houseId;
     spaceId_ = spaceId;
     roomId_ = roomId;
-    QVariantMap room = equipment::getRoom(houseId,spaceId,roomId);
-    QVariantList lightings = room["lighting"].toList();
-    int lightSize = lightings.size();
+    roomStruct room = equipment::getRoom(houseId,spaceId,roomId);
+    lightings_ = room.lighting;
+    int lightSize = lightings_.size();
     int lightWidgetSize = lightWidgetList_.size();
 
     if(lightWidgetSize<lightSize){
         while(lightSize>lightWidgetSize){
             btnTwoSlider* bts = new btnTwoSlider(this);
             lightWidgetList_.append(bts);
-            qDebug()<<"lightWidgetList_.append()";
             ui->scrollAreaWidgetContents->layout()->addWidget(bts);
             connect(bts, SIGNAL(lightSwitch()), this,SLOT(ligthSwitch()));
             lightWidgetSize++;
@@ -54,26 +53,11 @@ void lightPage::setData(int houseId,int spaceId,int roomId)
     }
 
     for (int i=0;i<lightSize;i++) {
-        btnTwoSlider * light = lightWidgetList_[i];
-        QVariantMap lighting = lightings[i].toMap();
-        //名称
-        light->setName(lighting["name"].toString());
-        //icon
-        int icon = icon::getIcon(lighting["icon"].toString());
-        light->setIcon(icon);
-
-        QVariantMap func = lighting["function"].toMap();
-        //亮度
-        if(func["dimming"].toInt()==0){}
-        //色温
-        if(func["color_temperature"].toInt()==0){}
-        //颜色
-        if(func["hue"].toInt()==0){
-            light->hideColor();
-        } else {
-            light->showColor();
-        }
+        btnTwoSlider* light = lightWidgetList_[i];
+        lightingStruct lighting = lightings_[i];
+        light->setData(lighting);
     }
+
 }
 
 void lightPage::goBackSlot()

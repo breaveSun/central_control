@@ -1,6 +1,7 @@
 *{
     color: #BCBCBC;
     background-color:#171717;
+    border-style: none;
 }
 #titleName{
     color:#FFFFFF;
@@ -9,7 +10,6 @@
     border-style: none;
 }
 /*灯光控制*/
-
 #lightFrame{
     border-radius: 20px;
 }
@@ -72,7 +72,7 @@
     border-style: none;
 }
 /*主页*/
-#msg,#personalCenter,#spaceComboBox,#spaceComboBoxBtn,#oneClickClose QPushButton,#sceneConf *{
+#msg,#personalCenter,#spaceComboBox,#spaceComboBoxBtn,#oneClickClose QPushButton,#sceneConf *,#spacesContents QPushButton{
     border-style: none;
 }
 #roomCardFrame{
@@ -115,6 +115,11 @@
 #sceneConf #frame{
     border-radius: 10px;
 }
+
+#changeSpaceFrame #line{
+    background-color: #BCBCBC;
+}
+
 
 
 /*测试使用

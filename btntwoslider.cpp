@@ -10,14 +10,19 @@ btnTwoSlider::btnTwoSlider(QWidget *parent) :
     ui(new Ui::btnTwoSlider)
 {
     ui->setupUi(this);
-    ui->lightListSwitch->setChecked(false);
     ui->lightListSwitch->setTextOn("");
     ui->lightListSwitch->setTextOff("");
     ui->lightListSwitch->setBgColorOn(QColor("#D2AA74"));
     ui->lightListSwitch->setBgColorOff(QColor("#353638"));
-    ui->lightSet->setVisible(false);
-
     connect(ui->lightListSwitch, SIGNAL(statusChanged(qint16,bool)), SLOT(statusChanged(qint16,bool)));
+
+    ui->lightSet->setVisible(false);
+    ui->lightNumSlider->setTitle("亮度");
+    ui->lightNumSlider->setUnit("%");
+    connect(ui->lightNumSlider, SIGNAL(valueChanged()), SLOT(brightnessValueChanged()));
+    ui->temNumSlider->setTitle("色温");
+    ui->temNumSlider->setUnit("K");
+    connect(ui->temNumSlider, SIGNAL(valueChanged()), SLOT(colorTemperatureValueChanged()));
 
     ui->rSlider_2->setRange(0,255);
     ui->rSlider_2->setTitle("R");
@@ -37,13 +42,65 @@ btnTwoSlider::~btnTwoSlider()
 {
     delete ui;
 }
+void btnTwoSlider::setData(lightingStruct lighting){
+    lighting_ = lighting;
+    setName(lighting.name);
+    setIcon(icon::getIcon(lighting.icon));
 
+
+    lightingFuncStruct func = lighting.function;
+
+    //亮度
+    if(func.dimming==0){
+
+    } else{
+        ui->lightNumSlider->setNum(lighting_.dimming_absolute_value);
+    }
+
+    //色温
+    if(func.color_temperature==0){
+
+    }else{
+        int min = lighting_.min_color_temperature.toInt();
+        int max = lighting_.max_color_temperature.toInt();
+        ui->temNumSlider->setRange(min,max);
+        ui->temNumSlider->setNum(lighting_.hue_value);
+    }
+
+    //颜色
+    if(func.hue==0){
+        hideColor();
+    } else {
+        showColor();
+
+        ui->rgbEdit->setText(lighting_.hue_value);
+        setColor(lighting_.hue_value);
+    }
+
+    //根据开关设置样式
+    bool switchStatus = lighting_.switch_value=="1"?true:false;
+    ui->lightListSwitch->blockSignals(true);
+    ui->lightListSwitch->setChecked(switchStatus);
+    ui->lightListSwitch->blockSignals(false);
+    //灯光控制项展开和关闭
+    ui->lightSet->setVisible(switchStatus);
+    ui->lightFrame->setFixedHeight(ui->lightFrame->sizeHint().height());
+    setFixedHeight(sizeHint().height());
+    //修改背景色
+    if (switchStatus){
+        setStyleSheet("background-color:rgb(34,34,34);");
+    } else {
+        setStyleSheet("background-color:rgb(23,23,23);");
+    }
+}
 void btnTwoSlider::setName(QString name){
     ui->lightTitle->setText(name);
 }
+
 void btnTwoSlider::setIcon(int icon){
     ui->lightTitle->setIcon(icon);
 }
+
 void btnTwoSlider::setColor(QString color){
     ui->preColorBox->setStyleSheet("background-color:#"+color+";");
     //字符串拆分 两两为一组16进制 转10进制赋值给rgb
@@ -75,15 +132,23 @@ void btnTwoSlider::statusChanged(qint16 id,bool checked)
     ui->lightSet->setVisible(checked);
     ui->lightFrame->setFixedHeight(ui->lightFrame->sizeHint().height());
     setFixedHeight(sizeHint().height());
-    //修改背景色 //todo::样式不对
+    //修改背景色
     if (checked){
         setStyleSheet("background-color:rgb(34,34,34);");
     } else {
         setStyleSheet("background-color:rgb(23,23,23);");
     }
 
+    //发送请求
+    QVariantMap lightMap;
+    lightMap["group_id"] = lighting_.Switch;
+    lightMap["switch"] = checked?"1":"0";
+    QVariantList data;
+    data.append(lightMap);
+    QString jsonStr = Common::ListToString(data);
+    equipment::lightControl(jsonStr);
 
-//    setStyleSheet("QWidget#lightSet{background-color:red;border-radius: 0px;}QWidget#widget{background-color:yellow;border-radius: 0px;}");
+
     emit lightSwitch();
 }
 
@@ -94,6 +159,38 @@ void btnTwoSlider::rgbValueChanged(){
     QString rgbString = QString::fromStdString(toHex(r)+toHex(g)+toHex(b));
     ui->preColorBox->setStyleSheet("background-color:#"+rgbString+";");
     ui->rgbEdit->setText(rgbString);
+    //发送请求
+    QVariantMap lightMap;
+    lightMap["group_id"] = lighting_.hue;
+    lightMap["hue"] = rgbString;
+    QVariantList data;
+    data.append(lightMap);
+    QString jsonStr = Common::ListToString(data);
+    equipment::lightControl(jsonStr);
+
+}
+void btnTwoSlider::brightnessValueChanged(){
+    int value = ui->lightNumSlider->getNum();
+    //发送请求
+    QVariantMap lightMap;
+    lightMap["group_id"] = lighting_.dimming_absolute;
+    lightMap["brightness"] = QString::number(value);
+    QVariantList data;
+    data.append(lightMap);
+    QString jsonStr = Common::ListToString(data);
+    equipment::lightControl(jsonStr);
+}
+
+void btnTwoSlider::colorTemperatureValueChanged(){
+    int value = ui->temNumSlider->getNum();
+    //发送请求
+    QVariantMap lightMap;
+    lightMap["group_id"] = lighting_.color_temperature;
+    lightMap["color_temperature"] = QString::number(value);
+    QVariantList data;
+    data.append(lightMap);
+    QString jsonStr = Common::ListToString(data);
+    equipment::lightControl(jsonStr);
 }
 
 std::string btnTwoSlider::toHex(int num)
@@ -140,7 +237,7 @@ void btnTwoSlider::toRGB(int &red,int &green,int &blue,std::string color16){
     //16进制色彩表示中，两个数字一个完整的色彩部件（red，green，blue）
     //2进位存储表达中，8个字节位表达一个16进制整数
     //移位16个字节位，并执行&操作，可以得出red部件的数值
-    int a = num >> 16;
+//    int a = num >> 16;
     red = num >> 16 & 0xFF;
     //移位8个字节位，并执行&操作，可以得出green部件的数值
     green = num >> 8 & 0xFF;

@@ -51,6 +51,5 @@ void rgbSlider::setRange(int min,int max){
 void rgbSlider::move(int value){
     ui->rgbNum->setText(QString::number(value));
     emit valueChanged();
-    //todo::调用控制接口
 }
 

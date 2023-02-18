@@ -60,5 +60,5 @@ int mySlider::min(){
 }
 void mySlider::move(int value){
     ui->sliderNum->setText(QString::number(value));
-    //todo::调用控制接口
+    emit valueChanged();
 }

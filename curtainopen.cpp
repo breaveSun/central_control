@@ -43,6 +43,32 @@ curtainOpen::~curtainOpen()
     qDebug() <<id_<< "end destroy widget";
     delete ui;
 }
+
+void curtainOpen::setData(curtainStruct curtain){
+    curtain_ = curtain;
+    setName(curtain_.name);
+    setIcon(icon::getIcon(curtain_.icon));
+
+    //开关
+    if(curtain_.function.Switch==0){}
+    //位置
+    if(curtain_.function.position==0){
+
+    }else {
+        ui->openCloseSlider->setNum(curtain_.position_value);
+    }
+    //角度
+    if(curtain_.function.angle==0){
+        hideAngle();
+    } else {
+        showAngle();
+        ui->angleSlider->setNum(curtain_.position_value);
+    }
+
+    //窗帘方向
+    setDirection(curtain_.direction);
+}
+
 void curtainOpen::setId(int id){
     id_ = id;
 }

@@ -9,6 +9,8 @@ class roomCard;
 }
 class verticalTxtUnit;
 class verticalicontextBK;
+struct roomParamStruct;
+struct roomSceneStruct;
 class roomCard : public QWidget
 {
     Q_OBJECT
@@ -21,11 +23,11 @@ public:
 
     void setIcon(int icon);
 
-    void setData(int houseId,int spaceId,int roomId);
+    void setData(roomStruct room);
+private:
+    void setParams(QVector<roomParamStruct> params);
 
-    void setParams(QVariantList params);
-
-    void setScenes(QVariantList scenes);
+    void setScenes(QVector<roomSceneStruct> scenes);
 signals:
     void goPage(PageBack pb, int houseId,int spaceId,int roomId);
 
@@ -40,9 +42,7 @@ private:
     Ui::roomCard *ui;
     QVector<verticalTxtUnit *> paramsWidgetList_;
     QVector<verticalicontextBK *> scenesWidgetList_;
-    int houseId_;
-    int spaceId_;
-    int roomId_;
+    roomStruct room_;
 };
 
 #endif // ROOMCARD_H

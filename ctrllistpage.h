@@ -25,10 +25,14 @@ signals:
 
 private slots:
     void goBackSlot();
+    void goLightDetailSlot(enum PageBack pb,int houseId,int spaceId,int roomId);
+    void goCurtainDetailSlot(enum PageBack pb,int houseId,int spaceId,int roomId);
 
 private:
     Ui::ctrlListPage *ui;
-    QVariantMap pRoomData_;
+    roomStruct pRoomData_;
+    QVector<lightingStruct> lightings_;
+    QVector<curtainStruct> curtains_;
     int houseId_;
     int spaceId_;
     int roomId_;

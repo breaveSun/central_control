@@ -1,7 +1,8 @@
 #ifndef CURTAINOPEN_H
 #define CURTAINOPEN_H
 
-#include <QWidget>
+//#include <QWidget>
+#include "common.h"
 
 namespace Ui {
 class curtainOpen;
@@ -17,6 +18,8 @@ class curtainOpen : public QWidget
 public:
     explicit curtainOpen(QWidget *parent = nullptr);
     ~curtainOpen();
+
+    void setData(curtainStruct curtain);
 
     void setId(int id);
 
@@ -53,6 +56,7 @@ private slots:
 
 private:
     int id_;
+    curtainStruct curtain_;
     Ui::curtainOpen *ui;
     titleIcon *pTitleIcon_;
     QThread *pThTest_;

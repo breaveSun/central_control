@@ -4,22 +4,37 @@
 #include "equipment.h"
 #include "common.h"
 #include "icon.h"
+#include "changespace.h"
 
 homePage::homePage(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::homePage)
 {
     ui->setupUi(this);
-    pSpacesChange_ = new QWidget(this);
-    pSpacesChange_->setVisible(false);
+    //切换空间
+    pChangeSpace_ = new changeSpace(this);
+    pChangeSpace_->setWindowOpacity(0.95);
+    connect(pChangeSpace_,SIGNAL(changeSpaceHide()),this,SLOT(spaceChangeWidgetHide()));
+    connect(pChangeSpace_,SIGNAL(updateRooms(int,int)),this,SLOT(updateRooms(int,int)));
+
+    ui->spaceChanged->setIcon("drop_down",20);
+    connect(ui->spaceChanged,SIGNAL(btnClicked(bool)),this,SLOT(spacesChange(bool)));
+
+    //图标样式
     Common::setLabelIcon(ui->locationIcon,icon::getIcon("location"),20);
     ui->locationName->setText("拱墅区");
     Common::setLabelIcon(ui->weatherIcon,icon::getIcon("cloudy_to_clear"),20);
     ui->weatherTxt->setText("15°C");
     Common::setButtonIcon(ui->msg,icon::getIcon("msg"));
     Common::setButtonIcon(ui->personalCenter,icon::getIcon("my"));
-    ui->spaceChanged->setIcon("drop_down",20);
-    connect(ui->spaceChanged,SIGNAL(btnClicked(bool)),this,SLOT(spacesChange(bool)));
+
+    //加载页面数据
+    setData(houseId_,spaceId_);
+
+    //关闭全部设备
+    ui->closeAllDevices->setCheckable(true);
+    connect(ui->closeAllDevices,SIGNAL(clicked(bool)),this,SLOT(closeAllDevices(bool)));
+
 }
 
 homePage::~homePage()
@@ -29,12 +44,48 @@ homePage::~homePage()
 
 void homePage::setData(int houseId,int spaceId)
 {
-    houseId_ = houseId;
-    spaceId_ = spaceId;
-    QVariantMap space = equipment::getSpace(houseId,spaceId);
-    spaceData_ = space;
-    ui->spaceChanged->setTxt(spaceData_["name"].toString());
-    QVariantList rooms = space["rooms"].toList();
+//    //获取房子和空间名称
+    QString houseName;
+    QString spaceName;
+
+    houseData_ = equipment::getEquipment();
+    for (int i=0;i<houseData_->size();i++) {
+        houseStruct house = houseData_->at(i);
+        if(houseId == 0){
+            houseName = house.name;
+            houseId_ = house.id;
+            spaceStruct space = house.spaces[0];
+            spaceName = space.name;
+            spaceId_ = space.id;
+            spaceData_ = space;
+            break;
+        }
+        if(houseId == house.id){
+            houseName = house.name;
+            houseId_ = house.id;
+            QVector<spaceStruct> spaces = house.spaces;
+            if(spaceId == 0){
+                spaceId_ = spaces[0].id;
+                spaceName = spaces[0].name;
+                break;
+            }
+            for(int j =0;j<spaces.size();j++){
+                spaceStruct space = spaces[i];
+                if(spaceId == space.id){
+                    spaceName = space.name;
+                    spaceId_ = space.id;
+                    spaceData_ = space;
+                    break;
+                }
+            }
+        }
+    }
+
+    //给下拉菜单按钮设置文字
+    ui->spaceChanged->setTxt(houseName+spaceName);
+
+    //获取房间数据 更新房间列表
+    QVector<roomStruct> rooms = spaceData_.rooms;
     int roomSize = rooms.size();
     int roomWidgetSize = roomCardWidgetList_.size();
 
@@ -58,17 +109,9 @@ void homePage::setData(int houseId,int spaceId)
 
     for (int i=0;i<roomSize;i++) {
         roomCard * room = roomCardWidgetList_[i];
-        QVariantMap roomM = rooms[i].toMap();
+        roomStruct roomS = rooms[i];
         //名称
-        room->setName(roomM["name"].toString());
-        //icon
-        int icon = icon::getIcon(roomM["icon"].toString());
-        room->setIcon(icon);
-        room->setData(houseId_,spaceId_,roomM["id"].toInt());
-        //设置房间参数
-        room->setParams(roomM["param"].toList());
-        //设置房间场景
-        room->setScenes(roomM["scene"].toList());
+        room->setData(roomS);
         connect(room,SIGNAL(goPage(PageBack,int,int,int)),this,SIGNAL(goPage(PageBack,int,int,int)));
 
     }
@@ -78,9 +121,43 @@ void homePage::setData(int houseId,int spaceId)
 }
 
 void homePage::spacesChange(bool clicked){
-    pSpacesChange_->setVisible(clicked);
-    pSpacesChange_->isActiveWindow();
-    pSpacesChange_->setGeometry(ui->roomsScrollArea->geometry());
-    qDebug()<<"size:"<<ui->roomsScrollArea->size()<<" hint:"<<ui->roomsScrollArea->sizeHint();
-    qDebug()<<"size:"<<pSpacesChange_->size()<<" hint:"<<pSpacesChange_->sizeHint();
+    if(clicked){
+        QPoint pos = this->mapToGlobal(ui->roomsScrollArea->pos());
+        pChangeSpace_->setGeometry(pos.x(),pos.y(),ui->roomsScrollArea->width(),ui->roomsScrollArea->height());
+        pChangeSpace_->setData(houseData_,houseId_,spaceId_);
+        pChangeSpace_->show();
+        ui->spaceChanged->setIcon("pull_up",20);
+    } else {
+        pChangeSpace_->hide();
+        ui->spaceChanged->setIcon("drop_down",20);
+    }
 }
+
+void homePage::spaceChangeWidgetHide(){
+    if (pChangeSpace_ != nullptr && ui->spaceChanged->isChecked())
+    {
+        ui->spaceChanged->setChecked(false);
+        ui->spaceChanged->setIcon("drop_down",20);
+    }
+    QRect closeAllDeviceRect = QRect(ui->closeAllDevices->pos().x()+ui->spacesCloseAll->pos().x()
+                                     ,ui->closeAllDevices->pos().y()+ui->spacesCloseAll->pos().y()
+                                     ,ui->closeAllDevices->width()
+                                     ,ui->closeAllDevices->height());
+   if(closeAllDeviceRect.contains(this->mapFromGlobal(QCursor::pos()))){
+        qDebug()<<"触发关闭全部按钮的信号";
+        //触发关闭全部按钮的信号
+        closeAllDevices(true);
+    }
+
+}
+
+void homePage::updateRooms(int houseId,int spaceId){
+    ui->scrollAreaWidgetContents->show();
+    setData(houseId,spaceId);
+    ui->scrollAreaWidgetContents->show();
+}
+
+void homePage::closeAllDevices(bool checked){
+    qDebug()<<__FUNCTION__<<checked;
+}
+

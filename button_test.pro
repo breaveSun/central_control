@@ -1,7 +1,7 @@
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
+QT += network
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -28,7 +28,9 @@ SOURCES += \
     equipment.cpp \
     homepage.cpp \
     horizontalbtn.cpp \
+    httpserver.cpp \
     icon.cpp \
+    labelbtn.cpp \
     light.cpp \
     lightpage.cpp \
     logindlg.cpp \
@@ -39,7 +41,6 @@ SOURCES += \
     myslider.cpp \
     rgbslider.cpp \
     roomcard.cpp \
-    space.cpp \
     switchbutton.cpp \
     titleicon.cpp \
     verticalicontext.cpp \
@@ -61,7 +62,9 @@ HEADERS += \
     equipment.h \
     homepage.h \
     horizontalbtn.h \
+    httpserver.h \
     icon.h \
+    labelbtn.h \
     light.h \
     lightpage.h \
     logindlg.h \
@@ -71,7 +74,6 @@ HEADERS += \
     myslider.h \
     rgbslider.h \
     roomcard.h \
-    space.h \
     switchbutton.h \
     titleicon.h \
     verticalicontext.h \
@@ -88,6 +90,7 @@ FORMS += \
     curtainpage.ui \
     homepage.ui \
     horizontalbtn.ui \
+    labelbtn.ui \
     lightpage.ui \
     logindlg.ui \
     mainpage.ui \
