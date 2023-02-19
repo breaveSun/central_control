@@ -8,6 +8,8 @@ rgbSlider::rgbSlider(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(ui->sliderLine,&QSlider::sliderMoved,this,&rgbSlider::move);
+    connect(ui->sliderLine,&QSlider::sliderReleased,this,&rgbSlider::released);
+    connect(ui->sliderLine,&QSlider::sliderPressed,this,&rgbSlider::pressed);
 }
 
 rgbSlider::rgbSlider(QWidget *parent,int min,int max) :
@@ -17,7 +19,9 @@ rgbSlider::rgbSlider(QWidget *parent,int min,int max) :
 {
     ui->setupUi(this);
     ui->sliderLine->setRange(min_,max_);
-    connect(ui->sliderLine,&QSlider::valueChanged,this,&rgbSlider::move);
+    connect(ui->sliderLine,&QSlider::sliderMoved,this,&rgbSlider::move);
+    connect(ui->sliderLine,&QSlider::sliderReleased,this,&rgbSlider::released);
+    connect(ui->sliderLine,&QSlider::sliderPressed,this,&rgbSlider::pressed);
 }
 
 rgbSlider::~rgbSlider()
@@ -48,8 +52,20 @@ void rgbSlider::setRange(int min,int max){
     ui->sliderLine->setRange(min,max);
 }
 
-void rgbSlider::move(int value){
+void rgbSlider::move(int position){
+    ui->rgbNum->setText(QString::number(position));
+    emit sliderMoved(position);
+}
+
+void rgbSlider::released(){
+    int value = ui->sliderLine->value();
     ui->rgbNum->setText(QString::number(value));
-    emit valueChanged();
+    emit sliderReleased();
+}
+
+void rgbSlider::pressed(){
+    int value = ui->sliderLine->value();
+    ui->rgbNum->setText(QString::number(value));
+    emit sliderPressed();
 }
 

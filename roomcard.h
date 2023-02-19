@@ -24,6 +24,9 @@ public:
     void setIcon(int icon);
 
     void setData(roomStruct room);
+
+    void setEnableDeviceNum(QString num);
+
 private:
     void setParams(QVector<roomParamStruct> params);
 

@@ -20,9 +20,13 @@ public:
     void setNum(int num);
     void setRange(int min, int max);
 signals:
-    void valueChanged();
+    void sliderMoved(int value);
+    void sliderReleased();
+    void sliderPressed();
 private slots:
     void move(int value);
+    void released();
+    void pressed();
 
 private:
     Ui::rgbSlider *ui;

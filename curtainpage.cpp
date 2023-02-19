@@ -29,8 +29,8 @@ void curtainPage::setData(int houseId,int spaceId,int roomId)
     spaceId_ = spaceId;
     roomId_ = roomId;
     roomStruct room = equipment::getRoom(houseId,spaceId,roomId);
-    QVector<curtainStruct> curtains = room.curtain;
-    int curtainSize = curtains.size();
+    curtains_ = room.curtain;
+    int curtainSize = curtains_.size();
     int curtainWidgetSize = curtainWidgetList_.size();
 
     if(curtainWidgetSize<curtainSize){
@@ -53,7 +53,7 @@ void curtainPage::setData(int houseId,int spaceId,int roomId)
 
     for (int i=0;i<curtainSize;i++) {
         curtainOpen * curtain = curtainWidgetList_[i];
-        curtainStruct curtainS = curtains[i];
+        curtainStruct curtainS = curtains_[i];
         curtain->setData(curtainS);
     }
     ui->scrollAreaWidgetContents->setFixedHeight(ui->scrollAreaWidgetContents->sizeHint().height());
@@ -69,4 +69,16 @@ void curtainPage::closeAllSlot()
     for (int i=0;i<curtainWidgetList_.size();i++) {
         curtainWidgetList_[i]->closeCurtain();
     }
+
+    //发送请求
+    QVariantList data;
+    for (int i=0;i<curtains_.size();i++){
+        QVariantMap curtainMap;
+        curtainMap["group_id"] = curtains_[i].Switch;
+        curtainMap["switch"] = "0";
+
+        data.append(curtainMap);
+    }
+    QString jsonStr = Common::ListToString(data);
+    equipment::curtainControl(jsonStr);
 }

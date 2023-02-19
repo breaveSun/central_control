@@ -26,7 +26,8 @@ curtainOpen::curtainOpen(QWidget *parent) :
     connect(ui->open, SIGNAL(btnPressed()), this, SLOT(startOpen()));
     connect(ui->close, SIGNAL(btnPressed()), this, SLOT(startClose()));
     connect(ui->stop, SIGNAL(btnPressed()), this, SLOT(stopPressed()));
-    connect(ui->stop, SIGNAL(btnClicked()), this, SLOT(stopClicked()));
+    connect(ui->openCloseSlider,SIGNAL(sliderReleased()),this,SLOT(openCloseSliderReleased()));
+    connect(ui->angleSlider,SIGNAL(sliderReleased()),this,SLOT(angleSliderReleased()));
 
     movingOpen_ = false;
     movingClose_ = false;
@@ -50,11 +51,25 @@ void curtainOpen::setData(curtainStruct curtain){
     setIcon(icon::getIcon(curtain_.icon));
 
     //开关
-    if(curtain_.function.Switch==0){}
+    if(curtain_.function.Switch==0){
+    } else {
+        if(curtain_.Switch == "0"){
+            ui->open->setIconColor("#BCBCBC");
+            ui->stop->setIconColor("#BCBCBC");
+            ui->close->setIconColor("#D2AA74");
+            ui->openCloseSlider->setNum("0");
+        }else{
+            ui->open->setIconColor("#D2AA74");
+            ui->stop->setIconColor("#BCBCBC");
+            ui->close->setIconColor("#BCBCBC");
+            ui->openCloseSlider->setNum("100");
+        }
+    }
     //位置
     if(curtain_.function.position==0){
-
+        ui->openCloseSlider->hide();
     }else {
+        ui->openCloseSlider->show();
         ui->openCloseSlider->setNum(curtain_.position_value);
     }
     //角度
@@ -89,13 +104,9 @@ void curtainOpen::setCloseIcon(int icon){
 
 void curtainOpen::hideAngle(){
     ui->angleSlider->setVisible(false);
-//    ui->curtainFrame->setFixedHeight(ui->curtainFrame->sizeHint().height());
-//    setFixedHeight(sizeHint().height());
 }
 void curtainOpen::showAngle(){
     ui->angleSlider->setVisible(true);
-//    ui->curtainFrame->setFixedHeight(ui->curtainFrame->sizeHint().height());
-//    setFixedHeight(sizeHint().height());
 }
 
 void curtainOpen::setDirection(QString direction){
@@ -107,145 +118,79 @@ void curtainOpen::setDirection(QString direction){
         ui->close->setIcon(icon::getIcon("hor_close"));
     }
 }
-
 void curtainOpen::closeCurtain(){
-    qDebug()<<id_<<__FUNCTION__<<movingOpen_<<movingClose_;
-    if(movingClose_){
-        return;
-    }
-
-    //关闭按钮开启样式 - 关闭动作开始
+    ui->open->setIconColor("#BCBCBC");
+    ui->stop->setIconColor("#BCBCBC");
     ui->close->setIconColor("#D2AA74");
-    movingClose_ = true;
-
-    if (movingOpen_){
-        //打开按钮恢复默认样式 打开动作停止
-        ui->open->setIconColor("#FFFFFF");
-        movingOpen_ = false;
-        return;
-    }
-    //开启进程
-    startThread();
-    //开启事件
-    emit toThread();
-}
-
-void curtainOpen::startThread(){
-    qDebug()<<id_<<__FUNCTION__;
-    if(pThTest_){
-        qDebug()<<id_<<"pThTest_"<<(pThTest_== nullptr);
-        qDebug()<<id_<<"pCurtainThread_"<<(pCurtainThread_== nullptr);
-        return;
-    }
-    pThTest_ = new QThread;
-    pCurtainThread_ = new curtainThread;
-    pCurtainThread_->moveToThread(pThTest_);
-    qDebug()<<id_<<"moveToThread;";
-    connect(pThTest_, &QThread::finished, this, &curtainOpen::threadFinish);
-    connect(pThTest_,&QThread::finished,pThTest_,&QObject::deleteLater);
-    connect(pThTest_, &QThread::finished, pCurtainThread_, &QObject::deleteLater);
-    connect(this,&curtainOpen::toThread,pCurtainThread_,&curtainThread::Func);
-    connect(pCurtainThread_,SIGNAL(once()),this,SLOT(threadUpdateSlider()));
-    pThTest_->start();
-    qDebug()<<id_<<"pThTest_->start();";
+    ui->openCloseSlider->setNum("0");
 }
 
 void curtainOpen::startOpen(){
-    qDebug()<<id_<<__FUNCTION__<<movingOpen_<<movingClose_;
-
-    if(movingOpen_){
-        return;
-    }
-
-    //打开按钮开启样式 - 打开动作开始
     ui->open->setIconColor("#D2AA74");
-    movingOpen_ = true;
-    if (movingClose_){
-        //关闭按钮恢复默认样式 关闭动作停止
-        ui->close->setIconColor("#FFFFFF");
-        movingClose_ = false;
-        return;
-    }
-    //开启进程
-    startThread();
-    //开启事件
-    emit toThread();
+    ui->stop->setIconColor("#BCBCBC");
+    ui->close->setIconColor("#BCBCBC");
+    ui->openCloseSlider->setNum("100");
+
+    //发送请求
+    QVariantMap curtainMap;
+    curtainMap["group_id"] = curtain_.Switch;
+    curtainMap["switch"] = "1";
+    QVariantList data;
+    data.append(curtainMap);
+    QString jsonStr = Common::ListToString(data);
+    equipment::curtainControl(jsonStr);
 }
 void curtainOpen::startClose(){
-    closeCurtain();
-    /*qDebug()<<id_<<__FUNCTION__<<movingOpen_<<movingClose_;
-    if(movingClose_){
-        return;
-    }
-
-    //关闭按钮开启样式 - 关闭动作开始
+    ui->open->setIconColor("#BCBCBC");
+    ui->stop->setIconColor("#BCBCBC");
     ui->close->setIconColor("#D2AA74");
-    movingClose_ = true;
-
-    if (movingOpen_){
-        //打开按钮恢复默认样式 打开动作停止
-        ui->open->setIconColor("#FFFFFF");
-        movingOpen_ = false;
-        return;
-    }
-    //开启进程
-    startThread();
-    //开启事件
-    emit toThread();*/
+    ui->openCloseSlider->setNum("0");
+    //发送请求
+    QVariantMap curtainMap;
+    curtainMap["group_id"] = curtain_.Switch;
+    curtainMap["switch"] = "0";
+    QVariantList data;
+    data.append(curtainMap);
+    QString jsonStr = Common::ListToString(data);
+    equipment::curtainControl(jsonStr);
 }
 
 void curtainOpen::stopPressed(){
-    qDebug()<<__FUNCTION__;
-    if (pCurtainThread_ && pCurtainThread_->isRunning()){
-        pCurtainThread_->stop();
-        ui->stop->setIconColor("#D2AA74");
-        movingOpen_ = false;
-        movingClose_ = false;
-        ui->open->setIconColor("#FFFFFF");
-        ui->close->setIconColor("#FFFFFF");
-    }
+    ui->stop->setIconColor("#D2AA74");
+    ui->open->setIconColor("#BCBCBC");
+    ui->close->setIconColor("#BCBCBC");
+
+    //发送请求
+    QVariantMap curtainMap;
+    curtainMap["group_id"] = curtain_.stop;
+    curtainMap["stop"] = "1";
+    QVariantList data;
+    data.append(curtainMap);
+    QString jsonStr = Common::ListToString(data);
+    equipment::curtainControl(jsonStr);
 }
 
-void curtainOpen::stopClicked(){
-    ui->stop->setIconColor("#FFFFFF");
+void curtainOpen::openCloseSliderReleased(){
+    int value = ui->openCloseSlider->getNum();
+    //发送请求
+    QVariantMap curtainMap;
+    curtainMap["group_id"] = curtain_.position;
+    curtainMap["oc_degree"] = QString::number(value);
+    QVariantList data;
+    data.append(curtainMap);
+    QString jsonStr = Common::ListToString(data);
+    equipment::curtainControl(jsonStr);
 }
 
-void curtainOpen::threadUpdateSlider(){
-    qDebug()<<id_<<"threadUpdateSlider"<<movingOpen_<<movingClose_;
-    //确定当前是开启还是关闭
-    if(movingOpen_){
-        int num = ui->openCloseSlider->getNum();
-        int max = ui->openCloseSlider->max();
-        qDebug()<<id_<<"movingOpen_"<<num<<max;
-        if (num<max){
-            num++;
-            ui->openCloseSlider->setNum(QString::number(num));
-        } else {
-            //开启结束
-            pCurtainThread_->stop();
-            movingOpen_ = false;
-            ui->open->setIconColor("#FFFFFF");
-        }
-    }
-
-    if(movingClose_){
-        int num = ui->openCloseSlider->getNum();
-        int min = ui->openCloseSlider->min();
-        qDebug()<<id_<<"movingClose_"<<num<<min;
-        if (num>min){
-            num--;
-            ui->openCloseSlider->setNum(QString::number(num));
-        } else {
-            qDebug()<<id_<<"movingClose_   stop";
-            //关闭结束
-            pCurtainThread_->stop();
-            movingClose_ = false;
-            ui->close->setIconColor("#FFFFFF");
-        }
-    }
-}
-
-void curtainOpen::threadFinish(){
-    qDebug()<<id_<<__FUNCTION__;
+void curtainOpen::angleSliderReleased(){
+    int value = ui->angleSlider->getNum();
+    //发送请求
+    QVariantMap curtainMap;
+    curtainMap["group_id"] = curtain_.position;
+    curtainMap["angle"] = QString::number(value);
+    QVariantList data;
+    data.append(curtainMap);
+    QString jsonStr = Common::ListToString(data);
+    equipment::curtainControl(jsonStr);
 }
 

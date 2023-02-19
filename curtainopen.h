@@ -36,23 +36,20 @@ public:
 
     void setDirection(QString direction);
 
-    //外部类调用关闭窗帘
+    //外部类调用关闭窗帘(页面关闭，发送请求在外部类)
     void closeCurtain();
 
-signals:
-    void toThread();
-private:
-    //开启线程
-    void startThread();
+//signals:
+//    void toThread();
+//private:
+//    //开启线程
+//    void startThread();
 private slots:
     void startOpen();
     void startClose();
     void stopPressed();
-    void stopClicked();
-    //线程更新滑动条样式
-    void threadUpdateSlider();
-    //线程关闭提示
-    void threadFinish();
+    void openCloseSliderReleased();
+    void angleSliderReleased();
 
 private:
     int id_;

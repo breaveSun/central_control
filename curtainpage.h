@@ -29,6 +29,7 @@ private slots:
 private:
     Ui::curtainPage *ui;
     QVector<curtainOpen *> curtainWidgetList_;
+    QVector<curtainStruct> curtains_;
     int houseId_;
     int spaceId_;
     int roomId_;

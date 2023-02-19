@@ -9,6 +9,8 @@ mySlider::mySlider(QWidget *parent) :
     ui->setupUi(this);
     ui->hSlider->setRange(min_,max_);
     connect(ui->hSlider,&QSlider::sliderMoved,this,&mySlider::move);
+    connect(ui->hSlider,&QSlider::sliderReleased,this,&mySlider::released);
+    connect(ui->hSlider,&QSlider::sliderPressed,this,&mySlider::pressed);
 }
 
 mySlider::mySlider(QWidget *parent,int min,int max) :
@@ -19,6 +21,8 @@ mySlider::mySlider(QWidget *parent,int min,int max) :
     ui->setupUi(this);
     ui->hSlider->setRange(min_,max_);
     connect(ui->hSlider,&QSlider::sliderMoved,this,&mySlider::move);
+    connect(ui->hSlider,&QSlider::sliderReleased,this,&mySlider::released);
+    connect(ui->hSlider,&QSlider::sliderPressed,this,&mySlider::pressed);
 }
 
 mySlider::~mySlider()
@@ -58,7 +62,19 @@ int mySlider::max(){
 int mySlider::min(){
     return min_;
 }
-void mySlider::move(int value){
+void mySlider::move(int position){
+    ui->sliderNum->setText(QString::number(position));
+    emit sliderMoved(position);
+}
+
+void mySlider::released(){
+    int value = ui->hSlider->value();
     ui->sliderNum->setText(QString::number(value));
-    emit valueChanged();
+    emit sliderReleased();
+}
+
+void mySlider::pressed(){
+    int value = ui->hSlider->value();
+    ui->sliderNum->setText(QString::number(value));
+    emit sliderPressed();
 }

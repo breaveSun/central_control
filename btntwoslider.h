@@ -39,7 +39,7 @@ public:
     void setColor(QString color);
 
     //关闭
-    void shutOff();
+    void shutOff(bool block=false);
 
     //隐藏颜色配置
     void hideColor();

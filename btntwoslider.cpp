@@ -19,10 +19,10 @@ btnTwoSlider::btnTwoSlider(QWidget *parent) :
     ui->lightSet->setVisible(false);
     ui->lightNumSlider->setTitle("亮度");
     ui->lightNumSlider->setUnit("%");
-    connect(ui->lightNumSlider, SIGNAL(valueChanged()), SLOT(brightnessValueChanged()));
+    connect(ui->lightNumSlider, SIGNAL(sliderReleased()), SLOT(brightnessValueChanged()));
     ui->temNumSlider->setTitle("色温");
     ui->temNumSlider->setUnit("K");
-    connect(ui->temNumSlider, SIGNAL(valueChanged()), SLOT(colorTemperatureValueChanged()));
+    connect(ui->temNumSlider, SIGNAL(sliderReleased()), SLOT(colorTemperatureValueChanged()));
 
     ui->rSlider_2->setRange(0,255);
     ui->rSlider_2->setTitle("R");
@@ -30,9 +30,9 @@ btnTwoSlider::btnTwoSlider(QWidget *parent) :
     ui->gSlider_2->setTitle("G");
     ui->bSlider_2->setRange(0,255);
     ui->bSlider_2->setTitle("B");
-    connect(ui->rSlider_2, SIGNAL(valueChanged()), SLOT(rgbValueChanged()));
-    connect(ui->gSlider_2, SIGNAL(valueChanged()), SLOT(rgbValueChanged()));
-    connect(ui->bSlider_2, SIGNAL(valueChanged()), SLOT(rgbValueChanged()));
+    connect(ui->rSlider_2, SIGNAL(sliderReleased()), SLOT(rgbValueChanged()));
+    connect(ui->gSlider_2, SIGNAL(sliderReleased()), SLOT(rgbValueChanged()));
+    connect(ui->bSlider_2, SIGNAL(sliderReleased()), SLOT(rgbValueChanged()));
 
     ui->rgbEdit->setStyleSheet("padding-left:10px;background-color: rgb(53,54,56);");
 
@@ -64,7 +64,7 @@ void btnTwoSlider::setData(lightingStruct lighting){
         int min = lighting_.min_color_temperature.toInt();
         int max = lighting_.max_color_temperature.toInt();
         ui->temNumSlider->setRange(min,max);
-        ui->temNumSlider->setNum(lighting_.hue_value);
+        ui->temNumSlider->setNum(lighting_.color_temperature_value);
     }
 
     //颜色
@@ -72,7 +72,8 @@ void btnTwoSlider::setData(lightingStruct lighting){
         hideColor();
     } else {
         showColor();
-
+        //todo::默认值应该在读取数据的时候确认
+        lighting_.hue_value = lighting_.hue_value==""?"FFFFFF":lighting_.hue_value;
         ui->rgbEdit->setText(lighting_.hue_value);
         setColor(lighting_.hue_value);
     }
@@ -114,8 +115,14 @@ void btnTwoSlider::setColor(QString color){
 //void btnTwoSlider::reSize(int width,int height){
 //    ui->lightSet->setGeometry(0,0,width,height);
 //}
-void btnTwoSlider::shutOff(){
+void btnTwoSlider::shutOff(bool block){
+    if(block){
+        ui->lightListSwitch->blockSignals(true);
+    }
     ui->lightListSwitch->setChecked(false);
+    if(block){
+        ui->lightListSwitch->blockSignals(false);
+    }
 }
 
 void btnTwoSlider::hideColor(){

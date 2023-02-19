@@ -69,3 +69,42 @@ void httpServer::SendAndGetText(QString strUrl, QString thod, QString strInput, 
 
     oNetReply->deleteLater();
 }
+//发起post请求 异步
+void httpServer::postHttpRequest(QString url,QString data)
+{
+    QNetworkRequest request;
+    QNetworkAccessManager* naManager = new QNetworkAccessManager(this);
+    QObject::connect(naManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(requestFinished(QNetworkReply*)));
+
+    request.setHeader(QNetworkRequest::ContentTypeHeader,QVariant("application/json"));
+    request.setUrl(QUrl::fromUserInput(url));
+
+    QNetworkReply* reply = naManager->post(request,data.toLocal8Bit());//发起post请求
+}
+
+//接收网络响应槽函数 异步
+void httpServer::requestFinished(QNetworkReply *reply)
+{
+    QString loginResultJson;
+    QByteArray bytes = reply->readAll();
+    // 获取http状态码
+    QVariant statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
+    if(statusCode.isValid())
+    {
+        qDebug() << "status code=" << statusCode.toInt();
+    }
+
+    QNetworkReply::NetworkError err = reply->error();
+    if(err != QNetworkReply::NoError)
+    {
+        qDebug() << "Failed: " << reply->errorString();
+    }
+    else
+    {
+        // 获取返回内容
+        qDebug() << "loginResultJson  is  " <<  QString::fromStdString(bytes.toStdString());
+        loginResultJson =  QString::fromStdString(bytes.toStdString());
+        //处理返回数据
+    }
+}
+

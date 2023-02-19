@@ -116,13 +116,15 @@ void equipment::lightControl(QString data){
     QString strResult = "";//http响应
     QString thod = "POST";//POST或GET
     qDebug()<<__FUNCTION__<<":"<<data;
-    httpServer::SendAndGetText(url,thod,sendMsg,strMessage,strResult);
-    if(strMessage.isEmpty())///HTTP正常响应
-    {
-        qDebug()<<"["<<__FILE__<<"]"<<__LINE__<<__FUNCTION__<<"接收数据 "<<strResult;
-    } else {
-        qDebug()<<"["<<__FILE__<<"]"<<__LINE__<<__FUNCTION__<<"错误信息 "<<strMessage;
-    }
+    httpServer* httpS = new httpServer();
+    httpS->postHttpRequest(url,data);
+//    httpServer::SendAndGetText(url,thod,sendMsg,strMessage,strResult);
+//    if(strMessage.isEmpty())///HTTP正常响应
+//    {
+//        qDebug()<<"["<<__FILE__<<"]"<<__LINE__<<__FUNCTION__<<"接收数据 "<<strResult;
+//    } else {
+//        qDebug()<<"["<<__FILE__<<"]"<<__LINE__<<__FUNCTION__<<"错误信息 "<<strMessage;
+//    }
 }
 
 void equipment::curtainControl(QString data){
@@ -131,6 +133,7 @@ void equipment::curtainControl(QString data){
     QString strMessage = "";//错误信息
     QString strResult = "";//http响应
     QString thod = "POST";//POST或GET
+    qDebug()<<__FUNCTION__<<data;
     httpServer::SendAndGetText(url,thod,sendMsg,strMessage,strResult);
     if(strMessage.isEmpty())///HTTP正常响应
     {
@@ -447,6 +450,7 @@ bool equipment::init()
 
                                 if(lightingV.find("switch_feedback") != lightingV.end()){
                                     lightingS.switch_feedback = lightingV["switch_feedback"].toString();
+                                    lightingS.switch_value = "0";
                                     if (deviceMap.find(lightingS.switch_feedback) != deviceMap.end()){
                                         lightingS.switch_value = deviceMap[lightingS.switch_feedback];
                                     }
@@ -462,7 +466,7 @@ bool equipment::init()
 
                                 if(lightingV.find("dimming_absolute_feedback") != lightingV.end()){
                                     lightingS.dimming_absolute_feedback = lightingV["dimming_absolute_feedback"].toString();
-
+                                    lightingS.dimming_absolute_value = "0";
                                     if (deviceMap.find(lightingS.dimming_absolute_feedback) != deviceMap.end()){
                                         lightingS.dimming_absolute_value = deviceMap[lightingS.dimming_absolute_feedback];
                                     }
@@ -475,20 +479,9 @@ bool equipment::init()
                                 if(lightingV.find("hue_feedback") != lightingV.end()){
                                     lightingS.hue_feedback = lightingV["hue_feedback"].toString();
 
+                                    lightingS.hue_value = "FFFFFF";
                                     if (deviceMap.find(lightingS.hue_feedback) != deviceMap.end()){
                                         lightingS.hue_value = deviceMap[lightingS.hue_feedback];
-                                    }
-                                }
-
-                                if(lightingV.find("color_temperature") != lightingV.end()){
-                                    lightingS.color_temperature = lightingV["color_temperature"].toString();
-                                }
-
-                                if(lightingV.find("color_temperature_feedback") != lightingV.end()){
-                                    lightingS.color_temperature_feedback = lightingV["color_temperature_feedback"].toString();
-
-                                    if (deviceMap.find(lightingS.color_temperature_feedback) != deviceMap.end()){
-                                        lightingS.color_temperature_value = deviceMap[lightingS.color_temperature_feedback];
                                     }
                                 }
 
@@ -500,6 +493,20 @@ bool equipment::init()
                                 if(lightingV.find("max_color_temperature") != lightingV.end()){
                                     lightingS.max_color_temperature = lightingV["max_color_temperature"].toString();
                                 }
+
+                                if(lightingV.find("color_temperature") != lightingV.end()){
+                                    lightingS.color_temperature = lightingV["color_temperature"].toString();
+                                }
+
+                                if(lightingV.find("color_temperature_feedback") != lightingV.end()){
+                                    lightingS.color_temperature_feedback = lightingV["color_temperature_feedback"].toString();
+
+                                    lightingS.color_temperature_value = lightingS.min_color_temperature;
+                                    if (deviceMap.find(lightingS.color_temperature_feedback) != deviceMap.end()){
+                                        lightingS.color_temperature_value = deviceMap[lightingS.color_temperature_feedback];
+                                    }
+                                }
+
                                 lightingListS.push_back(lightingS);
 
                             }
@@ -576,6 +583,7 @@ bool equipment::init()
                                 if(curtainV.find("switch_feedback") != curtainV.end()){
                                     curtainS.switch_feedback = curtainV["switch_feedback"].toString();
 
+                                    curtainS.switch_value = "0";
                                     if (deviceMap.find(curtainS.switch_feedback) != deviceMap.end()){
                                         curtainS.switch_value = deviceMap[curtainS.switch_feedback];
                                     }
@@ -588,9 +596,11 @@ bool equipment::init()
                                 if(curtainV.find("position_feedback") != curtainV.end()){
                                     curtainS.position_feedback = curtainV["position_feedback"].toString();
 
+                                    curtainS.position_value = "0";
                                     if (deviceMap.find(curtainS.position_feedback) != deviceMap.end()){
                                         curtainS.position_value = deviceMap[curtainS.position_feedback];
                                     }
+                                    curtainS.position_value = "13";
                                 }
 
                                 if(curtainV.find("stop") != curtainV.end()){

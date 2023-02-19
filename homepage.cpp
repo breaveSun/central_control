@@ -159,5 +159,34 @@ void homePage::updateRooms(int houseId,int spaceId){
 
 void homePage::closeAllDevices(bool checked){
     qDebug()<<__FUNCTION__<<checked;
+    QVariantList lightData;
+    QVariantList curtainData;
+    for (int r=0;r<spaceData_.rooms.size();r++) {
+        roomStruct room = spaceData_.rooms[r];
+        for (int i=0;i<room.lighting.size();i++){
+            QVariantMap lightMap;
+            lightMap["group_id"] = room.lighting[i].Switch;
+            lightMap["switch"] = "0";
+
+            lightData.append(lightMap);
+        }
+        for (int i=0;i<room.curtain.size();i++){
+            QVariantMap curtainMap;
+            curtainMap["group_id"] = room.curtain[i].Switch;
+            curtainMap["switch"] = "0";
+
+            curtainData.append(curtainMap);
+        }
+    }
+
+    QString jsonStr = Common::ListToString(lightData);
+    equipment::lightControl(jsonStr);
+
+    jsonStr = Common::ListToString(curtainData);
+    equipment::curtainControl(jsonStr);
+
+    for (int i=0;i<roomCardWidgetList_.size();i++) {
+        roomCardWidgetList_[i]->setEnableDeviceNum("0");
+    }
 }
 

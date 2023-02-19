@@ -57,6 +57,7 @@ void lightPage::setData(int houseId,int spaceId,int roomId)
         lightingStruct lighting = lightings_[i];
         light->setData(lighting);
     }
+    ui->scrollAreaWidgetContents->setFixedHeight(ui->scrollAreaWidgetContents->sizeHint().height());
 
 }
 
@@ -68,8 +69,19 @@ void lightPage::goBackSlot()
 void lightPage::closeAllSlot()
 {
     for (int i=0;i<lightWidgetList_.size();i++) {
-        lightWidgetList_[i]->shutOff();
+        lightWidgetList_[i]->shutOff(true);
     }
+    //发送请求
+    QVariantList data;
+    for (int i=0;i<lightings_.size();i++){
+        QVariantMap lightMap;
+        lightMap["group_id"] = lightings_[i].Switch;
+        lightMap["switch"] = "0";
+
+        data.append(lightMap);
+    }
+    QString jsonStr = Common::ListToString(data);
+    equipment::lightControl(jsonStr);
 }
 
 void lightPage::ligthSwitch()

@@ -51,6 +51,29 @@ void roomCard::setData(roomStruct room){
     setIcon(icon::getIcon(room_.icon));
     setParams(room.params);
     setScenes(room.scene);
+    int deviceNum = 0;
+    int enabledNum = 0;
+
+    for (int i=0;i<room_.lighting.size();i++){
+        deviceNum = deviceNum+1;
+        if(room_.lighting[i].switch_value == "1"){
+            enabledNum = enabledNum + 1;
+        }
+    }
+    for (int i=0;i<room_.curtain.size();i++){
+        deviceNum = deviceNum+1;
+        if(room_.curtain[i].switch_value == "1"){
+            enabledNum = enabledNum + 1;
+        }
+
+    }
+    ui->deviceNum->setText(QString::number(deviceNum));
+    ui->enabledNum->setText(QString::number(enabledNum));
+
+}
+
+void roomCard::setEnableDeviceNum(QString num){
+    ui->enabledNum->setText(num);
 }
 
 void roomCard::setParams(QVector<roomParamStruct> params){
@@ -154,5 +177,28 @@ void roomCard::editScene(){
 }
 
 void roomCard::onClickClose(){
+    //关闭所有灯
+    QVariantList lightData;
+    for (int i=0;i<room_.lighting.size();i++){
+        QVariantMap lightMap;
+        lightMap["group_id"] = room_.lighting[i].Switch;
+        lightMap["switch"] = "0";
 
+        lightData.append(lightMap);
+    }
+    QString jsonStr = Common::ListToString(lightData);
+    equipment::lightControl(jsonStr);
+    //关闭所有窗帘
+    QVariantList curtainData;
+    for (int i=0;i<room_.curtain.size();i++){
+        QVariantMap curtainMap;
+        curtainMap["group_id"] = room_.curtain[i].Switch;
+        curtainMap["switch"] = "0";
+
+        curtainData.append(curtainMap);
+    }
+    jsonStr = Common::ListToString(curtainData);
+    equipment::curtainControl(jsonStr);
+    //设置已经开启设备数量
+    ui->enabledNum->setText("0");
 }

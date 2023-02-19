@@ -24,11 +24,15 @@ public:
     int max();
     int min();
 signals:
-    void valueChanged();
+    void sliderMoved(int value);
+    void sliderReleased();
+    void sliderPressed();
 
 
 private slots:
     void move(int value);
+    void released();
+    void pressed();
 private:
     Ui::mySlider *ui;
     int min_ = 0;
