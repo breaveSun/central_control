@@ -25,14 +25,17 @@ signals:
 private slots:
     void goBackSlot();
     void closeAllSlot();
+    //接收服务器推送
+    void acceptPush(deviceDataStruct data);
 
 private:
     Ui::curtainPage *ui;
     QVector<curtainOpen *> curtainWidgetList_;
     QVector<curtainStruct> curtains_;
-    int houseId_;
-    int spaceId_;
-    int roomId_;
+    roomStruct room_;
+//    int houseId_;
+//    int spaceId_;
+//    int roomId_;
 };
 
 #endif // CURTAINPAGE_H

@@ -2,6 +2,8 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QT += network
+QT += websockets
+
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -41,11 +43,13 @@ SOURCES += \
     myslider.cpp \
     rgbslider.cpp \
     roomcard.cpp \
+    serverpushthread.cpp \
     switchbutton.cpp \
     titleicon.cpp \
     verticalicontext.cpp \
     verticalicontextbk.cpp \
-    verticaltxtunit.cpp
+    verticaltxtunit.cpp \
+    wsclient.cpp
 
 HEADERS += \
     LoadQss.h \
@@ -74,11 +78,13 @@ HEADERS += \
     myslider.h \
     rgbslider.h \
     roomcard.h \
+    serverpushthread.h \
     switchbutton.h \
     titleicon.h \
     verticalicontext.h \
     verticalicontextbk.h \
-    verticaltxtunit.h
+    verticaltxtunit.h \
+    wsclient.h
 
 FORMS += \
     btntwoslider.ui \

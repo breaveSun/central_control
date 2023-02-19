@@ -51,12 +51,22 @@ public:
     }
 
     static QVariantMap StringToVariantMap(const QString& str)
+    {
+        QByteArray njba = str.toUtf8();
+        QJsonParseError json_error;
+
+        QJsonDocument json_doc = QJsonDocument::fromJson(str.toUtf8(), &json_error);
+
+        if (json_error.error != QJsonParseError::NoError)
         {
-            QByteArray njba = str.toUtf8();
-            QJsonObject nobj = QJsonObject(QJsonDocument::fromJson(njba).object());
-            QVariantMap query = nobj.toVariantMap();
-            return query;
+            qDebug()<<"parse json error "<<json_error.error;
+            return QVariantMap{};
         }
+
+        QJsonObject nobj = QJsonObject(json_doc.object());
+        QVariantMap query = nobj.toVariantMap();
+        return query;
+    }
 
     static QString ListToString(QVariantList vtmap)
     {

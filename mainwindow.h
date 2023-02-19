@@ -14,6 +14,8 @@ class lightPage;
 class mainPage;
 class curtainPage;
 class ctrlListPage;
+class serverPushThread;
+class wsClient;
 
 class MainWindow : public QMainWindow
 {
@@ -34,7 +36,14 @@ private:
     curtainPage *pCurtainPage_;
     ctrlListPage *pCtrlListPage_;
 
+
+    wsClient *pWSClient_;
+
+
+
     Ui::MainWindow *ui;
+signals:
+    void startThreadWork();
 private slots:
 //    void changeStyleSlot();
 };

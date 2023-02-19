@@ -36,9 +36,9 @@ void mySlider::setTitle(QString title){
 
 void mySlider::setNum(QString num){
     int n =num.toInt();
-    if(n<0 || n>100){
-        n = 0;
-        num = "0";
+    if(n<min_ || n>max_){
+        n = min_;
+        num = QString::number(min_);
     }
     ui->sliderNum->setText(num);
     ui->hSlider->setValue(n);
@@ -49,6 +49,8 @@ void mySlider::setUnit(QString unit){
 }
 
 void mySlider::setRange(int min,int max){
+    min_ = min;
+    max_ = max;
     ui->hSlider->setRange(min,max);
 }
 

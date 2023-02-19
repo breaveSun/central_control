@@ -2,6 +2,7 @@
 #include "ui_btntwoslider.h"
 #include "titleicon.h"
 #include "common.h"
+#include "equipment.h"
 #include <iostream>
 #include <qdebug.h>
 
@@ -54,7 +55,8 @@ void btnTwoSlider::setData(lightingStruct lighting){
     if(func.dimming==0){
 
     } else{
-        ui->lightNumSlider->setNum(lighting_.dimming_absolute_value);
+
+        ui->lightNumSlider->setNum(equipment::getDeviceValue(lighting_.dimming_absolute_feedback));
     }
 
     //色温
@@ -64,7 +66,7 @@ void btnTwoSlider::setData(lightingStruct lighting){
         int min = lighting_.min_color_temperature.toInt();
         int max = lighting_.max_color_temperature.toInt();
         ui->temNumSlider->setRange(min,max);
-        ui->temNumSlider->setNum(lighting_.color_temperature_value);
+        ui->temNumSlider->setNum(equipment::getDeviceValue(lighting_.color_temperature_feedback));
     }
 
     //颜色
@@ -73,13 +75,13 @@ void btnTwoSlider::setData(lightingStruct lighting){
     } else {
         showColor();
         //todo::默认值应该在读取数据的时候确认
-        lighting_.hue_value = lighting_.hue_value==""?"FFFFFF":lighting_.hue_value;
-        ui->rgbEdit->setText(lighting_.hue_value);
-        setColor(lighting_.hue_value);
+        QString hueValue = equipment::getDeviceValue(lighting_.hue_feedback);
+        ui->rgbEdit->setText(hueValue);
+        txtSetColor(hueValue);
     }
 
     //根据开关设置样式
-    bool switchStatus = lighting_.switch_value=="1"?true:false;
+    bool switchStatus = equipment::getDeviceValue(lighting_.switch_feedback)=="1"?true:false;
     ui->lightListSwitch->blockSignals(true);
     ui->lightListSwitch->setChecked(switchStatus);
     ui->lightListSwitch->blockSignals(false);
@@ -102,7 +104,7 @@ void btnTwoSlider::setIcon(int icon){
     ui->lightTitle->setIcon(icon);
 }
 
-void btnTwoSlider::setColor(QString color){
+void btnTwoSlider::txtSetColor(QString color){
     ui->preColorBox->setStyleSheet("background-color:#"+color+";");
     //字符串拆分 两两为一组16进制 转10进制赋值给rgb
     int red,green,blue;
@@ -112,9 +114,35 @@ void btnTwoSlider::setColor(QString color){
     ui->bSlider_2->setNum(blue);
 }
 
-//void btnTwoSlider::reSize(int width,int height){
-//    ui->lightSet->setGeometry(0,0,width,height);
-//}
+void btnTwoSlider::setSwitch(bool s,bool block){
+    if(block){
+        ui->lightListSwitch->blockSignals(true);
+    }
+    ui->lightListSwitch->setChecked(s);
+    if(block){
+        ui->lightListSwitch->blockSignals(false);
+    }
+}
+
+void btnTwoSlider::setBrightness(QString num){
+    ui->lightNumSlider->setNum(num);
+}
+
+void btnTwoSlider::setColorTemperature(QString num){
+    ui->temNumSlider->setNum(num);
+}
+
+void btnTwoSlider::setColor(QString color){
+    ui->rgbEdit->setText(color);
+    ui->preColorBox->setStyleSheet("background-color:#"+color+";");
+    //字符串拆分 两两为一组16进制 转10进制赋值给rgb
+    int red,green,blue;
+    toRGB(red,green,blue,color.toStdString());
+    ui->rSlider_2->setNum(red);
+    ui->gSlider_2->setNum(green);
+    ui->bSlider_2->setNum(blue);
+}
+
 void btnTwoSlider::shutOff(bool block){
     if(block){
         ui->lightListSwitch->blockSignals(true);
@@ -131,6 +159,26 @@ void btnTwoSlider::hideColor(){
 
 void btnTwoSlider::showColor(){
     ui->colorCon->setVisible(true);
+}
+
+QString btnTwoSlider::getGroupId(FUNCTION_TYPE ft){
+    switch (ft) {
+    case FT_SWITCH:
+        return lighting_.switch_feedback;
+        break;
+    case FT_BRIGHTNESS:
+        return lighting_.dimming_absolute_feedback;
+        break;
+    case FT_COLOR_TEMPERATURE:
+        return lighting_.color_temperature_feedback;
+        break;
+    case FT_HUE:
+        return lighting_.hue_feedback;
+        break;
+    default:
+        return "";
+        break;
+    }
 }
 
 void btnTwoSlider::statusChanged(qint16 id,bool checked)

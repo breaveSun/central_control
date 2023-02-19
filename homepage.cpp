@@ -189,4 +189,26 @@ void homePage::closeAllDevices(bool checked){
         roomCardWidgetList_[i]->setEnableDeviceNum("0");
     }
 }
+void homePage::acceptPush(deviceDataStruct data){
+    qDebug()<<__FUNCTION__;
+
+    qDebug()<<"key:"<<data.groupId
+           <<"value:"<<data.value
+            <<"deviceType:"<<data.deviceType
+            <<"functionType:"<<data.functionType
+           <<"build_id:"<<data.houseId
+          <<"spaceId:"<<data.spaceId
+         <<"roomId:"<<data.roomId;
+
+    if (data.functionType == FT_SWITCH && spaceData_.build_id == data.houseId && spaceData_.id == data.spaceId){
+        for (int i=0;i<roomCardWidgetList_.size();i++) {
+            roomCard* roomCard = roomCardWidgetList_[i];
+            qDebug()<<"card room id"<<roomCard->getRoomId();
+            if(roomCard->getRoomId() == data.roomId){
+                roomCard->updateEnableDeviceNum();
+                break;
+            }
+        }
+    }
+}
 

@@ -2,8 +2,37 @@
 #define EQUIPMENT_H
 #include <memory>
 #include <QVariant>
+enum DEVICE_TYPE{
+    DT_LIGHT,//灯
+    DT_CURTAIN,//窗帘
+};
 
+enum FUNCTION_TYPE{
+    //通用
+    FT_SWITCH,//开关
+    //灯
+    FT_BRIGHTNESS,//亮度
+    FT_HUE,
+    FT_COLOR_TEMPERATURE,
+    //窗帘
+    FT_ANGLE,
+    FT_OC_DEGREE,
+    FT_STOP
+};
 
+//通知结构体
+typedef struct deviceDataStruct{
+    int houseId;
+    int spaceId;
+    int roomId;
+    QString groupId;
+    QString value;  //数据值
+    DEVICE_TYPE deviceType; //设备类型
+    FUNCTION_TYPE functionType; //数据类型 例如 灯的开关functionType=switch
+} deviceDataStruct;
+Q_DECLARE_METATYPE(deviceDataStruct)
+
+//页面布局结构体
 typedef struct lightingFuncStruct{
     int Switch;
     int dimming;
@@ -23,17 +52,17 @@ typedef struct lightingStruct {
     lightingFuncStruct function;
     QString Switch;
     QString switch_feedback;
-    QString switch_value;
+//    QString switch_value;
     QString dimming_relative;
     QString dimming_absolute;
     QString dimming_absolute_feedback;
-    QString dimming_absolute_value;
+//    QString dimming_absolute_value;
     QString hue;
     QString hue_feedback;
-    QString hue_value;
+//    QString hue_value;
     QString color_temperature;
     QString color_temperature_feedback;
-    QString color_temperature_value;
+//    QString color_temperature_value;
     QString min_color_temperature;
     QString max_color_temperature;
 }lightingStruct;
@@ -58,10 +87,10 @@ typedef struct curtainStruct{
     curtainFuncStruct function;
     QString Switch;
     QString switch_feedback;
-    QString switch_value;
+//    QString switch_value;
     QString position;
     QString position_feedback;
-    QString position_value;
+//    QString position_value;
     QString stop;
 }curtainStruct;
 Q_DECLARE_METATYPE(curtainStruct)
@@ -132,12 +161,19 @@ public:
     //控制窗帘发请求
     static void curtainControl(QString data);
 
+    static QString getDeviceValue(QString key);
+    static void setDeviceStruct(QString key,QString value);
+    static deviceDataStruct getDeviceStruct(QString key);
+    static void setDeviceStruct(QString key,deviceDataStruct value);
+    static QMap<QString,deviceDataStruct> deviceDataStructs_;//全局的设备数据
+
+public:
+
 private:
     static QMap<QString,QString> getDeviceData();
 
 private:
     static QVector<houseStruct> houses_;
-    static QVariantMap devicesData_;
 };
 
 #endif // EQUIPMENT_H

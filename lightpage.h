@@ -27,15 +27,17 @@ private slots:
     void goBackSlot();
     void closeAllSlot();
     void ligthSwitch();
+    //接收服务器推送
+    void acceptPush(deviceDataStruct data);
 
 private:
     Ui::lightPage *ui;
     QVector<btnTwoSlider *> lightWidgetList_;
-    QVariantMap* pRoomData_;
     QVector<lightingStruct> lightings_;
-    int houseId_;
-    int spaceId_;
-    int roomId_;
+    roomStruct room_;
+//    int houseId_;
+//    int spaceId_;
+//    int roomId_;
 };
 
 #endif // LIGHTPAGE_H

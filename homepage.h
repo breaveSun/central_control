@@ -29,6 +29,8 @@ private slots:
     void spaceChangeWidgetHide();
     void updateRooms(int houseId,int spaceId);
     void closeAllDevices(bool checked);
+    //接收服务器推送
+    void acceptPush(deviceDataStruct data);
 private:
     Ui::homePage *ui;
     changeSpace* pChangeSpace_;

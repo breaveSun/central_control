@@ -27,6 +27,10 @@ public:
 
     void setEnableDeviceNum(QString num);
 
+    void updateEnableDeviceNum();
+
+    int getRoomId();
+
 private:
     void setParams(QVector<roomParamStruct> params);
 

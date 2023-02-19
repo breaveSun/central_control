@@ -25,11 +25,11 @@ curtainPage::~curtainPage()
 
 void curtainPage::setData(int houseId,int spaceId,int roomId)
 {
-    houseId_ = houseId;
-    spaceId_ = spaceId;
-    roomId_ = roomId;
-    roomStruct room = equipment::getRoom(houseId,spaceId,roomId);
-    curtains_ = room.curtain;
+//    houseId_ = houseId;
+//    spaceId_ = spaceId;
+//    roomId_ = roomId;
+    room_ = equipment::getRoom(houseId,spaceId,roomId);
+    curtains_ = room_.curtain;
     int curtainSize = curtains_.size();
     int curtainWidgetSize = curtainWidgetList_.size();
 
@@ -61,7 +61,7 @@ void curtainPage::setData(int houseId,int spaceId,int roomId)
 
 void curtainPage::goBackSlot()
 {
-    emit goBackSignal(PB_GO_CTRLLIST_PAGR,houseId_,spaceId_,roomId_);
+    emit goBackSignal(PB_GO_CTRLLIST_PAGR,room_.build_id,room_.space_id,room_.id);
 }
 
 void curtainPage::closeAllSlot()
@@ -81,4 +81,43 @@ void curtainPage::closeAllSlot()
     }
     QString jsonStr = Common::ListToString(data);
     equipment::curtainControl(jsonStr);
+}
+
+
+void curtainPage::acceptPush(deviceDataStruct data){
+    qDebug()<<__FUNCTION__;
+
+    qDebug()<<"key:"<<data.groupId
+           <<"value:"<<data.value
+            <<"deviceType:"<<data.deviceType
+            <<"functionType:"<<data.functionType
+           <<"build_id:"<<data.houseId
+          <<"spaceId:"<<data.spaceId
+         <<"roomId:"<<data.roomId;
+
+    if (data.functionType == FT_SWITCH
+            && room_.build_id == data.houseId
+            && room_.space_id == data.spaceId
+            && room_.id == data.roomId){
+        for (int i=0;i<curtainWidgetList_.size();i++) {
+            curtainOpen* curtain = curtainWidgetList_[i];
+            QString brightness;
+            QString colorTemperature;
+            QString hue;
+            if(curtain->getGroupId(data.functionType) == data.groupId){
+                switch (data.functionType) {
+                case FT_SWITCH:
+                    curtain->setSwitch(data.value == "1");
+                case FT_OC_DEGREE:
+                    curtain->setOpenClose(data.value);
+                case FT_ANGLE:
+                    curtain->setAngle(data.value);
+                    break;
+                default:
+                    break;
+                }
+                break;
+            }
+        }
+    }
 }

@@ -12,7 +12,7 @@
 #include <httpserver.h>
 
 QVector<houseStruct> equipment::houses_ = {};
-
+QMap<QString,deviceDataStruct> equipment::deviceDataStructs_ = {};
 equipment::equipment()
 {
 }
@@ -450,10 +450,20 @@ bool equipment::init()
 
                                 if(lightingV.find("switch_feedback") != lightingV.end()){
                                     lightingS.switch_feedback = lightingV["switch_feedback"].toString();
-                                    lightingS.switch_value = "0";
+                                    deviceDataStruct dds;
+                                    dds.groupId = lightingS.switch_feedback;
+                                    dds.houseId = lightingS.build_id;
+                                    dds.spaceId = lightingS.space_id;
+                                    dds.roomId = lightingS.room_id;
+                                    dds.deviceType = DT_LIGHT;
+                                    dds.functionType = FT_SWITCH;
+                                    dds.value = "0";
+
                                     if (deviceMap.find(lightingS.switch_feedback) != deviceMap.end()){
-                                        lightingS.switch_value = deviceMap[lightingS.switch_feedback];
+                                        dds.value = deviceMap[lightingS.switch_feedback];
                                     }
+                                    deviceDataStructs_[lightingS.switch_feedback] = dds;
+
                                 }
 
                                 if(lightingV.find("dimming_relative") != lightingV.end()){
@@ -466,10 +476,19 @@ bool equipment::init()
 
                                 if(lightingV.find("dimming_absolute_feedback") != lightingV.end()){
                                     lightingS.dimming_absolute_feedback = lightingV["dimming_absolute_feedback"].toString();
-                                    lightingS.dimming_absolute_value = "0";
+
+                                    deviceDataStruct dds;
+                                    dds.groupId = lightingS.dimming_absolute_feedback;
+                                    dds.houseId = lightingS.build_id;
+                                    dds.spaceId = lightingS.space_id;
+                                    dds.roomId = lightingS.room_id;
+                                    dds.deviceType = DT_LIGHT;
+                                    dds.functionType = FT_BRIGHTNESS;
+                                    dds.value = "0";
                                     if (deviceMap.find(lightingS.dimming_absolute_feedback) != deviceMap.end()){
-                                        lightingS.dimming_absolute_value = deviceMap[lightingS.dimming_absolute_feedback];
+                                        dds.value = deviceMap[lightingS.dimming_absolute_feedback];
                                     }
+                                    deviceDataStructs_[lightingS.dimming_absolute_feedback] = dds;
                                 }
 
                                 if(lightingV.find("hue") != lightingV.end()){
@@ -478,11 +497,18 @@ bool equipment::init()
 
                                 if(lightingV.find("hue_feedback") != lightingV.end()){
                                     lightingS.hue_feedback = lightingV["hue_feedback"].toString();
-
-                                    lightingS.hue_value = "FFFFFF";
+                                    deviceDataStruct dds;
+                                    dds.groupId = lightingS.hue_feedback;
+                                    dds.houseId = lightingS.build_id;
+                                    dds.spaceId = lightingS.space_id;
+                                    dds.roomId = lightingS.room_id;
+                                    dds.deviceType = DT_LIGHT;
+                                    dds.functionType = FT_HUE;
+                                    dds.value = "FFFFFF";
                                     if (deviceMap.find(lightingS.hue_feedback) != deviceMap.end()){
-                                        lightingS.hue_value = deviceMap[lightingS.hue_feedback];
+                                        dds.value = deviceMap[lightingS.hue_feedback];
                                     }
+                                    deviceDataStructs_[lightingS.hue_feedback] = dds;
                                 }
 
 
@@ -501,10 +527,18 @@ bool equipment::init()
                                 if(lightingV.find("color_temperature_feedback") != lightingV.end()){
                                     lightingS.color_temperature_feedback = lightingV["color_temperature_feedback"].toString();
 
-                                    lightingS.color_temperature_value = lightingS.min_color_temperature;
+                                    deviceDataStruct dds;
+                                    dds.groupId = lightingS.color_temperature_feedback;
+                                    dds.houseId = lightingS.build_id;
+                                    dds.spaceId = lightingS.space_id;
+                                    dds.roomId = lightingS.room_id;
+                                    dds.deviceType = DT_LIGHT;
+                                    dds.functionType = FT_HUE;
+                                    dds.value = lightingS.min_color_temperature;
                                     if (deviceMap.find(lightingS.color_temperature_feedback) != deviceMap.end()){
-                                        lightingS.color_temperature_value = deviceMap[lightingS.color_temperature_feedback];
+                                        dds.value = deviceMap[lightingS.color_temperature_feedback];
                                     }
+                                    deviceDataStructs_[lightingS.color_temperature_feedback] = dds;
                                 }
 
                                 lightingListS.push_back(lightingS);
@@ -583,10 +617,18 @@ bool equipment::init()
                                 if(curtainV.find("switch_feedback") != curtainV.end()){
                                     curtainS.switch_feedback = curtainV["switch_feedback"].toString();
 
-                                    curtainS.switch_value = "0";
+                                    deviceDataStruct dds;
+                                    dds.groupId = curtainS.switch_feedback;
+                                    dds.houseId = curtainS.build_id;
+                                    dds.spaceId = curtainS.space_id;
+                                    dds.roomId = curtainS.room_id;
+                                    dds.deviceType = DT_CURTAIN;
+                                    dds.functionType = FT_SWITCH;
+                                    dds.value = "0";
                                     if (deviceMap.find(curtainS.switch_feedback) != deviceMap.end()){
-                                        curtainS.switch_value = deviceMap[curtainS.switch_feedback];
+                                        dds.value = deviceMap[curtainS.switch_feedback];
                                     }
+                                    deviceDataStructs_[curtainS.switch_feedback] = dds;
                                 }
 
                                 if(curtainV.find("position") != curtainV.end()){
@@ -596,11 +638,19 @@ bool equipment::init()
                                 if(curtainV.find("position_feedback") != curtainV.end()){
                                     curtainS.position_feedback = curtainV["position_feedback"].toString();
 
-                                    curtainS.position_value = "0";
+                                    deviceDataStruct dds;
+                                    dds.groupId = curtainS.position_feedback;
+                                    dds.houseId = curtainS.build_id;
+                                    dds.spaceId = curtainS.space_id;
+                                    dds.roomId = curtainS.room_id;
+                                    dds.deviceType = DT_CURTAIN;
+                                    dds.functionType = FT_OC_DEGREE;
+                                    dds.value = "0";
+
                                     if (deviceMap.find(curtainS.position_feedback) != deviceMap.end()){
-                                        curtainS.position_value = deviceMap[curtainS.position_feedback];
+                                        dds.value = deviceMap[curtainS.position_feedback];
                                     }
-                                    curtainS.position_value = "13";
+                                    deviceDataStructs_[curtainS.position_feedback] = dds;
                                 }
 
                                 if(curtainV.find("stop") != curtainV.end()){
@@ -631,3 +681,20 @@ bool equipment::init()
 
     return true;
 }
+
+QString equipment::getDeviceValue(QString key){
+    return deviceDataStructs_[key].value;
+}
+
+void equipment::setDeviceStruct(QString key,QString value){
+    deviceDataStructs_[key].value = value;
+}
+
+deviceDataStruct equipment::getDeviceStruct(QString key){
+    return deviceDataStructs_[key];
+}
+void equipment::setDeviceStruct(QString key,deviceDataStruct value){
+    deviceDataStructs_.insert(key,value);
+
+}
+

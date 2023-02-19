@@ -1,17 +1,15 @@
 #include "curtainopen.h"
 #include "ui_curtainopen.h"
 #include "curtainThread.h"
+#include "equipment.h"
 #include "icon.h"
 #include <qdebug.h>
 #include <unistd.h>
-#include <QThread>
 
 
 curtainOpen::curtainOpen(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::curtainOpen),
-    pThTest_(nullptr),
-    pCurtainThread_(nullptr)
+    ui(new Ui::curtainOpen)
 {
     ui->setupUi(this);
     ui->curtainFrame->setStyleSheet("background-color:#222222;");
@@ -35,13 +33,6 @@ curtainOpen::curtainOpen(QWidget *parent) :
 
 curtainOpen::~curtainOpen()
 {
-    qDebug() <<id_<< "start destroy widget";
-
-    if(pThTest_)
-    {
-        pCurtainThread_->stop();
-    }
-    qDebug() <<id_<< "end destroy widget";
     delete ui;
 }
 
@@ -70,14 +61,14 @@ void curtainOpen::setData(curtainStruct curtain){
         ui->openCloseSlider->hide();
     }else {
         ui->openCloseSlider->show();
-        ui->openCloseSlider->setNum(curtain_.position_value);
+        ui->openCloseSlider->setNum(equipment::getDeviceValue(curtain_.position_feedback));
     }
     //角度
     if(curtain_.function.angle==0){
         hideAngle();
     } else {
         showAngle();
-        ui->angleSlider->setNum(curtain_.position_value);
+        ui->angleSlider->setNum(equipment::getDeviceValue(curtain_.position_feedback));
     }
 
     //窗帘方向
@@ -102,6 +93,29 @@ void curtainOpen::setCloseIcon(int icon){
     ui->close->setIcon(icon);
 }
 
+void curtainOpen::setSwitch(bool s){
+    if(s){
+        ui->open->setIconColor("#D2AA74");
+        ui->stop->setIconColor("#BCBCBC");
+        ui->close->setIconColor("#BCBCBC");
+        ui->openCloseSlider->setNum("1");
+    }else {
+        ui->open->setIconColor("#BCBCBC");
+        ui->stop->setIconColor("#BCBCBC");
+        ui->close->setIconColor("#D2AA74");
+        ui->openCloseSlider->setNum("0");
+    }
+}
+
+
+void curtainOpen::setOpenClose(QString num){
+    ui->openCloseSlider->setNum(num);
+}
+
+void curtainOpen::setAngle(QString num){
+    ui->angleSlider->setNum(num);
+}
+
 void curtainOpen::hideAngle(){
     ui->angleSlider->setVisible(false);
 }
@@ -123,6 +137,28 @@ void curtainOpen::closeCurtain(){
     ui->stop->setIconColor("#BCBCBC");
     ui->close->setIconColor("#D2AA74");
     ui->openCloseSlider->setNum("0");
+}
+
+QString curtainOpen::getGroupId(FUNCTION_TYPE ft){
+    switch (ft) {
+    case FT_SWITCH:
+        return curtain_.switch_feedback;
+        break;
+    case FT_OC_DEGREE:
+        return curtain_.position_feedback;
+        break;
+    case FT_ANGLE:
+        return "";
+//        return curtain_.angle_feedback;
+        break;
+    case FT_STOP:
+        return "";
+//        return curtain_.stop_feedback;
+        break;
+    default:
+        return "";
+        break;
+    }
 }
 
 void curtainOpen::startOpen(){

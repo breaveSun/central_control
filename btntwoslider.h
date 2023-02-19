@@ -36,6 +36,18 @@ public:
     void setIcon(int icon);
 
     //通过输入框修改颜色
+    void txtSetColor(QString color);
+
+    //灯的开关
+    void setSwitch(bool s,bool block=false);
+
+    //设置灯的亮度
+    void setBrightness(QString num);
+
+    //设置灯的色温
+    void setColorTemperature(QString num);
+
+    //设置灯的颜色
     void setColor(QString color);
 
     //关闭
@@ -46,6 +58,9 @@ public:
 
     //显示颜色配置
     void showColor();
+
+    //获取灯查询数据的groupId
+    QString getGroupId(FUNCTION_TYPE ft);
 
 
 //    mySlider *brightness;

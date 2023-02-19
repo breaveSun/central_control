@@ -56,13 +56,14 @@ void roomCard::setData(roomStruct room){
 
     for (int i=0;i<room_.lighting.size();i++){
         deviceNum = deviceNum+1;
-        if(room_.lighting[i].switch_value == "1"){
+
+        if(equipment::getDeviceValue(room_.lighting[i].switch_feedback) == "1"){
             enabledNum = enabledNum + 1;
         }
     }
     for (int i=0;i<room_.curtain.size();i++){
         deviceNum = deviceNum+1;
-        if(room_.curtain[i].switch_value == "1"){
+        if(equipment::getDeviceValue(room_.curtain[i].switch_feedback) == "1"){
             enabledNum = enabledNum + 1;
         }
 
@@ -74,6 +75,33 @@ void roomCard::setData(roomStruct room){
 
 void roomCard::setEnableDeviceNum(QString num){
     ui->enabledNum->setText(num);
+}
+
+void roomCard::updateEnableDeviceNum(){
+    qDebug()<<__FUNCTION__;
+    int deviceNum = 0;
+    int enabledNum = 0;
+
+    for (int i=0;i<room_.lighting.size();i++){
+        deviceNum = deviceNum+1;
+
+        if(equipment::getDeviceValue(room_.lighting[i].switch_feedback) == "1"){
+            enabledNum = enabledNum + 1;
+        }
+    }
+    for (int i=0;i<room_.curtain.size();i++){
+        deviceNum = deviceNum+1;
+        if(equipment::getDeviceValue(room_.curtain[i].switch_feedback) == "1"){
+            enabledNum = enabledNum + 1;
+        }
+
+    }
+    ui->deviceNum->setText(QString::number(deviceNum));
+    ui->enabledNum->setText(QString::number(enabledNum));
+}
+
+int roomCard::getRoomId(){
+    return room_.id;
 }
 
 void roomCard::setParams(QVector<roomParamStruct> params){

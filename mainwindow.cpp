@@ -9,6 +9,8 @@
 #include "common.h"
 #include "ctrllistpage.h"
 #include "homepage.h"
+#include "serverpushthread.h"
+#include "wsclient.h"
 
 #include <QPushButton>
 #include <QMessageBox>
@@ -17,6 +19,7 @@
 #include <qfile.h>
 #include <qdebug.h>
 #include <QSettings>
+#include <QThread>
 
 
 class LightParam {
@@ -38,19 +41,29 @@ MainWindow::MainWindow(QWidget *parent)
     //隐藏鼠标光标
 //    QApplication::setOverrideCursor(Qt::BlankCursor);
 
+
 //    pMainPage_ = new mainPage;
     pHomePage_ = new homePage;
     pCtrlListPage_ = new ctrlListPage;
     pLightPage_ = new lightPage;
     pCurtainPage_ = new curtainPage;
+
+
+    //创建长链接
+    pWSClient_ = new wsClient(this);
+    pWSClient_->ConnectTo("ws://192.168.2.48:8888/socket.io/3588");
+    qDebug()<<connect(pWSClient_,SIGNAL(notices(deviceDataStruct))
+                      ,pHomePage_,SLOT(acceptPush(deviceDataStruct)));
+    connect(pWSClient_,SIGNAL(notices(deviceDataStruct)),pHomePage_,SLOT(acceptPush(deviceDataStruct)));
+    connect(pWSClient_,SIGNAL(notices(deviceDataStruct)),pLightPage_,SLOT(acceptPush(deviceDataStruct)));
+    connect(pWSClient_,SIGNAL(notices(deviceDataStruct)),pCurtainPage_,SLOT(acceptPush(deviceDataStruct)));
+
+
 //    ui->stackedWidget->addWidget(pMainPage_);
     ui->stackedWidget->addWidget(pHomePage_);
     ui->stackedWidget->addWidget(pCtrlListPage_);
     ui->stackedWidget->addWidget(pLightPage_);
     ui->stackedWidget->addWidget(pCurtainPage_);
-
-//    connect(pMainPage_, SIGNAL(goCtrlListSignal(PageBack,int,int,int)), this,SLOT(switchPage(PageBack,int,int,int)));
-//    connect(pMainPage_, SIGNAL(goHomeSignal(PageBack,int,int,int)), this,SLOT(switchPage(PageBack,int,int,int)));
 
     //主页去其他页面连接
     connect(pHomePage_, SIGNAL(goPage(PageBack,int,int,int)), this,SLOT(switchPage(PageBack,int,int,int)));
@@ -64,6 +77,7 @@ MainWindow::MainWindow(QWidget *parent)
     //从设备控制详情页返回 > 设备控制列表
     connect(pLightPage_, SIGNAL(goBackSignal(PageBack,int,int,int)), this,SLOT(switchPage(PageBack,int,int,int)));
     connect(pCurtainPage_, SIGNAL(goBackSignal(PageBack,int,int,int)), this,SLOT(switchPage(PageBack,int,int,int)));
+
 
 }
 
