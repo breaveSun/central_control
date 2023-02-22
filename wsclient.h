@@ -3,6 +3,7 @@
 #include <QObject>
 #include <QWebSocket>
 #include "equipment.h"
+#include "common.h"
 class QTimer;
 class wsClient : public QObject
 {
@@ -17,6 +18,9 @@ public:
 
 signals:
     void notices(deviceDataStruct datas);
+
+    void notices(messageStruct datas);
+
 
 private slots:
 

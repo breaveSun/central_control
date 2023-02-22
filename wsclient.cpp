@@ -64,30 +64,44 @@ void wsClient::on_textMessageReceived(const QString& message)
 {
     qDebug()<<"receive::"+message;
     //灯开关
-//    QString selfMsg = "{\"1/4/13\":\"0\"}";
+//    QString selfMsg = "{\"type\":\"device\",\"data\":{\"1/4/13\":\"0\"}}";
     //灯亮度
-//    QString selfMsg = "{\"1/5/14\":\"77\"}";
+//    QString selfMsg = "{\"type\":\"device\",\"data\":{\"1/5/14\":\"77\"}}";
 //    //灯色温
-//    QString selfMsg = "{\"1/0/14\":\"3300\"}";
+//    QString selfMsg = "{\"type\":\"device\",\"data\":{\"1/0/14\":\"3300\"}}";
 //    //灯颜色
-//    QString selfMsg = "{\"1/7/14\":\"00FF00\"}";
+//    QString selfMsg = "{\"type\":\"device\",\"data\":{\"1/7/14\":\"00FF00\"}}";
     //窗帘开关
-//        QString selfMsg = "{\"3/4/1\":\"0\"}";
-        //窗帘开合度
-        QString selfMsg = "{\"3/5/1\":\"86\"}";
+//        QString selfMsg = "{\"type\":\"device\",\"data\":{\"3/4/1\":\"0\"}}";
+//        //窗帘开合度
+//        QString selfMsg = ""{\"type\":\"device\",\"data\":{\"3/5/1\":\"86\"}}";
 
-
+    QString selfMsg = "{\"type\":\"message\",\"data\":{\"id\":69,\"title\":\"系统消息\",\"date_time\":\"2023/01/05 12:30\",\"content\":\"【系统升级】有升级啦！千峰智能空间系统2.0版本已经下载成功，我们将在今晚的8点正式为您更新。\",\"icon\":\"info\",\"status\":0,\"type\":0}}";
 
 
 
     QVariantMap mapV = Common::StringToVariantMap(selfMsg);
-
-    QVariantMap::iterator iter;
-    for(iter=mapV.begin(); iter!=mapV.end(); iter++){
-        equipment::setDeviceStruct(iter.key(),iter.value().toString());
-        deviceDataStruct deviceData = equipment::getDeviceStruct(iter.key());
-        deviceData.value = iter.value().toString();
-        emit notices(deviceData);
+    QString type = mapV["type"].toString();
+    if(type == "message"){
+        QVariantMap messageMap = mapV["data"].toMap();
+        messageStruct message;
+        message.id = messageMap["id"].toInt();
+        message.title = messageMap["title"].toString();
+        message.dateTime = messageMap["date_time"].toString();
+        message.content = messageMap["content"].toString();
+        message.icon = messageMap["icon"].toString();
+        message.status = 0;
+        message.type = messageMap["type"].toInt();
+        emit notices(message);
+    }else if(type == "device"){
+        QVariantMap deviceMap = mapV["data"].toMap();
+        QVariantMap::iterator iter;
+         for(iter=deviceMap.begin(); iter!=deviceMap.end(); iter++){
+             equipment::setDeviceStruct(iter.key(),iter.value().toString());
+             deviceDataStruct deviceData = equipment::getDeviceStruct(iter.key());
+             deviceData.value = iter.value().toString();
+             emit notices(deviceData);
+         }
     }
 
 }

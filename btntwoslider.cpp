@@ -25,6 +25,17 @@ btnTwoSlider::btnTwoSlider(QWidget *parent) :
     ui->temNumSlider->setUnit("K");
     connect(ui->temNumSlider, SIGNAL(sliderReleased()), SLOT(colorTemperatureValueChanged()));
 
+    pColorTextPreFix_ = new QLabel;
+    pColorTextPreFix_->setObjectName("colorTextPreFix");
+    pColorTextPreFix_->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Expanding);
+    pColorTextPreFix_->setText("#");
+    pLayoutInfoComing_ = new QVBoxLayout(ui->rgbEdit);
+    pLayoutInfoComing_->addWidget(pColorTextPreFix_);
+    ui->rgbEdit->setAlignment( Qt::AlignVCenter);
+    ui->rgbEdit->setStyleSheet("#rgbEdit{padding-left:18px;background-color: rgb(53,54,56);}#colorTextPreFix{background-color: rgb(53,54,56);}");
+    connect(ui->rgbEdit,SIGNAL(textChanged),this,SIGNAL(textChanged));
+
+
     ui->rSlider_2->setRange(0,255);
     ui->rSlider_2->setTitle("R");
     ui->gSlider_2->setRange(0,255);
@@ -35,7 +46,7 @@ btnTwoSlider::btnTwoSlider(QWidget *parent) :
     connect(ui->gSlider_2, SIGNAL(sliderReleased()), SLOT(rgbValueChanged()));
     connect(ui->bSlider_2, SIGNAL(sliderReleased()), SLOT(rgbValueChanged()));
 
-    ui->rgbEdit->setStyleSheet("padding-left:10px;background-color: rgb(53,54,56);");
+    //    pColorTextPreFix_->setStyleSheet("background-color:#EB4D3C;color:#FFFFFF;");
 
 }
 

@@ -1,5 +1,7 @@
 #ifndef COMMON_H
 #define COMMON_H
+
+#include <QCloseEvent>
 #include <QString>
 #include <iostream>
 #include <qdebug.h>
@@ -7,6 +9,7 @@
 #include <QFontDatabase>
 #include <QLabel>
 #include <QPushButton>
+#include <QToolButton>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <equipment.h>
@@ -23,8 +26,21 @@ enum PageBack {
     PB_GO_HOME, //主页
     PB_GO_LIGHT_PAGE, //照明控制
     PB_GO_CURTAIN_PAGE, //遮光控制
-    PB_GO_CTRLLIST_PAGR //设备控制
+    PB_GO_CTRLLIST_PAGR, //设备控制
+    PB_GO_MESSAGE_CENTER //消息列表页
 };
+
+
+typedef struct messageStruct{
+    int id;
+    QString title;
+    QString dateTime;
+    QString content;
+    QString icon;
+    int status;
+    int type;
+}messageStruct;
+Q_DECLARE_METATYPE(messageStruct)
 
 class Common{
 public:

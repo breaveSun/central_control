@@ -20,7 +20,7 @@ typedef struct lightContrl{
     QString group_id;
 }lightContrl;
 Q_DECLARE_METATYPE(lightContrl)
-
+class QVBoxLayout;
 class btnTwoSlider : public QWidget
 {
     Q_OBJECT
@@ -81,6 +81,8 @@ private:
 private:
     Ui::btnTwoSlider *ui;
     lightingStruct lighting_;
+    QLabel* pColorTextPreFix_;
+    QVBoxLayout* pLayoutInfoComing_;
 
 private slots:
     void statusChanged(qint16 id,bool checked);

@@ -2,6 +2,7 @@
 #define EQUIPMENT_H
 #include <memory>
 #include <QVariant>
+#include <QVector>
 enum DEVICE_TYPE{
     DT_LIGHT,//灯
     DT_CURTAIN,//窗帘

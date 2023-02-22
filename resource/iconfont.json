@@ -6,6 +6,20 @@
   "description": "智能空间",
   "glyphs": [
     {
+      "icon_id": "34176866",
+      "name": "info",
+      "font_class": "info",
+      "unicode": "e655",
+      "unicode_decimal": 58965
+    },
+    {
+      "icon_id": "34176867",
+      "name": "warning",
+      "font_class": "warning",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
       "icon_id": "34171077",
       "name": "light_belt",
       "font_class": "light_belt",

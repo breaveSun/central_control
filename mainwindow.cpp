@@ -11,6 +11,8 @@
 #include "homepage.h"
 #include "serverpushthread.h"
 #include "wsclient.h"
+#include "messagecenter.h"
+#include "printer.h"
 
 #include <QPushButton>
 #include <QMessageBox>
@@ -20,6 +22,7 @@
 #include <qdebug.h>
 #include <QSettings>
 #include <QThread>
+#include <QProcess>
 
 
 class LightParam {
@@ -40,6 +43,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     //隐藏鼠标光标
 //    QApplication::setOverrideCursor(Qt::BlankCursor);
+    pCaller_ = new QProcess();
+    pPrinter_ = new printer(pCaller_);
+
+    pCaller_->start("uname", QStringList() << "-a" );
+    connect(pCaller_, SIGNAL(finished(int)), pPrinter_, SLOT(print(int)) );
+    connect(pPrinter_,SIGNAL(myUid(QString)),this,SLOT(startWS(QString)));
+
 
 
 //    pMainPage_ = new mainPage;
@@ -47,23 +57,14 @@ MainWindow::MainWindow(QWidget *parent)
     pCtrlListPage_ = new ctrlListPage;
     pLightPage_ = new lightPage;
     pCurtainPage_ = new curtainPage;
-
-
-    //创建长链接
-    pWSClient_ = new wsClient(this);
-    pWSClient_->ConnectTo("ws://192.168.2.48:8888/socket.io/3588");
-    qDebug()<<connect(pWSClient_,SIGNAL(notices(deviceDataStruct))
-                      ,pHomePage_,SLOT(acceptPush(deviceDataStruct)));
-    connect(pWSClient_,SIGNAL(notices(deviceDataStruct)),pHomePage_,SLOT(acceptPush(deviceDataStruct)));
-    connect(pWSClient_,SIGNAL(notices(deviceDataStruct)),pLightPage_,SLOT(acceptPush(deviceDataStruct)));
-    connect(pWSClient_,SIGNAL(notices(deviceDataStruct)),pCurtainPage_,SLOT(acceptPush(deviceDataStruct)));
-
+    pMessageCenter_ = new messageCenter;
 
 //    ui->stackedWidget->addWidget(pMainPage_);
     ui->stackedWidget->addWidget(pHomePage_);
     ui->stackedWidget->addWidget(pCtrlListPage_);
     ui->stackedWidget->addWidget(pLightPage_);
     ui->stackedWidget->addWidget(pCurtainPage_);
+    ui->stackedWidget->addWidget(pMessageCenter_);
 
     //主页去其他页面连接
     connect(pHomePage_, SIGNAL(goPage(PageBack,int,int,int)), this,SLOT(switchPage(PageBack,int,int,int)));
@@ -78,6 +79,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(pLightPage_, SIGNAL(goBackSignal(PageBack,int,int,int)), this,SLOT(switchPage(PageBack,int,int,int)));
     connect(pCurtainPage_, SIGNAL(goBackSignal(PageBack,int,int,int)), this,SLOT(switchPage(PageBack,int,int,int)));
 
+    //消息列表返回主页
+    connect(pMessageCenter_, SIGNAL(goBackSignal(PageBack,int,int,int)), this,SLOT(switchPage(PageBack,int,int,int)));
+
 
 }
 
@@ -85,6 +89,21 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+//void MainWindow::closeEvent(QCloseEvent *event){
+//    QMessageBox::StandardButton button;
+
+//    button = QMessageBox::question(this, tr("退出程序"), QString(tr("确认退出程序")), QMessageBox::Yes | QMessageBox::No);
+//    if (button == QMessageBox::No)
+//    {
+//        event->ignore();
+//    }
+//    else if(button == QMessageBox::Yes)
+//    {
+//        event->accept();
+//    }
+//    //TODO: 在退出窗口之前，实现希望做的操作
+//}
 
 void MainWindow::switchPage(enum PageBack pb,int houseId,int spaceId,int roomId){
 //    QPushButton *button = qobject_cast<QPushButton*>(sender());
@@ -111,7 +130,22 @@ void MainWindow::switchPage(enum PageBack pb,int houseId,int spaceId,int roomId)
         pCtrlListPage_->setData(houseId,spaceId,roomId);
         ui->stackedWidget->setCurrentWidget(pCtrlListPage_);
         break;
+    case PB_GO_MESSAGE_CENTER:
+        qDebug()<<"PB_GO_MESSAGE_CENTER:"<<roomId;
+        ui->stackedWidget->setCurrentWidget(pMessageCenter_);
+        break;
+
     default:
         return;
     }
+}
+
+void MainWindow::startWS(QString uid){
+    //创建长链接
+    pWSClient_ = new wsClient(this);
+    pWSClient_->ConnectTo("ws://192.168.2.48:8888/socket.io/"+uid);
+    connect(pWSClient_,SIGNAL(notices(deviceDataStruct)),pHomePage_,SLOT(acceptPush(deviceDataStruct)));
+    connect(pWSClient_,SIGNAL(notices(deviceDataStruct)),pLightPage_,SLOT(acceptPush(deviceDataStruct)));
+    connect(pWSClient_,SIGNAL(notices(deviceDataStruct)),pCurtainPage_,SLOT(acceptPush(deviceDataStruct)));
+    connect(pWSClient_,SIGNAL(notices(messageStruct)),pMessageCenter_,SLOT(acceptPush(messageStruct)));
 }

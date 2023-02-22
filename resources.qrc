@@ -1,9 +1,9 @@
 <RCC>
     <qresource prefix="/">
-        <file>style.qss</file>
-        <file>resource/iconfont.ttf</file>
         <file>resource/config.json</file>
         <file>resource/iconfont.json</file>
+        <file>resource/iconfont.ttf</file>
         <file>resource/message.json</file>
+        <file>style.qss</file>
     </qresource>
 </RCC>

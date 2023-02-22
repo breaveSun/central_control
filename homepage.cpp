@@ -34,6 +34,10 @@ homePage::homePage(QWidget *parent) :
     //关闭全部设备
     ui->closeAllDevices->setCheckable(true);
     connect(ui->closeAllDevices,SIGNAL(clicked(bool)),this,SLOT(closeAllDevices(bool)));
+    //消息列表
+    connect(ui->msg,SIGNAL(clicked(bool)),this,SLOT(messageList(bool)));
+
+
 
 }
 
@@ -188,6 +192,10 @@ void homePage::closeAllDevices(bool checked){
     for (int i=0;i<roomCardWidgetList_.size();i++) {
         roomCardWidgetList_[i]->setEnableDeviceNum("0");
     }
+}
+
+void homePage::messageList(bool checked){
+    emit goPage(PB_GO_MESSAGE_CENTER,0,0,0);
 }
 void homePage::acceptPush(deviceDataStruct data){
     qDebug()<<__FUNCTION__;

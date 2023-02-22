@@ -1,8 +1,6 @@
-QT       += core gui
-
+QT       +=  core gui
+QT       +=  websockets network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-QT += network
-QT += websockets
 
 CONFIG += c++11
 
@@ -28,6 +26,7 @@ SOURCES += \
     curtainopen.cpp \
     curtainpage.cpp \
     equipment.cpp \
+    fingerboard.cpp \
     homepage.cpp \
     horizontalbtn.cpp \
     httpserver.cpp \
@@ -39,8 +38,12 @@ SOURCES += \
     main.cpp \
     mainpage.cpp \
     mainwindow.cpp \
+    messagecenter.cpp \
+    messagecenteritem.cpp \
+    mylineedit.cpp \
     myscollarea.cpp \
     myslider.cpp \
+    printer.cpp \
     rgbslider.cpp \
     roomcard.cpp \
     serverpushthread.cpp \
@@ -64,6 +67,7 @@ HEADERS += \
     curtainopen.h \
     curtainpage.h \
     equipment.h \
+    fingerboard.h \
     homepage.h \
     horizontalbtn.h \
     httpserver.h \
@@ -74,8 +78,12 @@ HEADERS += \
     logindlg.h \
     mainpage.h \
     mainwindow.h \
+    messagecenter.h \
+    messagecenteritem.h \
+    mylineedit.h \
     myscollarea.h \
     myslider.h \
+    printer.h \
     rgbslider.h \
     roomcard.h \
     serverpushthread.h \
@@ -94,6 +102,7 @@ FORMS += \
     ctrllistpage.ui \
     curtainopen.ui \
     curtainpage.ui \
+    fingerboard.ui \
     homepage.ui \
     horizontalbtn.ui \
     labelbtn.ui \
@@ -101,6 +110,8 @@ FORMS += \
     logindlg.ui \
     mainpage.ui \
     mainwindow.ui \
+    messagecenter.ui \
+    messagecenteritem.ui \
     myslider.ui \
     rgbslider.ui \
     roomcard.ui \
@@ -111,11 +122,12 @@ FORMS += \
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
+else: unix: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
 
 DISTFILES += \
     json/CMakeLists.txt
 
 RESOURCES += \
-    resource.qrc
+    resources.qrc
