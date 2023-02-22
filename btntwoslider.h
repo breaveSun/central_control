@@ -67,6 +67,8 @@ public:
 //    mySlider *colorTem;
 signals:
     void lightSwitch();
+    void focusIn();
+    void focusOut();
 private:
     //初始化默认的light struct
     void initLightContrl(lightContrl &initStruct);

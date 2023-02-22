@@ -14,6 +14,7 @@
 #include <QJsonObject>
 #include <equipment.h>
 #include <icon.h>
+#include <QNetworkInterface>
 
 enum  EquipmentSwitch {
     ES_LOST_CONTACT,  //断开连接
@@ -91,6 +92,32 @@ public:
         QByteArray jba = doc.toJson(QJsonDocument::Compact);
         QString jsonString = QString(jba);
         return jsonString;
+    }
+
+    static QString getHostMacAddress()
+    {
+            QList<QNetworkInterface> nets = QNetworkInterface::allInterfaces();// 获取所有网络接口列表
+            int nCnt = nets.count();
+//            qDebug()<<nets;
+            QString strMacAddr = "";
+            for(int i = 0; i < nCnt; i ++)
+            {
+                // 如果此网络接口被激活并且正在运行并且不是回环地址，且该mac的ip地址不能是回环地址并且是ipv4地址，则就是我们需要找的Mac地址
+                if(nets[i].flags().testFlag(QNetworkInterface::IsUp) &&
+                   nets[i].flags().testFlag(QNetworkInterface::IsRunning)
+                   && !nets[i].flags().testFlag(QNetworkInterface::IsLoopBack))
+                {
+                    for (int j=0;j<nets[i].addressEntries().size() ;j++ ) {
+                    //该mac的ip地址不能为172.0.0.1，且需是ipv4地址
+                    if(nets[i].addressEntries().at(j).ip()!=QHostAddress::LocalHost&&nets[i].addressEntries().at(j).ip().protocol()== QAbstractSocket::IPv4Protocol
+    ){
+                            strMacAddr = nets[i].hardwareAddress();
+                        }
+                    }
+                }
+            }
+            qDebug()<<"strMacAddr:"<<strMacAddr;
+            return strMacAddr;
     }
 
 };

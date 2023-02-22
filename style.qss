@@ -120,7 +120,23 @@
     background-color: #BCBCBC;
 }
 
+#fingerboardFrame{
+    background-color: #112233;
+}
 
+/*16进制键盘样式*/
+#btnA,#btnB,#btnC,#btnD,#btnE,#btnF,#btnDel,#btnDefine{
+    font-size:18pt;
+    color:#FFFFFF;
+    border-radius: 8px;
+    background-color: #4B4B4B;
+}
+#btn0,#btn1,#btn2,#btn3,#btn4,#btn5,#btn6,#btn7,#btn8,#btn9{
+    font-size:20pt;
+    color:#FFFFFF;
+    border-radius: 8px;
+    background-color: #6F6F6F;
+}
 /*测试使用
 #lightScrollArea{
     border:1px solid red;

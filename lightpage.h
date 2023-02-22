@@ -8,6 +8,7 @@ namespace Ui {
 class lightPage;
 }
 struct lightingStruct;
+class fingerboard;
 class lightPage : public QWidget
 {
     Q_OBJECT
@@ -30,14 +31,18 @@ private slots:
     //接收服务器推送
     void acceptPush(deviceDataStruct data);
 
+    //文本框聚焦
+    void focusIn();
+    //文本框失焦
+    void focusOut();
+
 private:
     Ui::lightPage *ui;
     QVector<btnTwoSlider *> lightWidgetList_;
     QVector<lightingStruct> lightings_;
     roomStruct room_;
-//    int houseId_;
-//    int spaceId_;
-//    int roomId_;
+    fingerboard *pBoard_;
+
 };
 
 #endif // LIGHTPAGE_H

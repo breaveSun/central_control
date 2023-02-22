@@ -104,9 +104,29 @@ typedef struct roomParamStruct{
 }roomParamStruct;
 Q_DECLARE_METATYPE(roomParamStruct)
 
+typedef struct roomSceneLightsStruct{
+    int id;
+    QString brightness_value;
+    QString color_temperature_value;
+    QString hue_value;
+}roomSceneLightsStruct;
+Q_DECLARE_METATYPE(roomSceneLightsStruct)
+
+typedef struct roomSceneCurtainsStruct{
+    int id;
+    QString angle_value;
+    QString oc_degree_value;
+}roomSceneCurtainsStruct;
+Q_DECLARE_METATYPE(roomSceneCurtainsStruct)
+
 typedef struct roomSceneStruct{
+    int id;
+    int room_id;
     QString name;
     QString icon;
+    QString type;
+    QVector<roomSceneLightsStruct> lights;
+    QVector<roomSceneCurtainsStruct> curtains;
 }roomSceneStruct;
 Q_DECLARE_METATYPE(roomSceneStruct)
 
@@ -119,7 +139,7 @@ typedef struct roomStruct{
     int space_id;
     QString icon;
     QVector<roomParamStruct> params;
-    QVector<roomSceneStruct> scene;
+    QVector<roomSceneStruct> scenes;
     QVector<lightingStruct> lighting;
     QVector<curtainStruct> curtain;
 }roomStruct;
@@ -171,7 +191,10 @@ public:
 public:
 
 private:
+    //从api获取device数据
     static QMap<QString,QString> getDeviceData();
+    //从api获取页面配置
+    static QVariantList getConfigData();
 
 private:
     static QVector<houseStruct> houses_;

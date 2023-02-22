@@ -7,9 +7,10 @@ fingerboard::fingerboard(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint
-                    | Qt::Tool
+                    /*| Qt::Tool*/
                     | Qt::WindowStaysOnTopHint
-                    /*| Qt::WindowDoesNotAcceptFocus*/);
+                    | Qt::WindowDoesNotAcceptFocus);
+    ui->frame->setObjectName("fingerboardFrame");
 }
 
 fingerboard::~fingerboard()

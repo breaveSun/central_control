@@ -50,7 +50,7 @@ void roomCard::setData(roomStruct room){
     setName(room_.name);
     setIcon(icon::getIcon(room_.icon));
     setParams(room.params);
-    setScenes(room.scene);
+    setScenes(room.scenes);
     int deviceNum = 0;
     int enabledNum = 0;
 

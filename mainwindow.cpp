@@ -12,7 +12,6 @@
 #include "serverpushthread.h"
 #include "wsclient.h"
 #include "messagecenter.h"
-#include "printer.h"
 
 #include <QPushButton>
 #include <QMessageBox>
@@ -22,8 +21,6 @@
 #include <qdebug.h>
 #include <QSettings>
 #include <QThread>
-#include <QProcess>
-
 
 class LightParam {
 public:
@@ -43,13 +40,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     //隐藏鼠标光标
 //    QApplication::setOverrideCursor(Qt::BlankCursor);
-    pCaller_ = new QProcess();
-    pPrinter_ = new printer(pCaller_);
-
-    pCaller_->start("uname", QStringList() << "-a" );
-    connect(pCaller_, SIGNAL(finished(int)), pPrinter_, SLOT(print(int)) );
-    connect(pPrinter_,SIGNAL(myUid(QString)),this,SLOT(startWS(QString)));
-
 
 
 //    pMainPage_ = new mainPage;
@@ -58,6 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
     pLightPage_ = new lightPage;
     pCurtainPage_ = new curtainPage;
     pMessageCenter_ = new messageCenter;
+    startWS(Common::getHostMacAddress());
 
 //    ui->stackedWidget->addWidget(pMainPage_);
     ui->stackedWidget->addWidget(pHomePage_);
@@ -89,21 +80,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-//void MainWindow::closeEvent(QCloseEvent *event){
-//    QMessageBox::StandardButton button;
-
-//    button = QMessageBox::question(this, tr("退出程序"), QString(tr("确认退出程序")), QMessageBox::Yes | QMessageBox::No);
-//    if (button == QMessageBox::No)
-//    {
-//        event->ignore();
-//    }
-//    else if(button == QMessageBox::Yes)
-//    {
-//        event->accept();
-//    }
-//    //TODO: 在退出窗口之前，实现希望做的操作
-//}
 
 void MainWindow::switchPage(enum PageBack pb,int houseId,int spaceId,int roomId){
 //    QPushButton *button = qobject_cast<QPushButton*>(sender());
@@ -140,10 +116,12 @@ void MainWindow::switchPage(enum PageBack pb,int houseId,int spaceId,int roomId)
     }
 }
 
-void MainWindow::startWS(QString uid){
+void MainWindow::startWS(QString mac){
     //创建长链接
     pWSClient_ = new wsClient(this);
-    pWSClient_->ConnectTo("ws://192.168.2.48:8888/socket.io/"+uid);
+
+    QString ADRESS_STR="//192.168.2.6:8888";
+    pWSClient_->ConnectTo("ws:"+ADRESS_STR+"/socket.io/"+mac);
     connect(pWSClient_,SIGNAL(notices(deviceDataStruct)),pHomePage_,SLOT(acceptPush(deviceDataStruct)));
     connect(pWSClient_,SIGNAL(notices(deviceDataStruct)),pLightPage_,SLOT(acceptPush(deviceDataStruct)));
     connect(pWSClient_,SIGNAL(notices(deviceDataStruct)),pCurtainPage_,SLOT(acceptPush(deviceDataStruct)));

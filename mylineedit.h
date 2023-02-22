@@ -1,19 +1,20 @@
 #ifndef MYLINEEDIT_H
 #define MYLINEEDIT_H
 
+#include <QObject>
 #include <QLineEdit>
 
 class myLineEdit : public QLineEdit
 {
     Q_OBJECT
 public:
-    explicit myLineEdit(QWidget *parent = 0);
-    void focusInEvent(QFocusEvent *event);//覆盖这两个函数
+    explicit myLineEdit(QWidget *parent = nullptr);
+    void focusInEvent(QFocusEvent *event);    //覆盖这两个函数
     void focusOutEvent(QFocusEvent *event);
 signals:
-   void focusIn();//获得焦点信号
-   void focusOut();//失去焦点信号
-public:
+    void focusIn();
+    void focusOut();
+
 };
 
-#endif // MYLINEEDIT_H
+#endif // MYTEXTEDIT_H

@@ -138,6 +138,7 @@ void homePage::spacesChange(bool clicked){
 }
 
 void homePage::spaceChangeWidgetHide(){
+    qDebug()<<"point:"<<this->mapFromGlobal(QCursor::pos());
     if (pChangeSpace_ != nullptr && ui->spaceChanged->isChecked())
     {
         ui->spaceChanged->setChecked(false);

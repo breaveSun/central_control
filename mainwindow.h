@@ -17,8 +17,6 @@ class ctrlListPage;
 class serverPushThread;
 class wsClient;
 class messageCenter;
-class QProcess;
-class printer;
 
 class MainWindow : public QMainWindow
 {
@@ -29,12 +27,11 @@ public:
     ~MainWindow();
 
 private:
-//    void closeEvent(QCloseEvent* event);
+    void startWS(QString mac);
 
 private slots:
     //页面跳转
     void switchPage(enum PageBack pb,int houseId,int soaceId,int roomId);
-    void startWS(QString uid);
 private:
     homePage *pHomePage_;
     lightPage *pLightPage_;
@@ -48,11 +45,10 @@ private:
     Ui::MainWindow *ui;
 
 
-    QProcess *pCaller_;
-    printer *pPrinter_;
 signals:
     void startThreadWork();
+
 private slots:
-//    void changeStyleSlot();
+
 };
 #endif // MAINWINDOW_H

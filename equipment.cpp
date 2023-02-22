@@ -11,6 +11,7 @@
 #include <errno.h>
 #include <httpserver.h>
 
+QString ADRESS_STR="//192.168.2.6:8888";
 QVector<houseStruct> equipment::houses_ = {};
 QMap<QString,deviceDataStruct> equipment::deviceDataStructs_ = {};
 equipment::equipment()
@@ -110,7 +111,7 @@ void equipment::getHouseSpaceName(int &houseId,int &spaceId,QString &houseName,Q
 }
 
 void equipment::lightControl(QString data){
-    QString url = "http://192.168.2.48:8888/knx/light";//http后台地址url
+    QString url = "http:"+ADRESS_STR+"/knx/light";//http后台地址url
     QString sendMsg = data;//http发送数据组包
     QString strMessage = "";//错误信息
     QString strResult = "";//http响应
@@ -128,7 +129,7 @@ void equipment::lightControl(QString data){
 }
 
 void equipment::curtainControl(QString data){
-    QString url = "http://192.168.2.48:8888/knx/curtain/";//http后台地址url
+    QString url = "http:"+ADRESS_STR+"/knx/curtain/";//http后台地址url
     QString sendMsg = data;//http发送数据组包
     QString strMessage = "";//错误信息
     QString strResult = "";//http响应
@@ -146,7 +147,7 @@ void equipment::curtainControl(QString data){
 
 QMap<QString,QString> equipment::getDeviceData(){
     ///调用示例
-    QString url = "http://192.168.2.48:8888/knx/";//http后台地址url
+    QString url = "http:"+ADRESS_STR+"/knx/";//http后台地址url
     QString sendMsg = "";//http发送数据组包
     QString strMessage = "";//错误信息
     QString strResult = "";//http响应
@@ -166,44 +167,7 @@ QMap<QString,QString> equipment::getDeviceData(){
                     QString value = i.value().toString();
                     deviceData[key] = value;
             }
-//            = data["data"].value<QMap<QString,QString>>();
             return deviceData;
-            /*for (int i=0;i<houses_.size();i++){
-                QVector<spaceStruct>* spaces = &(houses_[i].spaces);
-               for (int s=0;s<spaces->size();s++){
-                    QVector<roomStruct>* rooms = &(spaces[s].data()->rooms);
-                    for (int r=0;r<rooms->size();r++){
-                        QVector<lightingStruct>* lightings = &(rooms[r].data()->lighting);
-                        for (int l=0;l<lightings->size();l++){
-                           lightingStruct* light = lightings[l].data();
-                           if(deviceData.find(light->switch_feedback) != deviceData.end()){
-                               light->switch_value = deviceData[light->switch_feedback];
-                           }
-                           if(deviceData.find(light->dimming_absolute_feedback) != deviceData.end()){
-                               light->hue_value = deviceData[light->dimming_absolute_feedback];
-                           }
-                           if(deviceData.find(light->hue_feedback) != deviceData.end()){
-                               light->dimming_absolute_value = deviceData[light->hue_feedback];
-                           }
-                           if(deviceData.find(light->color_temperature_feedback) != deviceData.end()){
-                               light->color_temperature_value = deviceData[light->color_temperature_feedback];
-                           }
-                        }
-                        QVector<curtainStruct>* curtains = &(rooms[r].data()->curtain);
-                        for (int c=0;c<curtains->size();c++){
-                            curtainStruct* curtain = curtains[c].data();
-                            if(deviceData.find(curtain->switch_feedback) != deviceData.end()){
-                                curtain->switch_value = deviceData[curtain->switch_feedback];
-                            }
-                            if(deviceData.find(curtain->position_feedback) != deviceData.end()){
-                                curtain->position_value = deviceData[curtain->position_feedback];
-                            }
-                        }
-                    }
-                }
-
-            }
-        */
         }
     }
     else///HTTP通信异常
@@ -213,9 +177,36 @@ QMap<QString,QString> equipment::getDeviceData(){
     return QMap<QString,QString>{};
 }
 
+QVariantList equipment::getConfigData(){
+    ///调用示例
+    QString url = "http:"+ADRESS_STR+"/base/config";//http后台地址url
+    QString sendMsg = "";//http发送数据组包
+    QString strMessage = "";//错误信息
+    QString strResult = "";//http响应
+    QString thod = "GET";//POST或GET
+    httpServer::SendAndGetText(url,thod,sendMsg,strMessage,strResult);
+
+    if(strMessage.isEmpty())///HTTP正常响应
+    {
+        qDebug()<<"["<<__FILE__<<"]"<<__LINE__<<__FUNCTION__<<"接收数据 "<<strResult;
+        QVariantMap data = Common::StringToVariantMap(strResult);
+        if (data.find("data")!=data.end()){
+            QVariantList values= data["data"].toList();
+            return values;
+        }
+    }
+    else///HTTP通信异常
+    {
+        qDebug()<<"["<<__FILE__<<"]"<<__LINE__<<__FUNCTION__<<"错误信息 "<<strMessage;
+    }
+    return QVariantList{};
+}
+
 bool equipment::init()
 {
-    QFile file(":/resource/config.json");	//创建QFile对象，并指定json文件路径
+    QVariantList list;
+    list = getConfigData();
+    /*QFile file(":/resource/config.json");	//创建QFile对象，并指定json文件路径
     //打开json文件并判断（不成功则返回0）
     if(!file.open(QIODevice::ReadOnly)){
         qDebug()<<"json file load err";
@@ -242,7 +233,7 @@ bool equipment::init()
     //获取QJsonObject，并读取Json串中各类型的值
     QJsonArray jArray = jDoc.array();
     //将QJsonArray转QVariantList
-    QVariantList list = jArray.toVariantList();
+    QVariantList list = jArray.toVariantList();*/
 
     if(list.size()<=0){
         qDebug()<<"no json data";
@@ -251,12 +242,6 @@ bool equipment::init()
 
     QMap<QString,QString> deviceMap= getDeviceData();
     for(int i=0;i<list.size();i++){
-        /*bool ok = list[i].canConvert<houseStruct>();
-        if (ok){
-            houseStruct h= list[i].value<houseStruct>();
-            houses_.append(h);
-        } else {
-        }*/
         QVariantMap houseV = list[i].toMap();
         houseStruct houseS;
 
@@ -359,13 +344,32 @@ bool equipment::init()
                             roomS.params = roomParamList;
                         }
 
-                        if(roomV.find("scene") != roomV.end()){
-                            QVariantList scenes = roomV["scene"].toList();
-                            QVector<roomSceneStruct> roomSceneList;
+                        if(roomV.find("scenes") != roomV.end()){
+                            QVariantMap scenesListV = roomV["scenes"].toMap();
+                            QVariantList scenesListS;
+                            if(scenesListV.find("default") != scenesListV.end()){
+                                scenesListS = scenesListV["default"].toList();
+                            }
+                            if(scenesListV.find("custom") != scenesListV.end()){
+                                QVariantList customScenes = scenesListV["custom"].toList();
+                                for(int cs = 0;cs<customScenes.size();cs++){
+                                    scenesListS.append(customScenes[cs]);
+                                }
+                            }
 
-                            for(int s=0;s<scenes.size();s++){
-                                QVariantMap sceneV = scenes[s].toMap();
+
+                            QVector<roomSceneStruct> roomSceneList;
+                            for(int s=0;s<scenesListS.size();s++){
+                                QVariantMap sceneV = scenesListS[s].toMap();
                                 roomSceneStruct sceneS;
+
+                                if(sceneV.find("id") != sceneV.end()){
+                                    sceneS.id = sceneV["id"].toInt();
+                                }
+
+                                if(sceneV.find("room_id") != sceneV.end()){
+                                    sceneS.room_id = sceneV["room_id"].toInt();
+                                }
 
                                 if(sceneV.find("name") != sceneV.end()){
                                     sceneS.name = sceneV["name"].toString();
@@ -374,11 +378,72 @@ bool equipment::init()
                                 if(sceneV.find("icon") != sceneV.end()){
                                     sceneS.icon = sceneV["icon"].toString();
                                 }
+
+                                if(sceneV.find("type") != sceneV.end()){
+                                    sceneS.type = sceneV["type"].toString();
+                                }
+
+                                if(sceneV.find("lights") != sceneV.end()){
+
+                                    QVariantList sceneLightsV = sceneV["lights"].toList();
+                                    QVector<roomSceneLightsStruct> sceneLightsS;
+
+                                    for(int l=0;l<sceneLightsV.size();l++){
+                                        QVariantMap roomSceneLightV = sceneLightsV[l].toMap();
+                                        roomSceneLightsStruct roomSceneLightS;
+                                        if(roomSceneLightV.find("id") != roomSceneLightV.end()){
+                                            roomSceneLightS.id = roomSceneLightV["id"].toInt();
+                                        }
+
+                                        if(roomSceneLightV.find("brightness_value") != roomSceneLightV.end()){
+                                            roomSceneLightS.brightness_value = roomSceneLightV["brightness_value"].toString();
+                                        }
+
+                                        if(roomSceneLightV.find("color_temperature_value") != roomSceneLightV.end()){
+                                            roomSceneLightS.color_temperature_value = roomSceneLightV["color_temperature_value"].toString();
+                                        }
+
+                                        if(roomSceneLightV.find("hue_value") != roomSceneLightV.end()){
+                                            roomSceneLightS.hue_value = roomSceneLightV["hue_value"].toString();
+                                        }
+                                        sceneLightsS.append(roomSceneLightS);
+                                    }
+
+                                    sceneS.lights = sceneLightsS;
+                                }
+
+                                if(sceneV.find("curtains") != sceneV.end()){
+
+                                    QVariantList sceneCurtainsV = sceneV["curtains"].toList();
+                                    QVector<roomSceneCurtainsStruct> sceneCurtainsS;
+
+                                    for(int l=0;l<sceneCurtainsV.size();l++){
+                                        QVariantMap roomSceneCurtainV = sceneCurtainsV[l].toMap();
+                                        roomSceneCurtainsStruct roomSceneCurtainS;
+                                        if(roomSceneCurtainV.find("id") != roomSceneCurtainV.end()){
+                                            roomSceneCurtainS.id = roomSceneCurtainV["id"].toInt();
+                                        }
+
+                                        if(roomSceneCurtainV.find("angle_value") != roomSceneCurtainV.end()){
+                                            roomSceneCurtainS.angle_value = roomSceneCurtainV["angle_value"].toString();
+                                        }
+
+                                        if(roomSceneCurtainV.find("oc_degree_value") != roomSceneCurtainV.end()){
+                                            roomSceneCurtainS.oc_degree_value = roomSceneCurtainV["oc_degree_value"].toString();
+                                        }
+
+                                        sceneCurtainsS.append(roomSceneCurtainS);
+                                    }
+
+                                    sceneS.curtains = sceneCurtainsS;
+                                }
+
                                 roomSceneList.append(sceneS);
                             }
 
-                            roomS.scene = roomSceneList;
+                            roomS.scenes = roomSceneList;
                         }
+
 
                         if(roomV.find("lighting") != roomV.end()){
 
