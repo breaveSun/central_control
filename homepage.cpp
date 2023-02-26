@@ -168,16 +168,16 @@ void homePage::closeAllDevices(bool checked){
     QVariantList curtainData;
     for (int r=0;r<spaceData_.rooms.size();r++) {
         roomStruct room = spaceData_.rooms[r];
-        for (int i=0;i<room.lighting.size();i++){
+        for (int i=0;i<room.lights.size();i++){
             QVariantMap lightMap;
-            lightMap["group_id"] = room.lighting[i].Switch;
+            lightMap["group_id"] = room.lights[i].Switch;
             lightMap["switch"] = "0";
 
             lightData.append(lightMap);
         }
-        for (int i=0;i<room.curtain.size();i++){
+        for (int i=0;i<room.curtains.size();i++){
             QVariantMap curtainMap;
-            curtainMap["group_id"] = room.curtain[i].Switch;
+            curtainMap["group_id"] = room.curtains[i].Switch;
             curtainMap["switch"] = "0";
 
             curtainData.append(curtainMap);

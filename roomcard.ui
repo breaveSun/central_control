@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>315</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -287,7 +287,7 @@
          <item>
           <widget class="QLabel" name="label_3">
            <property name="text">
-            <string>场景切换</string>
+            <string>场景模式</string>
            </property>
           </widget>
          </item>
@@ -303,16 +303,6 @@
             </size>
            </property>
           </spacer>
-         </item>
-         <item>
-          <widget class="btnTxtIcon" name="editScene" native="true">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-          </widget>
          </item>
         </layout>
        </widget>

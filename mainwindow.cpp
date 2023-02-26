@@ -120,7 +120,7 @@ void MainWindow::startWS(QString mac){
     //创建长链接
     pWSClient_ = new wsClient(this);
 
-    QString ADRESS_STR="//192.168.2.6:8888";
+    QString ADRESS_STR="//192.168.2.2:8888";
     pWSClient_->ConnectTo("ws:"+ADRESS_STR+"/socket.io/"+mac);
     connect(pWSClient_,SIGNAL(notices(deviceDataStruct)),pHomePage_,SLOT(acceptPush(deviceDataStruct)));
     connect(pWSClient_,SIGNAL(notices(deviceDataStruct)),pLightPage_,SLOT(acceptPush(deviceDataStruct)));

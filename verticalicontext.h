@@ -17,6 +17,8 @@ public:
     void setTxt(QString txt);
     void setIcon(int icon);
     void setIconColor(QString color);
+    void setTxtColor(QString color);
+    void setBGColor(QString color);
 signals:
         void btnPressed();
         void btnClicked();

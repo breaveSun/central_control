@@ -6,6 +6,76 @@
   "description": "智能空间",
   "glyphs": [
     {
+      "icon_id": "34283609",
+      "name": "user",
+      "font_class": "user",
+      "unicode": "e65e",
+      "unicode_decimal": 58974
+    },
+    {
+      "icon_id": "34283610",
+      "name": "ver_code",
+      "font_class": "ver_code",
+      "unicode": "e65f",
+      "unicode_decimal": 58975
+    },
+    {
+      "icon_id": "34283607",
+      "name": "password",
+      "font_class": "password",
+      "unicode": "e65c",
+      "unicode_decimal": 58972
+    },
+    {
+      "icon_id": "34283608",
+      "name": "clear",
+      "font_class": "clear",
+      "unicode": "e65d",
+      "unicode_decimal": 58973
+    },
+    {
+      "icon_id": "34283586",
+      "name": "logo",
+      "font_class": "logo",
+      "unicode": "e65b",
+      "unicode_decimal": 58971
+    },
+    {
+      "icon_id": "34255627",
+      "name": "parenting",
+      "font_class": "parenting",
+      "unicode": "e63c",
+      "unicode_decimal": 58940
+    },
+    {
+      "icon_id": "34255029",
+      "name": "default",
+      "font_class": "default",
+      "unicode": "e658",
+      "unicode_decimal": 58968
+    },
+    {
+      "icon_id": "34255032",
+      "name": "quiet",
+      "font_class": "quiet",
+      "unicode": "e659",
+      "unicode_decimal": 58969
+    },
+    {
+      "icon_id": "34255052",
+      "name": "AI",
+      "font_class": "AI",
+      "unicode": "e65a",
+      "unicode_decimal": 58970
+    },
+    {
+      "icon_id": "34232477",
+      "name": "delete",
+      "font_class": "delete",
+      "unicode": "e657",
+      "unicode_decimal": 58967
+    },
+    {
       "icon_id": "34176866",
       "name": "info",
       "font_class": "info",
@@ -270,13 +340,6 @@
       "font_class": "drink",
       "unicode": "e63b",
       "unicode_decimal": 58939
-    },
-    {
-      "icon_id": "34169505",
-      "name": "parenting",
-      "font_class": "parenting",
-      "unicode": "e63c",
-      "unicode_decimal": 58940
     },
     {
       "icon_id": "34169506",

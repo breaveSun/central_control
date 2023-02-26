@@ -120,7 +120,7 @@ typedef struct roomSceneCurtainsStruct{
 Q_DECLARE_METATYPE(roomSceneCurtainsStruct)
 
 typedef struct roomSceneStruct{
-    int id;
+    QString id;
     int room_id;
     QString name;
     QString icon;
@@ -138,10 +138,11 @@ typedef struct roomStruct{
     int build_id;
     int space_id;
     QString icon;
+    QString current_scene;
     QVector<roomParamStruct> params;
     QVector<roomSceneStruct> scenes;
-    QVector<lightingStruct> lighting;
-    QVector<curtainStruct> curtain;
+    QVector<lightingStruct> lights;
+    QVector<curtainStruct> curtains;
 }roomStruct;
 Q_DECLARE_METATYPE(roomStruct)
 
@@ -181,6 +182,9 @@ public:
 
     //控制窗帘发请求
     static void curtainControl(QString data);
+
+    //切换场景请求
+    static void changeScene(int roomId,QString sceneId);
 
     static QString getDeviceValue(QString key);
     static void setDeviceStruct(QString key,QString value);

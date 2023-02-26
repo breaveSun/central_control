@@ -6,12 +6,14 @@
 #include <QFontDatabase>
 #include <QMessageBox>
 #include <QVariant>
+#include <QtVirtualKeyboard/QtVirtualKeyboard>
 
 
 int main(int argc, char *argv[])
 {
     //虚拟键盘调用
-//    qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
+    qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
+
     QApplication a(argc, argv);
 
     //qss加载

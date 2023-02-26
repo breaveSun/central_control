@@ -5,6 +5,7 @@
 #include "common.h"
 #include "icon.h"
 #include "fingerboard.h"
+#include "mylineedit.h"
 
 #include <qdebug.h>
 #include <qlayout.h>
@@ -17,7 +18,11 @@ lightPage::lightPage(QWidget *parent) :
     Common::setButtonIcon(ui->lightBack,icon::getIcon("return"));
     connect(ui->lightBack,&QPushButton::clicked,this,&lightPage::goBackSlot);
     connect(ui->closeAll,&QPushButton::clicked,this,&lightPage::closeAllSlot);
-    pBoard_ = nullptr;
+
+    pBoard_ = new fingerboard;
+    pBoard_->initFocusWidget(this);
+    pBoard_->setGeometry(0,600,600,324);
+//    pBoard_->show();
 }
 
 lightPage::~lightPage()
@@ -28,7 +33,7 @@ lightPage::~lightPage()
 void lightPage::setData(int houseId,int spaceId,int roomId)
 {
     room_ = equipment::getRoom(houseId,spaceId,roomId);
-    lightings_ = room_.lighting;
+    lightings_ = room_.lights;
     int lightSize = lightings_.size();
     int lightWidgetSize = lightWidgetList_.size();
 
@@ -53,13 +58,14 @@ void lightPage::setData(int houseId,int spaceId,int roomId)
 
     for (int i=0;i<lightSize;i++) {
         btnTwoSlider* light = lightWidgetList_[i];
-        qDebug()<<connect(light,SIGNAL(focusIn()),this,SLOT(focusIn()));
-        connect(light,SIGNAL(focusIn()),this,SLOT(focusIn()));
+        //qDebug()<<connect(light,SIGNAL(colorTxtMouseReleased()),this,SLOT(colorTxtMouseReleased()));
+        connect(light,SIGNAL(colorTxtMouseReleased()),this,SLOT(colorTxtMouseReleased()));
         connect(light,SIGNAL(focusOut()),this,SLOT(focusOut()));
         lightingStruct lighting = lightings_[i];
         light->setData(lighting);
     }
     ui->scrollAreaWidgetContents->setFixedHeight(ui->scrollAreaWidgetContents->sizeHint().height());
+
 }
 
 void lightPage::goBackSlot()
@@ -134,22 +140,13 @@ void lightPage::acceptPush(deviceDataStruct data){
 }
 
 
-void lightPage::focusIn(){
-    qDebug()<<__FUNCTION__;
-    if(pBoard_ == nullptr){
-        pBoard_ = new fingerboard(ui->lightScrollArea);
-        int boardHeight = pBoard_->size().height();
-        int boardWidth = pBoard_->size().width();
-        int boardX = ui->lightScrollArea->pos().x();
-        int boardY = this->size().height()-boardHeight;
-        qDebug()<<pBoard_->size();
-        qDebug()<<this->size();
-        qDebug()<<boardX<<","<<boardY<<","<<boardWidth<<","<<boardHeight;
-        pBoard_->setGeometry(boardX,600,600,324);
-        pBoard_->show();
-    }
+void lightPage::colorTxtMouseReleased(){
+    pBoard_->setGeometry(0,750,600,324);
+//    btnTwoSlider* light = qobject_cast<btnTwoSlider *>(sender());
+//    light->setFocusIn();
 }
 
 void lightPage::focusOut(){
     qDebug()<<__FUNCTION__;
+//    pBoard_->hide();
 }

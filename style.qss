@@ -123,6 +123,9 @@
 #fingerboardFrame{
     background-color: #112233;
 }
+#verticalicontextBKFrame{
+    border-radius: 10px;
+}
 
 /*16进制键盘样式*/
 #btnA,#btnB,#btnC,#btnD,#btnE,#btnF,#btnDel,#btnDefine{

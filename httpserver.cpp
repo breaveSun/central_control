@@ -22,6 +22,8 @@ void httpServer::SendAndGetText(QString strUrl, QString thod, QString strInput, 
 {
     QNetworkRequest oNetRequest;
     oNetRequest.setUrl(QUrl(strUrl));
+    qDebug()<<__FUNCTION__<<strUrl;
+    qDebug()<<"thod:"<<thod<<"data:"<<strInput;
 
     QNetworkAccessManager oNetAccessManager;
     QNetworkReply* oNetReply = nullptr;
@@ -35,6 +37,9 @@ void httpServer::SendAndGetText(QString strUrl, QString thod, QString strInput, 
     else if (thod == "GET" )
     {
         oNetReply = oNetAccessManager.get(oNetRequest);
+    }
+    else if (thod == "PUT"){
+        oNetReply = oNetAccessManager.put(oNetRequest, strInput.toLocal8Bit());
     }
 
     // 添加超时处理，10s超时

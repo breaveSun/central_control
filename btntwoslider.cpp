@@ -33,9 +33,9 @@ btnTwoSlider::btnTwoSlider(QWidget *parent) :
     pLayoutInfoComing_->addWidget(pColorTextPreFix_);
     ui->rgbEdit->setAlignment( Qt::AlignVCenter);
     ui->rgbEdit->setStyleSheet("#rgbEdit{padding-left:18px;background-color: rgb(53,54,56);}#colorTextPreFix{background-color: rgb(53,54,56);}");
-    connect(ui->rgbEdit,SIGNAL(focusIn()),this,SIGNAL(focusIn()));
-    connect(ui->rgbEdit,SIGNAL(focusOut()),this,SIGNAL(focusOut()));
-    qDebug()<<connect(ui->rgbEdit,SIGNAL(focusIn()),this,SIGNAL(focusIn()));
+//    connect(ui->rgbEdit,SIGNAL(mouseReleased()),this,SIGNAL(colorTxtMouseReleased()));
+//    connect(ui->rgbEdit,SIGNAL(focusOut()),this,SIGNAL(focusOut()));
+//    qDebug()<<connect(ui->rgbEdit,SIGNAL(focusIn()),this,SIGNAL(focusIn()));
 
     ui->rSlider_2->setRange(0,255);
     ui->rSlider_2->setTitle("R");
@@ -193,6 +193,15 @@ QString btnTwoSlider::getGroupId(FUNCTION_TYPE ft){
     }
 }
 
+void btnTwoSlider::setFocusIn(){
+    qDebug()<<__FUNCTION__;
+    ui->rgbEdit->activateWindow();
+    ui->rgbEdit->setFocus();
+}
+
+QString btnTwoSlider::getName(){
+    return lighting_.name;
+}
 void btnTwoSlider::statusChanged(qint16 id,bool checked)
 {
     //灯光控制项展开和关闭
@@ -217,6 +226,7 @@ void btnTwoSlider::statusChanged(qint16 id,bool checked)
 
 
     emit lightSwitch();
+
 }
 
 void btnTwoSlider::rgbValueChanged(){

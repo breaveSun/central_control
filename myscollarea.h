@@ -10,7 +10,6 @@ class myScollArea: public QScrollArea
 public:
     myScollArea(QWidget* parent = NULL);
 
-
 protected:
     bool eventFilter(QObject *obj,QEvent *evt);
 

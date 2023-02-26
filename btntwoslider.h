@@ -62,12 +62,14 @@ public:
     //获取灯查询数据的groupId
     QString getGroupId(FUNCTION_TYPE ft);
 
+    void setFocusIn();
 
+    QString getName();
 //    mySlider *brightness;
 //    mySlider *colorTem;
 signals:
     void lightSwitch();
-    void focusIn();
+    void colorTxtMouseReleased();
     void focusOut();
 private:
     //初始化默认的light struct

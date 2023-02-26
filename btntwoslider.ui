@@ -366,7 +366,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="myLineEdit" name="rgbEdit">
+                <widget class="QLineEdit" name="rgbEdit">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -409,13 +409,13 @@
                   <string>353638</string>
                  </property>
                  <property name="cursorPosition">
-                  <number>1</number>
+                  <number>6</number>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                  </property>
                  <property name="placeholderText">
-                  <string>#FFFFFF</string>
+                  <string>FFFFFF</string>
                  </property>
                 </widget>
                </item>
@@ -567,11 +567,6 @@
    <extends>QWidget</extends>
    <header>rgbslider.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>myLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>mylineedit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

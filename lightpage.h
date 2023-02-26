@@ -31,8 +31,9 @@ private slots:
     //接收服务器推送
     void acceptPush(deviceDataStruct data);
 
-    //文本框聚焦
-    void focusIn();
+    //文本框点击事件释放
+    void colorTxtMouseReleased();
+
     //文本框失焦
     void focusOut();
 

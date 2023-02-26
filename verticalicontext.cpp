@@ -29,8 +29,17 @@ void verticalIconText::setIcon(int icon){
 }
 
 void verticalIconText::setIconColor(QString color){
-    setStyleSheet("#icon{color:"+color+"}");
+    setStyleSheet("#icon{color:"+color+";}");
 }
+
+void verticalIconText::setTxtColor(QString color){
+    setStyleSheet("#txt{color:"+color+";}");
+}
+
+void verticalIconText::setBGColor(QString color){
+    setStyleSheet("background-color:"+color+";");
+}
+
 void verticalIconText::btnPressedSlot(){
 //    qDebug()<<__FUNCTION__<<objectName();
     emit btnPressed();

@@ -11,7 +11,7 @@
 #include <errno.h>
 #include <httpserver.h>
 
-QString ADRESS_STR="//192.168.2.6:8888";
+QString ADRESS_STR="//192.168.2.2:8888";
 QVector<houseStruct> equipment::houses_ = {};
 QMap<QString,deviceDataStruct> equipment::deviceDataStructs_ = {};
 equipment::equipment()
@@ -144,6 +144,20 @@ void equipment::curtainControl(QString data){
     }
 }
 
+void equipment::changeScene(int roomId,QString sceneId){
+    QString url = "http:"+ADRESS_STR+"/knx/rooms/"+QString::number(roomId)+"/scenes/"+sceneId;//http后台地址url
+    QString sendMsg = "";//http发送数据组包
+    QString strMessage = "";//错误信息
+    QString strResult = "";//http响应
+    QString thod = "PUT";//POST或GET
+    httpServer::SendAndGetText(url,thod,sendMsg,strMessage,strResult);
+    if(strMessage.isEmpty())///HTTP正常响应
+    {
+        qDebug()<<"["<<__FILE__<<"]"<<__LINE__<<__FUNCTION__<<"接收数据 "<<strResult;
+    } else {
+        qDebug()<<"["<<__FILE__<<"]"<<__LINE__<<__FUNCTION__<<"错误信息 "<<strMessage;
+    }
+}
 
 QMap<QString,QString> equipment::getDeviceData(){
     ///调用示例
@@ -316,6 +330,10 @@ bool equipment::init()
                             roomS.icon = roomV["icon"].toString();
                         }
 
+                        if(roomV.find("current_scene") != roomV.end()){
+                            roomS.current_scene = roomV["current_scene"].toString();
+                        }
+
                         if(roomV.find("param") != roomV.end()){
                             QVariantList params = roomV["param"].toList();
                             QVector<roomParamStruct> roomParamList;
@@ -364,7 +382,7 @@ bool equipment::init()
                                 roomSceneStruct sceneS;
 
                                 if(sceneV.find("id") != sceneV.end()){
-                                    sceneS.id = sceneV["id"].toInt();
+                                    sceneS.id = sceneV["id"].toString();
                                 }
 
                                 if(sceneV.find("room_id") != sceneV.end()){
@@ -445,9 +463,9 @@ bool equipment::init()
                         }
 
 
-                        if(roomV.find("lighting") != roomV.end()){
+                        if(roomV.find("lights") != roomV.end()){
 
-                            QVariantList lightingList = roomV["lighting"].toList();
+                            QVariantList lightingList = roomV["lights"].toList();
                             QVector<lightingStruct> lightingListS;
 
                             for(int l=0;l<lightingList.size();l++){
@@ -610,15 +628,15 @@ bool equipment::init()
 
                             }
 
-                            roomS.lighting = lightingListS;
+                            roomS.lights = lightingListS;
 
 
 
                         }
 
-                        if(roomV.find("curtain") != roomV.end()){
+                        if(roomV.find("curtains") != roomV.end()){
 
-                            QVariantList curtainListV = roomV["curtain"].toList();
+                            QVariantList curtainListV = roomV["curtains"].toList();
                             QVector<curtainStruct> curtainListS;
 
                             for(int c=0;c<curtainListV.size();c++){
@@ -724,7 +742,7 @@ bool equipment::init()
 
                                 curtainListS.append(curtainS);
                             }
-                            roomS.curtain = curtainListS;
+                            roomS.curtains = curtainListS;
                         }
 
                         roomListS.append(roomS);

@@ -40,8 +40,8 @@ void ctrlListPage::setData(int houseId,int spaceId,int roomId)
     spaceId_ = spaceId;
     roomId_ = roomId;
 
-    lightings_ = pRoomData_.lighting;
-    curtains_ = pRoomData_.curtain;
+    lightings_ = pRoomData_.lights;
+    curtains_ = pRoomData_.curtains;
     if(lightings_.size()>0){
         pLightCtrl_->setVisible(true);
         pLightCtrl_->setGoPageData(PB_GO_LIGHT_PAGE,houseId,spaceId,roomId);

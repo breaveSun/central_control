@@ -8,7 +8,7 @@ verticalicontextBK::verticalicontextBK(QWidget *parent) :
 {
     ui->setupUi(this);
     widget = new verticalIconText(this);
-    ui->frame->layout()->addWidget(widget);
+    ui->verticalicontextBKFrame->layout()->addWidget(widget);
     connect(widget, SIGNAL(btnPressed()),this, SLOT(btnPressedSlot()));
     connect(widget, SIGNAL(btnClicked()),this, SLOT(btnClickedSlot()));
 }
@@ -16,6 +16,10 @@ verticalicontextBK::verticalicontextBK(QWidget *parent) :
 verticalicontextBK::~verticalicontextBK()
 {
     delete ui;
+}
+
+void verticalicontextBK::setId(QString id){
+    id_ = id;
 }
 
 void verticalicontextBK::setTxt(QString txt){
@@ -27,19 +31,21 @@ void verticalicontextBK::setIcon(int icon){
 }
 
 void verticalicontextBK::setBKColor(QString color){
-    ui->frame->setStyleSheet("background-color:"+color+";");
+    setStyleSheet("*{background-color:"+color+";}");
 }
 
 void verticalicontextBK::setColor(QString color){
-    ui->frame->setStyleSheet("color:"+color+";");
+    setStyleSheet("#icon,#txt{color:"+color+";}");
+}
+
+void verticalicontextBK::setTwoColor(QString color,QString bgColor){
+    setStyleSheet("*{background-color:"+bgColor+";}#icon,#txt{color:"+color+";}");
 }
 
 void verticalicontextBK::btnPressedSlot(){
-//    qDebug()<<__FUNCTION__<<objectName();
-    emit btnPressed();
+    emit btnPressed(id_);
 }
 
 void verticalicontextBK::btnClickedSlot(){
-//    qDebug()<<__FUNCTION__<<objectName();
-    emit btnClicked();
+    emit btnClicked(id_);
 }

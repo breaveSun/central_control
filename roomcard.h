@@ -34,7 +34,7 @@ public:
 private:
     void setParams(QVector<roomParamStruct> params);
 
-    void setScenes(QVector<roomSceneStruct> scenes);
+    void setScenes(QVector<roomSceneStruct> scenes,QString current_scene);
 signals:
     void goPage(PageBack pb, int houseId,int spaceId,int roomId);
 
@@ -42,8 +42,9 @@ private slots:
     void slipLeft();
     void slipRight();
     void checkDevice();
-    void editScene();
     void onClickClose();
+    void changeScene(QString id);
+    void sliderChanged(int value);
 
 private:
     Ui::roomCard *ui;

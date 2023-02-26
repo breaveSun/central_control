@@ -18,16 +18,15 @@ roomCard::roomCard(QWidget *parent) :
     ui->enabledNum->setText("0");
     ui->checkDevice->setTxt("查看设备");
     ui->checkDevice->setIcon("rightwards");
-    ui->editScene->setTxt("编辑场景");
-    ui->editScene->setIcon("rightwards");
     Common::setButtonIcon(ui->slipLeft,icon::getIcon("slip_left"));
     Common::setButtonIcon(ui->slipRight,icon::getIcon("slip_right"));
 
     connect(ui->slipLeft,&QPushButton::clicked,this,&roomCard::slipLeft);
     connect(ui->slipRight,&QPushButton::clicked,this,&roomCard::slipRight);
     connect(ui->checkDevice,SIGNAL(btnPressed()),this,SLOT(checkDevice()));
-    connect(ui->editScene,SIGNAL(btnPressed()),this,SLOT(editScene()));
     connect(ui->oneClickClose,SIGNAL(btnPressed()),this,SLOT(onClickClose()));
+
+    connect(ui->scrollArea->horizontalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(sliderChanged(int)));
 
 }
 
@@ -50,20 +49,20 @@ void roomCard::setData(roomStruct room){
     setName(room_.name);
     setIcon(icon::getIcon(room_.icon));
     setParams(room.params);
-    setScenes(room.scenes);
+    setScenes(room.scenes,room.current_scene);
     int deviceNum = 0;
     int enabledNum = 0;
 
-    for (int i=0;i<room_.lighting.size();i++){
+    for (int i=0;i<room_.lights.size();i++){
         deviceNum = deviceNum+1;
 
-        if(equipment::getDeviceValue(room_.lighting[i].switch_feedback) == "1"){
+        if(equipment::getDeviceValue(room_.lights[i].switch_feedback) == "1"){
             enabledNum = enabledNum + 1;
         }
     }
-    for (int i=0;i<room_.curtain.size();i++){
+    for (int i=0;i<room_.curtains.size();i++){
         deviceNum = deviceNum+1;
-        if(equipment::getDeviceValue(room_.curtain[i].switch_feedback) == "1"){
+        if(equipment::getDeviceValue(room_.curtains[i].switch_feedback) == "1"){
             enabledNum = enabledNum + 1;
         }
 
@@ -78,20 +77,19 @@ void roomCard::setEnableDeviceNum(QString num){
 }
 
 void roomCard::updateEnableDeviceNum(){
-    qDebug()<<__FUNCTION__;
     int deviceNum = 0;
     int enabledNum = 0;
 
-    for (int i=0;i<room_.lighting.size();i++){
+    for (int i=0;i<room_.lights.size();i++){
         deviceNum = deviceNum+1;
 
-        if(equipment::getDeviceValue(room_.lighting[i].switch_feedback) == "1"){
+        if(equipment::getDeviceValue(room_.lights[i].switch_feedback) == "1"){
             enabledNum = enabledNum + 1;
         }
     }
-    for (int i=0;i<room_.curtain.size();i++){
+    for (int i=0;i<room_.curtains.size();i++){
         deviceNum = deviceNum+1;
-        if(equipment::getDeviceValue(room_.curtain[i].switch_feedback) == "1"){
+        if(equipment::getDeviceValue(room_.curtains[i].switch_feedback) == "1"){
             enabledNum = enabledNum + 1;
         }
 
@@ -143,7 +141,7 @@ void roomCard::setParams(QVector<roomParamStruct> params){
     }
 }
 
-void roomCard::setScenes(QVector<roomSceneStruct> scenes){
+void roomCard::setScenes(QVector<roomSceneStruct> scenes,QString current_scene){
 
     int scenesSize = scenes.size();
     int scenesWidgetSize = scenesWidgetList_.size();
@@ -168,48 +166,55 @@ void roomCard::setScenes(QVector<roomSceneStruct> scenes){
 
     for (int i=0;i<scenesSize;i++) {
         verticalicontextBK * vit = scenesWidgetList_[i];
-        vit->setColor("#BCBCBC");
-        vit->setBKColor("#353638");
+
         roomSceneStruct sceneM = scenes[i];
+        vit->setId(sceneM.id);
         //名称
         vit->setTxt(sceneM.name);
         //icon
         vit->setIcon(icon::getIcon(sceneM.icon));
+
+        if(current_scene == sceneM.id){
+            vit->setTwoColor("#FFFFFF","#D2AA74");
+        }else{
+            vit->setTwoColor("#BCBCBC","#353638");
+        }
+        connect(vit,SIGNAL(btnPressed(QString)),this,SLOT(changeScene(QString)));
     }
     ui->scrollAreaWidgetContents->setFixedWidth(ui->scrollAreaWidgetContents->sizeHint().width());
-
+    if(scenesSize<5){
+        ui->slipLeft->setStyleSheet("color:#353638");
+        ui->slipRight->setStyleSheet("color:#353638");
+    }else {
+        ui->slipLeft->setStyleSheet("color:#BCBCBC");
+        ui->slipRight->setStyleSheet("color:#353638");
+    }
 }
 
 void roomCard::slipLeft(){
-    qDebug()<<ui->scrollArea->sizeHint().width()<<":"<<ui->scrollArea->width();
+    int offsetx = ui->scrollArea->width()-30;
+    QScrollBar *scrollBarx = ui->scrollArea->horizontalScrollBar();
+    scrollBarx->setValue(scrollBarx->value()+offsetx);
+}
+
+void roomCard::slipRight(){
     int offsetx = ui->scrollArea->width()-30;
 
     QScrollBar *scrollBarx = ui->scrollArea->horizontalScrollBar();
     scrollBarx->setValue(scrollBarx->value()-offsetx);
 }
 
-void roomCard::slipRight(){
-    qDebug()<<ui->scrollArea->sizeHint().width()<<":"<<ui->scrollArea->width();
-    int offsetx = ui->scrollArea->width()-50;
-
-    QScrollBar *scrollBarx = ui->scrollArea->horizontalScrollBar();
-    scrollBarx->setValue(scrollBarx->value()+offsetx);
-}
-
 void roomCard::checkDevice(){
     emit goPage(PB_GO_CTRLLIST_PAGR,room_.build_id,room_.space_id,room_.id);
 }
 
-void roomCard::editScene(){
-//    emit goPage(PB_GO_CTRLLIST_PAGR,room_.build_id,room_.space_id,room_.id);
-}
 
 void roomCard::onClickClose(){
     //关闭所有灯
     QVariantList lightData;
-    for (int i=0;i<room_.lighting.size();i++){
+    for (int i=0;i<room_.lights.size();i++){
         QVariantMap lightMap;
-        lightMap["group_id"] = room_.lighting[i].Switch;
+        lightMap["group_id"] = room_.lights[i].Switch;
         lightMap["switch"] = "0";
 
         lightData.append(lightMap);
@@ -218,9 +223,9 @@ void roomCard::onClickClose(){
     equipment::lightControl(jsonStr);
     //关闭所有窗帘
     QVariantList curtainData;
-    for (int i=0;i<room_.curtain.size();i++){
+    for (int i=0;i<room_.curtains.size();i++){
         QVariantMap curtainMap;
-        curtainMap["group_id"] = room_.curtain[i].Switch;
+        curtainMap["group_id"] = room_.curtains[i].Switch;
         curtainMap["switch"] = "0";
 
         curtainData.append(curtainMap);
@@ -229,4 +234,26 @@ void roomCard::onClickClose(){
     equipment::curtainControl(jsonStr);
     //设置已经开启设备数量
     ui->enabledNum->setText("0");
+}
+
+
+void roomCard::changeScene(QString id){
+    //发送切换模式指令
+    if(id!=room_.current_scene){
+        equipment::changeScene(room_.id,id);
+    }
+}
+
+void roomCard::sliderChanged(int value){
+    int end = ui->scrollAreaWidgetContents->size().width()-ui->scrollArea->width();
+    if(value == 0){
+        ui->slipLeft->setStyleSheet("color:#BCBCBC");
+        ui->slipRight->setStyleSheet("color:#353638");
+    } else if (value == end){
+        ui->slipLeft->setStyleSheet("color:#353638");
+        ui->slipRight->setStyleSheet("color:#BCBCBC");
+    } else {
+        ui->slipLeft->setStyleSheet("color:#BCBCBC");
+        ui->slipRight->setStyleSheet("color:#BCBCBC");
+    }
 }

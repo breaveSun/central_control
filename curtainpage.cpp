@@ -25,11 +25,8 @@ curtainPage::~curtainPage()
 
 void curtainPage::setData(int houseId,int spaceId,int roomId)
 {
-//    houseId_ = houseId;
-//    spaceId_ = spaceId;
-//    roomId_ = roomId;
     room_ = equipment::getRoom(houseId,spaceId,roomId);
-    curtains_ = room_.curtain;
+    curtains_ = room_.curtains;
     int curtainSize = curtains_.size();
     int curtainWidgetSize = curtainWidgetList_.size();
 
