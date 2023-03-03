@@ -207,7 +207,7 @@
           <number>30</number>
          </property>
          <property name="leftMargin">
-          <number>15</number>
+          <number>70</number>
          </property>
          <property name="topMargin">
           <number>0</number>
@@ -259,10 +259,10 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <property name="spacing">
-             <number>15</number>
+             <number>30</number>
             </property>
             <property name="leftMargin">
-             <number>80</number>
+             <number>0</number>
             </property>
             <property name="topMargin">
              <number>0</number>
@@ -312,7 +312,7 @@
              <number>0</number>
             </property>
             <property name="leftMargin">
-             <number>80</number>
+             <number>0</number>
             </property>
             <property name="topMargin">
              <number>0</number>
@@ -476,7 +476,7 @@
               </property>
               <layout class="QVBoxLayout" name="verticalLayout">
                <property name="spacing">
-                <number>20</number>
+                <number>30</number>
                </property>
                <property name="leftMargin">
                 <number>0</number>
@@ -485,7 +485,7 @@
                 <number>20</number>
                </property>
                <property name="rightMargin">
-                <number>45</number>
+                <number>70</number>
                </property>
                <property name="bottomMargin">
                 <number>20</number>
@@ -545,15 +545,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>mySlider</class>
-   <extends>QWidget</extends>
-   <header>myslider.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>titleIcon</class>
    <extends>QWidget</extends>
    <header>titleicon.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>mySlider</class>
+   <extends>QWidget</extends>
+   <header>myslider.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

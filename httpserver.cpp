@@ -84,7 +84,7 @@ void httpServer::postHttpRequest(QString url,QString data)
     request.setHeader(QNetworkRequest::ContentTypeHeader,QVariant("application/json"));
     request.setUrl(QUrl::fromUserInput(url));
 
-    QNetworkReply* reply = naManager->post(request,data.toLocal8Bit());//发起post请求
+    naManager->post(request,data.toLocal8Bit());//发起post请求
 }
 
 //接收网络响应槽函数 异步

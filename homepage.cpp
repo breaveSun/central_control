@@ -31,9 +31,9 @@ homePage::homePage(QWidget *parent) :
     //加载页面数据
     setData(houseId_,spaceId_);
 
-    //关闭全部设备
+    /*//关闭全部设备
     ui->closeAllDevices->setCheckable(true);
-    connect(ui->closeAllDevices,SIGNAL(clicked(bool)),this,SLOT(closeAllDevices(bool)));
+    connect(ui->closeAllDevices,SIGNAL(clicked(bool)),this,SLOT(closeAllDevices(bool)));*/
     //消息列表
     connect(ui->msg,SIGNAL(clicked(bool)),this,SLOT(messageList(bool)));
 
@@ -144,6 +144,7 @@ void homePage::spaceChangeWidgetHide(){
         ui->spaceChanged->setChecked(false);
         ui->spaceChanged->setIcon("drop_down",20);
     }
+    /*
     QRect closeAllDeviceRect = QRect(ui->closeAllDevices->pos().x()+ui->spacesCloseAll->pos().x()
                                      ,ui->closeAllDevices->pos().y()+ui->spacesCloseAll->pos().y()
                                      ,ui->closeAllDevices->width()
@@ -152,7 +153,7 @@ void homePage::spaceChangeWidgetHide(){
         qDebug()<<"触发关闭全部按钮的信号";
         //触发关闭全部按钮的信号
         closeAllDevices(true);
-    }
+    }*/
 
 }
 
@@ -161,7 +162,7 @@ void homePage::updateRooms(int houseId,int spaceId){
     setData(houseId,spaceId);
     ui->scrollAreaWidgetContents->show();
 }
-
+/*
 void homePage::closeAllDevices(bool checked){
     qDebug()<<__FUNCTION__<<checked;
     QVariantList lightData;
@@ -194,7 +195,7 @@ void homePage::closeAllDevices(bool checked){
         roomCardWidgetList_[i]->setEnableDeviceNum("0");
     }
 }
-
+*/
 void homePage::messageList(bool checked){
     emit goPage(PB_GO_MESSAGE_CENTER,0,0,0);
 }

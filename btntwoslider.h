@@ -94,6 +94,11 @@ private slots:
     void brightnessValueChanged();
     void colorTemperatureValueChanged();
 
+    //颜色文本编辑
+    void editingFinished();
+//    void returnPressed();
+    void textEdited(QString txt);
+
 };
 
 #endif // BTNTWOSLIDER_H

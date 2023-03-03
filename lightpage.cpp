@@ -14,10 +14,11 @@ lightPage::lightPage(QWidget *parent) :
     ui(new Ui::lightPage)
 {
     ui->setupUi(this);
-    //给返回按钮设置图标
-    Common::setButtonIcon(ui->lightBack,icon::getIcon("return"));
-    connect(ui->lightBack,&QPushButton::clicked,this,&lightPage::goBackSlot);
-    connect(ui->closeAll,&QPushButton::clicked,this,&lightPage::closeAllSlot);
+    ui->title->setTitle("照明控制");
+    ui->title->addBackBtn();
+    ui->title->addListBtn("一键关灯");
+    connect(ui->title,SIGNAL(backClick()),this,SLOT(goBackSlot()));
+    connect(ui->title,SIGNAL(listClick()),this,SLOT(closeAllSlot()));
 
     pBoard_ = new fingerboard;
     pBoard_->initFocusWidget(this);
@@ -66,6 +67,9 @@ void lightPage::setData(int houseId,int spaceId,int roomId)
     }
     ui->scrollAreaWidgetContents->setFixedHeight(ui->scrollAreaWidgetContents->sizeHint().height());
 
+    qDebug()<<"room_.build_id:"<<room_.build_id
+    <<"room_.space_id:"<<room_.space_id
+    <<"room_.id:"<<room_.id;
 }
 
 void lightPage::goBackSlot()
@@ -106,25 +110,30 @@ void lightPage::acceptPush(deviceDataStruct data){
             <<"functionType:"<<data.functionType
            <<"build_id:"<<data.houseId
           <<"spaceId:"<<data.spaceId
-         <<"roomId:"<<data.roomId;
-
-    if (data.functionType == FT_SWITCH
+         <<"roomId:"<<data.roomId
+    <<"room_.build_id:"<<room_.build_id
+    <<"room_.space_id:"<<room_.space_id
+    <<"room_.id:"<<room_.id;
+    if (data.deviceType == DT_LIGHT
             && room_.build_id == data.houseId
             && room_.space_id == data.spaceId
             && room_.id == data.roomId){
         for (int i=0;i<lightWidgetList_.size();i++) {
             btnTwoSlider* light = lightWidgetList_[i];
-            QString brightness;
-            QString colorTemperature;
-            QString hue;
             if(light->getGroupId(data.functionType) == data.groupId){
                 switch (data.functionType) {
                 case FT_SWITCH:
                     light->setSwitch(data.value == "1",true);
+                    ui->scrollAreaWidgetContents->setFixedHeight(ui->scrollAreaWidgetContents->sizeHint().height());
+
                 case FT_BRIGHTNESS:
+                    //约定亮度=0不改变样式
+                    if(data.value == 0) return;
+                    qDebug()<<"FT_BRIGHTNESS"<<data.value;
                     light->setBrightness(data.value);
                     break;
                 case FT_COLOR_TEMPERATURE:
+                    qDebug()<<"FT_COLOR_TEMPERATURE"<<data.value;
                     light->setColorTemperature(data.value);
                     break;
                 case FT_HUE:

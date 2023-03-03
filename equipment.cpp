@@ -300,7 +300,7 @@ bool equipment::init()
 
                     QVariantList roomList = spaceV["rooms"].toList();
                     QVector<roomStruct> roomListS = {};
-
+                    roomList.append(roomList[0]);
                     for(int r=0;r<roomList.size();r++){
 
                         QVariantMap roomV = roomList[r].toMap();
@@ -334,7 +334,7 @@ bool equipment::init()
                             roomS.current_scene = roomV["current_scene"].toString();
                         }
 
-                        if(roomV.find("param") != roomV.end()){
+                        /*if(roomV.find("param") != roomV.end()){
                             QVariantList params = roomV["param"].toList();
                             QVector<roomParamStruct> roomParamList;
                             for(int p=0;p<params.size();p++){
@@ -360,7 +360,40 @@ bool equipment::init()
                             }
 
                             roomS.params = roomParamList;
-                        }
+                        }*/
+                        QVector<roomParamStruct> roomParamList;
+                            roomParamStruct roomParamS2 = {};
+                            roomParamS2.name = "temp";
+                            roomParamS2.title = "温度";
+                            roomParamS2.value = "26";
+                            roomParamS2.unit = "°C";
+                            roomParamList.push_back(roomParamS2);
+                            roomParamStruct roomParamS3 = {};
+                            roomParamS3.name = "humidity";
+                            roomParamS3.title = "湿度";
+                            roomParamS3.value = "52";
+                            roomParamS3.unit = "%rh";
+                            roomParamList.push_back(roomParamS3);
+                            roomParamStruct roomParamS1 = {};
+                            roomParamS1.name = "CO₂";
+                            roomParamS1.title = "CO₂";
+                            roomParamS1.value = "560";
+                            roomParamS1.unit = "ppm";
+                            roomParamList.push_back(roomParamS1);
+                            roomParamStruct roomParamS4 = {};
+                            roomParamS4.name = "PM25";
+                            roomParamS4.title = "PM2.5";
+                            roomParamS4.value = "28";
+                            roomParamS4.unit = "μg/m³";
+                            roomParamList.push_back(roomParamS4);
+                            roomParamStruct roomParamS5 = {};
+                            roomParamS5.name = "air_quality";
+                            roomParamS5.title = "空气质量";
+                            roomParamS5.value = "优";
+                            roomParamS5.unit = "";
+                            roomParamList.push_back(roomParamS5);
+                        roomS.params = roomParamList;
+
 
                         if(roomV.find("scenes") != roomV.end()){
                             QVariantMap scenesListV = roomV["scenes"].toMap();

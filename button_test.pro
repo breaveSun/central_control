@@ -1,5 +1,5 @@
 QT       +=  core gui
-QT       +=  websockets network  qml quick
+QT       +=  websockets network  qml quick printsupport
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
@@ -34,6 +34,7 @@ SOURCES += \
     labelbtn.cpp \
     light.cpp \
     lightpage.cpp \
+    listbtn.cpp \
     logindlg.cpp \
     main.cpp \
     mainpage.cpp \
@@ -43,6 +44,7 @@ SOURCES += \
     mylineedit.cpp \
     myscollarea.cpp \
     myslider.cpp \
+    pagehead.cpp \
     printer.cpp \
     rgbslider.cpp \
     roomcard.cpp \
@@ -75,6 +77,7 @@ HEADERS += \
     labelbtn.h \
     light.h \
     lightpage.h \
+    listbtn.h \
     logindlg.h \
     mainpage.h \
     mainwindow.h \
@@ -83,6 +86,7 @@ HEADERS += \
     mylineedit.h \
     myscollarea.h \
     myslider.h \
+    pagehead.h \
     printer.h \
     rgbslider.h \
     roomcard.h \
@@ -107,12 +111,14 @@ FORMS += \
     horizontalbtn.ui \
     labelbtn.ui \
     lightpage.ui \
+    listbtn.ui \
     logindlg.ui \
     mainpage.ui \
     mainwindow.ui \
     messagecenter.ui \
     messagecenteritem.ui \
     myslider.ui \
+    pagehead.ui \
     rgbslider.ui \
     roomcard.ui \
     titleicon.ui \

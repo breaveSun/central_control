@@ -1,6 +1,7 @@
 #include "myslider.h"
 #include "ui_myslider.h"
 #include <qdebug.h>
+#include <QtCore/qmath.h>
 
 mySlider::mySlider(QWidget *parent) :
     QWidget(parent),
@@ -8,6 +9,7 @@ mySlider::mySlider(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->hSlider->setRange(min_,max_);
+    ui->sliderTitle->setFixedWidth(30);
     connect(ui->hSlider,&QSlider::sliderMoved,this,&mySlider::move);
     connect(ui->hSlider,&QSlider::sliderReleased,this,&mySlider::released);
     connect(ui->hSlider,&QSlider::sliderPressed,this,&mySlider::pressed);
@@ -54,6 +56,17 @@ void mySlider::setRange(int min,int max){
     ui->hSlider->setRange(min,max);
 }
 
+void mySlider::setPageStep(int step){
+    step_ = step;
+//    ui->hSlider->setTickInterval(step);
+//    ui->hSlider->setPageStep(step);
+}
+
+
+void mySlider::setTitleWidth(int width){
+    ui->sliderTitle->setFixedWidth(width);
+}
+
 int mySlider::getNum(){
     return ui->hSlider->value();
 }
@@ -71,6 +84,15 @@ void mySlider::move(int position){
 
 void mySlider::released(){
     int value = ui->hSlider->value();
+    if(step_>1){
+        int rem = value%step_;
+        if(rem>(step_/2)){
+            value = (value/step_+1)*step_;
+        } else {
+            value = (value/step_)*step_;
+        }
+        ui->hSlider->setValue(value);
+    }
     ui->sliderNum->setText(QString::number(value));
     emit sliderReleased();
 }

@@ -19,6 +19,8 @@ public:
     void setNum(QString num);
     void setUnit(QString unit);
     void setRange(int min,int max);
+    void setPageStep(int step);
+    void setTitleWidth(int width = 30);
 
     int getNum();
     int max();
@@ -37,6 +39,7 @@ private:
     Ui::mySlider *ui;
     int min_ = 0;
     int max_ = 100;
+    int step_ = 1;
 };
 
 #endif // MYSLIDER_H

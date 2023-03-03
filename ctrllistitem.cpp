@@ -7,9 +7,7 @@ ctrlListItem::ctrlListItem(QWidget *parent) :
     ui(new Ui::ctrlListItem)
 {
     ui->setupUi(this);
-    //设置右侧按钮图标
-    Common::setButtonIcon(ui->goPage,icon::getIcon("more"));
-    connect(ui->goPage, &QPushButton::clicked, this, &ctrlListItem::goDetailPage);
+    connect(ui->item, SIGNAL(btnClick()), this, SLOT(goDetailPage()));
 }
 
 ctrlListItem::~ctrlListItem()
@@ -18,11 +16,11 @@ ctrlListItem::~ctrlListItem()
 }
 
 void ctrlListItem::setName(QString name){
-    ui->ctrlListTitle->setText(name);
+    ui->item->setName(name);
 }
 
 void ctrlListItem::setIcon(int icon){
-    ui->ctrlListTitle->setIcon(icon);
+    ui->item->setIcon(icon);
 }
 
 void ctrlListItem::setGoPageData(enum PageBack pb,int houseId,int spaceId,int roomId){

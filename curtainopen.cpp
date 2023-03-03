@@ -19,8 +19,10 @@ curtainOpen::curtainOpen(QWidget *parent) :
     ui->stop->setIcon(icon::getIcon("pause"));
     ui->openCloseSlider->setTitle("开合度");
     ui->openCloseSlider->setUnit("%");
+    ui->openCloseSlider->setTitleWidth(40);
     ui->angleSlider->setTitle("角度");
     ui->angleSlider->setUnit("°");
+    ui->angleSlider->setTitleWidth(40);
     connect(ui->open, SIGNAL(btnPressed()), this, SLOT(startOpen()));
     connect(ui->close, SIGNAL(btnPressed()), this, SLOT(startClose()));
     connect(ui->stop, SIGNAL(btnPressed()), this, SLOT(stopPressed()));
@@ -61,14 +63,18 @@ void curtainOpen::setData(curtainStruct curtain){
         ui->openCloseSlider->hide();
     }else {
         ui->openCloseSlider->show();
-        ui->openCloseSlider->setNum(equipment::getDeviceValue(curtain_.position_feedback));
+        QString positionNum = equipment::getDeviceValue(curtain_.position_feedback);
+        positionNum = positionNum.isEmpty()?"0":positionNum;
+        ui->openCloseSlider->setNum(positionNum);
     }
     //角度
     if(curtain_.function.angle==0){
         hideAngle();
     } else {
         showAngle();
-        ui->angleSlider->setNum(equipment::getDeviceValue(curtain_.position_feedback));
+        QString angleNum = equipment::getDeviceValue(curtain_.position_feedback);
+        angleNum = angleNum.isEmpty()?"0":angleNum;
+        ui->angleSlider->setNum(angleNum);
     }
 
     //窗帘方向

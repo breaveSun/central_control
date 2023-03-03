@@ -63,24 +63,16 @@ void wsClient::on_error(QAbstractSocket::SocketError error)
 void wsClient::on_textMessageReceived(const QString& message)
 {
     qDebug()<<"receive::"+message;
-    //灯开关
-//    QString selfMsg = "{\"type\":\"device\",\"data\":{\"1/4/13\":\"0\"}}";
-    //灯亮度
-//    QString selfMsg = "{\"type\":\"device\",\"data\":{\"1/5/14\":\"77\"}}";
-//    //灯色温
-//    QString selfMsg = "{\"type\":\"device\",\"data\":{\"1/0/14\":\"3300\"}}";
-//    //灯颜色
-//    QString selfMsg = "{\"type\":\"device\",\"data\":{\"1/7/14\":\"00FF00\"}}";
-    //窗帘开关
-//        QString selfMsg = "{\"type\":\"device\",\"data\":{\"3/4/1\":\"0\"}}";
-//        //窗帘开合度
-//        QString selfMsg = ""{\"type\":\"device\",\"data\":{\"3/5/1\":\"86\"}}";
+    QString zhuTem = "{\"type\":\"device_update\",\"data\":{\"2/7/1\":\"3900\"}}";
+    QString dengBright = "{\"type\":\"device_update\",\"data\":{\"2/5/2\":\"20\"}}";
+    QString dengSwitch = "{\"type\":\"device_update\",\"data\":{\"2/4/2\":\"1\"}}";
 
-    QString selfMsg = "{\"type\":\"message\",\"data\":{\"id\":69,\"title\":\"系统消息\",\"date_time\":\"2023/01/05 12:30\",\"content\":\"【系统升级】有升级啦！千峰智能空间系统2.0版本已经下载成功，我们将在今晚的8点正式为您更新。\",\"icon\":\"info\",\"status\":0,\"type\":0}}";
+    QString lianSwitch = "{\"type\":\"device_update\",\"data\":{\"3/4/3\":\"0\"}}";
+    QString message1 = "{\"type\":\"message\",\"data\":{\"id\":69,\"title\":\"系统消息\",\"date_time\":\"2023/01/05 12:30\",\"content\":\"【系统升级】有升级啦！千峰智能空间系统2.0版本已经下载成功，我们将在今晚的8点正式为您更新。\",\"icon\":\"info\",\"status\":0,\"type\":0}}";
 
 
 
-    QVariantMap mapV = Common::StringToVariantMap(selfMsg);
+    QVariantMap mapV = Common::StringToVariantMap(message);
     QString type = mapV["type"].toString();
     if(type == "message"){
         QVariantMap messageMap = mapV["data"].toMap();
@@ -93,15 +85,17 @@ void wsClient::on_textMessageReceived(const QString& message)
         message.status = 0;
         message.type = messageMap["type"].toInt();
         emit notices(message);
-    }else if(type == "device"){
+    }else if(type == "device_update"){
         QVariantMap deviceMap = mapV["data"].toMap();
         QVariantMap::iterator iter;
-         for(iter=deviceMap.begin(); iter!=deviceMap.end(); iter++){
-             equipment::setDeviceStruct(iter.key(),iter.value().toString());
-             deviceDataStruct deviceData = equipment::getDeviceStruct(iter.key());
-             deviceData.value = iter.value().toString();
+//         for(iter=deviceMap.begin(); iter!=deviceMap.end(); iter++){
+            QString key = deviceMap["key"].toString();
+            QString value = deviceMap["value"].toString();
+             equipment::setDeviceStruct(key,value);
+             deviceDataStruct deviceData = equipment::getDeviceStruct(key);
+             deviceData.value = value;
              emit notices(deviceData);
-         }
+//         }
     }
 
 }

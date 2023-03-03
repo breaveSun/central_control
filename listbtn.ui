@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ctrlListItem</class>
- <widget class="QWidget" name="ctrlListItem">
+ <class>listBtn</class>
+ <widget class="QWidget" name="listBtn">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>100</height>
+    <height>300</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -36,25 +36,20 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="listBtn" name="item" native="true">
+    <widget class="QToolButton" name="listBtnItem">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="text">
+      <string/>
+     </property>
     </widget>
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>listBtn</class>
-   <extends>QWidget</extends>
-   <header location="global">listbtn.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -20,9 +20,11 @@ btnTwoSlider::btnTwoSlider(QWidget *parent) :
     ui->lightSet->setVisible(false);
     ui->lightNumSlider->setTitle("亮度");
     ui->lightNumSlider->setUnit("%");
+    ui->lightNumSlider->setRange(10,100);
     connect(ui->lightNumSlider, SIGNAL(sliderReleased()), SLOT(brightnessValueChanged()));
     ui->temNumSlider->setTitle("色温");
     ui->temNumSlider->setUnit("K");
+    ui->temNumSlider->setPageStep(100);
     connect(ui->temNumSlider, SIGNAL(sliderReleased()), SLOT(colorTemperatureValueChanged()));
 
     pColorTextPreFix_ = new QLabel;
@@ -33,9 +35,10 @@ btnTwoSlider::btnTwoSlider(QWidget *parent) :
     pLayoutInfoComing_->addWidget(pColorTextPreFix_);
     ui->rgbEdit->setAlignment( Qt::AlignVCenter);
     ui->rgbEdit->setStyleSheet("#rgbEdit{padding-left:18px;background-color: rgb(53,54,56);}#colorTextPreFix{background-color: rgb(53,54,56);}");
-//    connect(ui->rgbEdit,SIGNAL(mouseReleased()),this,SIGNAL(colorTxtMouseReleased()));
-//    connect(ui->rgbEdit,SIGNAL(focusOut()),this,SIGNAL(focusOut()));
-//    qDebug()<<connect(ui->rgbEdit,SIGNAL(focusIn()),this,SIGNAL(focusIn()));
+    connect(ui->rgbEdit,SIGNAL(editingFinished()),this,SLOT(editingFinished()));
+//    connect(ui->rgbEdit,SIGNAL(returnPressed()),this,SLOT(returnPressed()));
+//    connect(ui->rgbEdit,SIGNAL(textChanged(QString)),this,SLOT(textChanged(QString)));//文本改变发送信号，setText也会发送
+    connect(ui->rgbEdit,SIGNAL(textEdited(QString)),this,SLOT(textEdited(QString)));//文本改变发送信号，setText不会发送
 
     ui->rSlider_2->setRange(0,255);
     ui->rSlider_2->setTitle("R");
@@ -47,7 +50,6 @@ btnTwoSlider::btnTwoSlider(QWidget *parent) :
     connect(ui->gSlider_2, SIGNAL(sliderReleased()), SLOT(rgbValueChanged()));
     connect(ui->bSlider_2, SIGNAL(sliderReleased()), SLOT(rgbValueChanged()));
 
-    //    pColorTextPreFix_->setStyleSheet("background-color:#EB4D3C;color:#FFFFFF;");
 
 }
 
@@ -134,6 +136,16 @@ void btnTwoSlider::setSwitch(bool s,bool block){
     if(block){
         ui->lightListSwitch->blockSignals(false);
     }
+    //灯光控制项展开和关闭
+    ui->lightSet->setVisible(s);
+    ui->lightFrame->setFixedHeight(ui->lightFrame->sizeHint().height());
+    setFixedHeight(sizeHint().height());
+    //修改背景色
+    if (s){
+        setStyleSheet("background-color:rgb(34,34,34);");
+    } else {
+        setStyleSheet("background-color:rgb(23,23,23);");
+    }
 }
 
 void btnTwoSlider::setBrightness(QString num){
@@ -174,6 +186,12 @@ void btnTwoSlider::showColor(){
 }
 
 QString btnTwoSlider::getGroupId(FUNCTION_TYPE ft){
+    qDebug()<<__FUNCTION__
+           <<lighting_.switch_feedback
+          <<":"<<lighting_.dimming_absolute_feedback
+         <<":"<<lighting_.color_temperature_feedback
+        <<":"<<lighting_.hue_feedback;
+
     switch (ft) {
     case FT_SWITCH:
         return lighting_.switch_feedback;
@@ -204,7 +222,8 @@ QString btnTwoSlider::getName(){
 }
 void btnTwoSlider::statusChanged(qint16 id,bool checked)
 {
-    //灯光控制项展开和关闭
+#ifndef _PRODUCT_
+   //灯光控制项展开和关闭
     ui->lightSet->setVisible(checked);
     ui->lightFrame->setFixedHeight(ui->lightFrame->sizeHint().height());
     setFixedHeight(sizeHint().height());
@@ -214,6 +233,7 @@ void btnTwoSlider::statusChanged(qint16 id,bool checked)
     } else {
         setStyleSheet("background-color:rgb(23,23,23);");
     }
+#endif
 
     //发送请求
     QVariantMap lightMap;
@@ -223,10 +243,7 @@ void btnTwoSlider::statusChanged(qint16 id,bool checked)
     data.append(lightMap);
     QString jsonStr = Common::ListToString(data);
     equipment::lightControl(jsonStr);
-
-
     emit lightSwitch();
-
 }
 
 void btnTwoSlider::rgbValueChanged(){
@@ -268,6 +285,26 @@ void btnTwoSlider::colorTemperatureValueChanged(){
     data.append(lightMap);
     QString jsonStr = Common::ListToString(data);
     equipment::lightControl(jsonStr);
+}
+
+void btnTwoSlider::editingFinished(){
+    qDebug()<<__FUNCTION__;
+}
+
+//void btnTwoSlider::returnPressed(){
+//    qDebug()<<__FUNCTION__;
+//}
+
+void btnTwoSlider::textEdited(QString txt){
+    qDebug()<<__FUNCTION__<<txt;
+    //判断字符串是否合法
+    //长度限制6个字符
+    if(txt.length()>6){
+        txt = txt.left(6);
+        ui->rgbEdit->setText(txt);
+    }
+    //合法保存失焦
+    //todo::字符判断
 }
 
 std::string btnTwoSlider::toHex(int num)

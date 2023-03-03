@@ -20,6 +20,12 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="spacing">
+    <number>20</number>
+   </property>
+   <property name="topMargin">
+    <number>20</number>
+   </property>
    <item>
     <widget class="QWidget" name="widget" native="true">
      <property name="sizePolicy">
@@ -32,8 +38,14 @@
       <property name="leftMargin">
        <number>18</number>
       </property>
+      <property name="topMargin">
+       <number>11</number>
+      </property>
       <property name="rightMargin">
        <number>18</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
       </property>
       <item>
        <widget class="QWidget" name="locationWeather" native="true">
@@ -63,19 +75,19 @@
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <property name="spacing">
-          <number>0</number>
+          <number>3</number>
          </property>
          <property name="leftMargin">
           <number>10</number>
          </property>
          <property name="topMargin">
-          <number>2</number>
+          <number>0</number>
          </property>
          <property name="rightMargin">
           <number>10</number>
          </property>
          <property name="bottomMargin">
-          <number>2</number>
+          <number>0</number>
          </property>
          <item>
           <widget class="QLabel" name="locationIcon">
@@ -243,36 +255,6 @@
         </property>
        </spacer>
       </item>
-      <item>
-       <widget class="QPushButton" name="closeAllDevices">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>90</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>9</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>关闭全部设备</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
@@ -358,16 +340,16 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
        <property name="spacing">
-        <number>30</number>
+        <number>20</number>
        </property>
        <property name="leftMargin">
-        <number>5</number>
+        <number>15</number>
        </property>
        <property name="topMargin">
         <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>5</number>
+        <number>15</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>

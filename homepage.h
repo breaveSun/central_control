@@ -28,7 +28,7 @@ private slots:
     void spacesChange(bool clicked);
     void spaceChangeWidgetHide();
     void updateRooms(int houseId,int spaceId);
-    void closeAllDevices(bool checked);
+    /*void closeAllDevices(bool checked);*/
     void messageList(bool checked);
     //接收服务器推送
     void acceptPush(deviceDataStruct data);

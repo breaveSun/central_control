@@ -2,15 +2,18 @@
 #include "ui_ctrllistpage.h"
 #include "ctrllistitem.h"
 #include "equipment.h"
-#include "common.h"
 #include "icon.h"
+#include "pagehead.h"
 
 ctrlListPage::ctrlListPage(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ctrlListPage)
 {
     ui->setupUi(this);
-    ui->titleLabel->setText("设备控制");
+    ui->title->setTitle("设备控制");
+    ui->title->addBackBtn();
+
+
     pLightCtrl_ = new ctrlListItem;
     pLightCtrl_->setIcon(icon::getIcon("lighting_control"));
     pLightCtrl_->setName("照明控制");
@@ -22,11 +25,9 @@ ctrlListPage::ctrlListPage(QWidget *parent) :
     ui->scrollAreaWidgetContents->layout()->addWidget(pLightCtrl_);
     ui->scrollAreaWidgetContents->layout()->addWidget(pCurtainCtrl_);
 
-    //给返回按钮设置图标
-    Common::setButtonIcon(ui->ctrlListpageBack,icon::getIcon("return"));
 
     //返回页面跳转
-    connect(ui->ctrlListpageBack,&QPushButton::clicked,this,&ctrlListPage::goBackSlot);
+    connect(ui->title,SIGNAL(backClick()),this,SLOT(goBackSlot()));
 
     //详情页面跳转
     connect(pLightCtrl_,SIGNAL(goDetailPageSignal(PageBack,int,int,int)),this,SLOT(goLightDetailSlot(PageBack,int,int,int)));
