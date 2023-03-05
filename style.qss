@@ -49,6 +49,7 @@
 #sceneConf #vIconTxtBtn{
     border-radius:15px;
 }
+
 #sceneConf #slipLeft,#sceneConf #slipRight{
     font:30px;
     font-weight:bold;
@@ -61,6 +62,44 @@
 #spacesList QPushButton{
     text-align:left;
 }
+
+#pageTitle,#listItem #titleName{
+    color:#FFFFFF;
+    font:20px;
+    font-weight:bold;
+}
+
+#listBtn{
+    font:16px;
+    background-color:#353638;
+    padding:5px 10px;
+    border-radius:15px;
+}
+
+#lightFrame{
+    border-radius:20px;
+}
+
+#lightTitle #titleName{
+    color:#FFFFFF;
+    font:20px;
+}
+
+#lightSet *{
+    font:18px;
+}
+
+#rgbChange{
+    border-radius:15px;
+}
+
+#rgbEdit{
+    border-radius:15px;
+}
+
+
+
+
 
 
 

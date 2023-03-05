@@ -20,10 +20,12 @@ btnTwoSlider::btnTwoSlider(QWidget *parent) :
     ui->lightNumSlider->setTitle("亮度");
     ui->lightNumSlider->setUnit("%");
     ui->lightNumSlider->setRange(10,100);
+    ui->lightNumSlider->setTitleWidth(40);
     connect(ui->lightNumSlider, SIGNAL(sliderReleased()), SLOT(brightnessValueChanged()));
     ui->temNumSlider->setTitle("色温");
     ui->temNumSlider->setUnit("K");
     ui->temNumSlider->setPageStep(100);
+    ui->temNumSlider->setTitleWidth(40);
     connect(ui->temNumSlider, SIGNAL(sliderReleased()), SLOT(colorTemperatureValueChanged()));
 
     pColorTextPreFix_ = new QLabel;
@@ -41,10 +43,13 @@ btnTwoSlider::btnTwoSlider(QWidget *parent) :
 
     ui->rSlider_2->setRange(0,255);
     ui->rSlider_2->setTitle("R");
+    ui->rSlider_2->setTitleWidth(40);
     ui->gSlider_2->setRange(0,255);
     ui->gSlider_2->setTitle("G");
+    ui->gSlider_2->setTitleWidth(40);
     ui->bSlider_2->setRange(0,255);
     ui->bSlider_2->setTitle("B");
+    ui->bSlider_2->setTitleWidth(40);
     connect(ui->rSlider_2, SIGNAL(sliderReleased()), SLOT(rgbValueChanged()));
     connect(ui->gSlider_2, SIGNAL(sliderReleased()), SLOT(rgbValueChanged()));
     connect(ui->bSlider_2, SIGNAL(sliderReleased()), SLOT(rgbValueChanged()));
@@ -89,6 +94,7 @@ void btnTwoSlider::setData(lightingStruct lighting){
         showColor();
         //todo::默认值应该在读取数据的时候确认
         QString hueValue = equipment::getDeviceValue(lighting_.hue_feedback);
+        if (hueValue.isEmpty()) hueValue = "000000";
         ui->rgbEdit->setText(hueValue);
         txtSetColor(hueValue);
     }
