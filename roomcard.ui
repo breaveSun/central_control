@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>315</height>
+    <height>335</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -48,31 +48,37 @@
        <number>20</number>
       </property>
       <property name="leftMargin">
-       <number>25</number>
+       <number>20</number>
       </property>
       <property name="topMargin">
-       <number>10</number>
+       <number>20</number>
       </property>
       <property name="rightMargin">
-       <number>25</number>
+       <number>20</number>
       </property>
       <property name="bottomMargin">
-       <number>25</number>
+       <number>20</number>
       </property>
       <item>
        <widget class="QWidget" name="roomCardTitle" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout_9">
          <property name="leftMargin">
-          <number>18</number>
+          <number>0</number>
          </property>
          <property name="topMargin">
-          <number>10</number>
+          <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>18</number>
+          <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>10</number>
+          <number>0</number>
          </property>
          <item>
           <widget class="titleIcon" name="roomTitle" native="true">
@@ -81,32 +87,6 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>329</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="horizontalBtn" name="oneClickClose" native="true">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">border-color: rgb(239, 41, 41);</string>
            </property>
           </widget>
          </item>
@@ -123,16 +103,16 @@
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <property name="spacing">
-          <number>30</number>
+          <number>40</number>
          </property>
          <property name="leftMargin">
-          <number>18</number>
+          <number>0</number>
          </property>
          <property name="topMargin">
           <number>12</number>
          </property>
          <property name="rightMargin">
-          <number>18</number>
+          <number>0</number>
          </property>
          <property name="bottomMargin">
           <number>12</number>
@@ -141,16 +121,16 @@
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="widget_3" native="true">
+       <widget class="QWidget" name="devicesInfo" native="true">
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <property name="leftMargin">
-          <number>18</number>
+          <number>0</number>
          </property>
          <property name="topMargin">
           <number>12</number>
          </property>
          <property name="rightMargin">
-          <number>18</number>
+          <number>0</number>
          </property>
          <property name="bottomMargin">
           <number>12</number>
@@ -188,7 +168,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>设备数量：</string>
+               <string>设备数：</string>
               </property>
              </widget>
             </item>
@@ -290,51 +270,71 @@
           </spacer>
          </item>
          <item>
-          <widget class="btnTxtIcon" name="checkDevice" native="true">
+          <widget class="QWidget" name="checkDeviceWidget" native="true">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="font">
-            <font>
-             <pointsize>13</pointsize>
-            </font>
-           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="btnTxtIcon" name="checkDevice" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>13</pointsize>
+               </font>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="widget_4" native="true">
+       <widget class="QWidget" name="sceneTitle" native="true">
         <layout class="QHBoxLayout" name="horizontalLayout_6">
          <property name="leftMargin">
-          <number>18</number>
+          <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>18</number>
+          <number>0</number>
          </property>
          <item>
           <widget class="QLabel" name="label_3">
            <property name="text">
-            <string>场景切换</string>
+            <string>场景</string>
            </property>
           </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_4">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
          </item>
         </layout>
        </widget>
@@ -352,13 +352,13 @@
           <number>12</number>
          </property>
          <property name="leftMargin">
-          <number>18</number>
+          <number>0</number>
          </property>
          <property name="topMargin">
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>18</number>
+          <number>0</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
@@ -502,12 +502,6 @@
    <class>titleIcon</class>
    <extends>QWidget</extends>
    <header>titleicon.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>horizontalBtn</class>
-   <extends>QWidget</extends>
-   <header>horizontalbtn.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

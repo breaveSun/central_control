@@ -15,7 +15,7 @@ public:
     explicit titleIcon(QWidget *parent = nullptr);
     ~titleIcon();
     void setText(QString name);
-    void setIcon(int icon);
+    void setIcon(int icon,int size=30);
 
 private:
     Ui::titleIcon *ui;

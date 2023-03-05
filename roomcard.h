@@ -21,7 +21,7 @@ public:
 
     void setName(QString name);
 
-    void setIcon(int icon);
+    void setIcon(int icon,int size);
 
     void setData(roomStruct room);
 
@@ -42,7 +42,7 @@ private slots:
     void slipLeft();
     void slipRight();
     void checkDevice();
-    void onClickClose();
+//    void onClickClose();
     void changeScene(QString id);
     void sliderChanged(int value);
 

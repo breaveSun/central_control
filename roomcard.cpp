@@ -12,19 +12,17 @@ roomCard::roomCard(QWidget *parent) :
     ui(new Ui::roomCard)
 {
     ui->setupUi(this);
-    ui->oneClickClose->setIcon("power");
-    ui->oneClickClose->setTxt("一键关闭");
     ui->deviceNum->setText("0");
     ui->enabledNum->setText("0");
     ui->checkDevice->setTxt("查看设备");
-    ui->checkDevice->setIcon("rightwards");
+    ui->checkDevice->setIcon("rightwards",5);
     Common::setButtonIcon(ui->slipLeft,icon::getIcon("slip_left"));
     Common::setButtonIcon(ui->slipRight,icon::getIcon("slip_right"));
 
     connect(ui->slipLeft,&QPushButton::clicked,this,&roomCard::slipLeft);
     connect(ui->slipRight,&QPushButton::clicked,this,&roomCard::slipRight);
     connect(ui->checkDevice,SIGNAL(btnPressed()),this,SLOT(checkDevice()));
-    connect(ui->oneClickClose,SIGNAL(btnPressed()),this,SLOT(onClickClose()));
+    //connect(ui->oneClickClose,SIGNAL(btnPressed()),this,SLOT(onClickClose()));
 
     connect(ui->scrollArea->horizontalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(sliderChanged(int)));
 
@@ -40,14 +38,14 @@ void roomCard::setName(QString name){
     ui->roomTitle->setText(name);
 }
 
-void roomCard::setIcon(int icon){
-    ui->roomTitle->setIcon(icon);
+void roomCard::setIcon(int icon,int size){
+    ui->roomTitle->setIcon(icon,size);
 }
 
 void roomCard::setData(roomStruct room){
     room_ = room;
     setName(room_.name);
-    setIcon(icon::getIcon(room_.icon));
+    setIcon(icon::getIcon(room_.icon),35);
     setParams(room.params);
     setScenes(room.scenes,room.current_scene);
     int deviceNum = 0;
@@ -208,7 +206,7 @@ void roomCard::checkDevice(){
     emit goPage(PB_GO_CTRLLIST_PAGR,room_.build_id,room_.space_id,room_.id);
 }
 
-
+/*
 void roomCard::onClickClose(){
     //关闭所有灯
     QVariantList lightData;
@@ -234,7 +232,7 @@ void roomCard::onClickClose(){
     equipment::curtainControl(jsonStr);
     //设置已经开启设备数量
     ui->enabledNum->setText("0");
-}
+}*/
 
 
 void roomCard::changeScene(QString id){

@@ -3,148 +3,48 @@
     background-color:#171717;
     border-style: none;
 }
-#titleName{
-    color:#FFFFFF;
+#locationName,#weatherTxt{
+    font:20px;
 }
-#lightBack,#curtainBack,#ctrlListpageBack{
-    border-style: none;
+#spacesCloseAll #btnTxtIconFrame #txt{
+    font:25px;
 }
-/*灯光控制*/
-#lightFrame{
-    border-radius: 20px;
-}
-#btnTwoSlider{
-    border-radius: 15px;
-}
-/*#lightTitleList{
-    border-radius: 10px;
-}*/
-#rgbEdit{
-    border-radius: 5px;
-}
-#closeAll{
-    color: #BBBBBB;
-    background-color: #333334;
-    border-radius: 12px;
-}
-#lightIcone{
-    width:20px;
-    height:20px;
-    margin-left: 20px;
-    background-size: cover;
-}
-#lightName{
-    font-size: 16px;
-    font-weight: 2px;
-}
-#lightListSwitch{
-    width:40px;
-    height:20px;
-}
-#rgbChange{
-    border-radius: 10px;
-}
-/*窗帘*/
-#curtainButtonW{
-    border-top:1px solid rgb(28,28,28);
-    border-bottom:1px solid rgb(28,28,28);
-}
-#curtainW1,#curtainW2{
-    background-color: rgb(28,28,28);
-}
-#icon,#txt{
-    border:0px solid rgb(28,28,28);
-}
-#curtainFrame{
-    border-radius: 20px;
-}
-#close{
-    border-right:1px solid #1C1C1C;
-}
-#curtainOpen{
-    background-color: #222222;
-}
-#openCloseSlider{
-    margin-top:30px;
-}
-/*控制列表*/
-#goPage{
-    border-style: none;
-}
-/*主页*/
-#msg,#personalCenter,#spaceComboBox,#spaceComboBoxBtn,#oneClickClose QPushButton,#sceneConf *,#spacesContents QPushButton{
-    border-style: none;
+#roomCardFrame,#roomCardFrame *{
+    background-color:#222222;
 }
 #roomCardFrame{
-    background-color: #222222;
-    border-radius: 18px;
+    border-radius:20px;
 }
-#roomCardFrame *{
-    background-color: #222222;
+#roomCardTitle #titleName{
+    color:#FFFFFF;
 }
-
-#locationWeather{
-    color: #BBBBBB;
-    border-radius: 12px;
-    background-color: #222222;
+#statusParam #num{
+    font:25px;
 }
-#locationWeather *{
-    background-color: #222222;
-}
-
-#closeAllDevices{
-    color: #BBBBBB;
-    background-color: #2F2F31;
-    border-radius: 14px;
-}
-
-/*半圆图标+文字按钮*/
-#oneClickClose>QFrame,#editScene>QFrame,#checkDevice>QFrame{
-    border-radius: 14px;
-}
-#oneClickClose *,#editScene *,#checkDevice *{
-    font-size:9pt;
-    color: #BBBBBB;
-    background-color: #353638;
+#statusParam #title{
+    font:18px;
 }
 
 #enabledNum{
     color:#D2AA74;
 }
 
-#sceneConf #frame{
-    border-radius: 10px;
+#devicesInfo *,#sceneTitle *{
+    font:20px;
 }
-
-#changeSpaceFrame #line{
-    background-color: #BCBCBC;
+#sceneConf *{
+    font:17px;
 }
-
-#fingerboardFrame{
-    background-color: #112233;
+#devicesInfo #icon{
+    font:15px;
 }
-#verticalicontextBKFrame{
-    border-radius: 10px;
+#sceneConf #icon{
+    font:30px;
 }
-
-/*16进制键盘样式*/
-#btnA,#btnB,#btnC,#btnD,#btnE,#btnF,#btnDel,#btnDefine{
-    font-size:18pt;
-    color:#FFFFFF;
-    border-radius: 8px;
-    background-color: #4B4B4B;
+#checkDeviceWidget, #checkDeviceWidget *{
+    background-color:#353638;
+    border-radius:20px;
 }
-#btn0,#btn1,#btn2,#btn3,#btn4,#btn5,#btn6,#btn7,#btn8,#btn9{
-    font-size:20pt;
-    color:#FFFFFF;
-    border-radius: 8px;
-    background-color: #6F6F6F;
+#sceneConf #verticalicontextBKFrame{
+    border-radius:15px;
 }
-/*测试使用
-#lightScrollArea{
-    border:1px solid red;
-}
-
-#scrollAreaWidgetContents{
-    border:1px solid green;
-}*/

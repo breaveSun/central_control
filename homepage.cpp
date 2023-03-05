@@ -25,8 +25,8 @@ homePage::homePage(QWidget *parent) :
     ui->locationName->setText("拱墅区");
     Common::setLabelIcon(ui->weatherIcon,icon::getIcon("cloudy_to_clear"),20);
     ui->weatherTxt->setText("15°C");
-    Common::setButtonIcon(ui->msg,icon::getIcon("msg"));
-    Common::setButtonIcon(ui->personalCenter,icon::getIcon("my"));
+    Common::setButtonIcon(ui->msg,icon::getIcon("msg"),40);
+    Common::setButtonIcon(ui->personalCenter,icon::getIcon("my"),40);
 
     //加载页面数据
     setData(houseId_,spaceId_);

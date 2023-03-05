@@ -18,8 +18,8 @@ titleIcon::~titleIcon()
 void titleIcon::setText(QString name){
     ui->titleName->setText(name);
 }
-void titleIcon::setIcon(int icon){
-    Common::setLabelIcon(ui->titleIcone,icon);
+void titleIcon::setIcon(int icon,int size){
+    Common::setLabelIcon(ui->titleIcone,icon,size);
 //    ui->titleIcone->setStyleSheet("font-family: iconfont");
 //    ui->titleIcone->setFont(Common::loadIcon(30));
 //    bool ok;
