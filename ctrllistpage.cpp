@@ -10,16 +10,16 @@ ctrlListPage::ctrlListPage(QWidget *parent) :
     ui(new Ui::ctrlListPage)
 {
     ui->setupUi(this);
-    ui->title->setTitle("设备控制");
+    ui->title->setTitle("设备guanli");
     ui->title->addBackBtn();
 
 
     pLightCtrl_ = new ctrlListItem;
     pLightCtrl_->setIcon(icon::getIcon("lighting_control"));
-    pLightCtrl_->setName("照明控制");
+    pLightCtrl_->setName("照明");
     pCurtainCtrl_ = new ctrlListItem;
     pCurtainCtrl_->setIcon(icon::getIcon("shading_control"));
-    pCurtainCtrl_->setName("遮光控制");
+    pCurtainCtrl_->setName("遮光");
 
 
     ui->scrollAreaWidgetContents->layout()->addWidget(pLightCtrl_);

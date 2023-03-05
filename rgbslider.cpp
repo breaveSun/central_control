@@ -52,6 +52,14 @@ void rgbSlider::setRange(int min,int max){
     ui->sliderLine->setRange(min,max);
 }
 
+void rgbSlider::setTitleWidth(int width){
+    ui->rgbNum->setFixedWidth(width);
+}
+
+int rgbSlider::max(){
+    return max_;
+}
+
 void rgbSlider::move(int position){
     ui->rgbNum->setText(QString::number(position));
     emit sliderMoved(position);

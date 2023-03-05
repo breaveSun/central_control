@@ -72,13 +72,13 @@
        <number>0</number>
       </property>
       <property name="leftMargin">
-       <number>20</number>
+       <number>15</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>20</number>
+       <number>15</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -207,13 +207,13 @@
           <number>30</number>
          </property>
          <property name="leftMargin">
-          <number>70</number>
+          <number>20</number>
          </property>
          <property name="topMargin">
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>15</number>
+          <number>20</number>
          </property>
          <property name="bottomMargin">
           <number>30</number>
@@ -375,13 +375,13 @@
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>80</width>
+                   <width>100</width>
                    <height>30</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>80</width>
+                   <width>100</width>
                    <height>30</height>
                   </size>
                  </property>
@@ -485,7 +485,7 @@
                 <number>20</number>
                </property>
                <property name="rightMargin">
-                <number>70</number>
+                <number>0</number>
                </property>
                <property name="bottomMargin">
                 <number>20</number>

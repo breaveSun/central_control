@@ -19,6 +19,8 @@ public:
     void setTitle(QString title);
     void setNum(int num);
     void setRange(int min, int max);
+    void setTitleWidth(int width = 30);
+    int max();
 signals:
     void sliderMoved(int value);
     void sliderReleased();
