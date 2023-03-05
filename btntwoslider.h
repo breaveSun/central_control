@@ -25,6 +25,7 @@ class btnTwoSlider : public QWidget
 {
     Q_OBJECT
 
+    QString rgbstr = "0123456789ABCDEFabcdef";
 public:
     explicit btnTwoSlider(QWidget *parent = nullptr);
     ~btnTwoSlider();

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>67</height>
+    <height>106</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -46,7 +46,7 @@
       <string>TextLabel</string>
      </property>
      <property name="textFormat">
-      <enum>Qt::MarkdownText</enum>
+      <enum>Qt::AutoText</enum>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

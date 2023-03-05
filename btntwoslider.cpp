@@ -5,7 +5,6 @@
 #include "equipment.h"
 #include <iostream>
 #include <qdebug.h>
-
 btnTwoSlider::btnTwoSlider(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::btnTwoSlider)
@@ -288,7 +287,35 @@ void btnTwoSlider::colorTemperatureValueChanged(){
 }
 
 void btnTwoSlider::editingFinished(){
-    qDebug()<<__FUNCTION__;
+    QString txt = ui->rgbEdit->text();
+    qDebug()<<__FUNCTION__<<txt;
+    //判断字符串是否合法
+    int len = txt.length();
+    //字符判断
+    bool enable = true;
+    if (len != 6){
+        enable = false;
+    }
+    for(int i=0;i<len;i++){
+        int index = rgbstr.indexOf(txt.at(i));
+        if(index<0){
+            //有非法字符
+            enable = false;
+            break;
+        }
+    }
+    if(enable){
+        //合法保存
+        txtSetColor(txt);
+        rgbValueChanged();
+    }else {
+        //数据回滚
+        QString hueValue = equipment::getDeviceValue(lighting_.hue_feedback);
+        setColor(hueValue);
+
+    }
+    ui->rgbEdit->setStyleSheet("#rgbEdit{border-style: none;padding-left:18px}");
+
 }
 
 //void btnTwoSlider::returnPressed(){
@@ -298,13 +325,25 @@ void btnTwoSlider::editingFinished(){
 void btnTwoSlider::textEdited(QString txt){
     qDebug()<<__FUNCTION__<<txt;
     //判断字符串是否合法
+    int len = txt.length();
     //长度限制6个字符
-    if(txt.length()>6){
+    if(len>6){
         txt = txt.left(6);
         ui->rgbEdit->setText(txt);
     }
-    //合法保存失焦
-    //todo::字符判断
+    bool red = false;
+    //字符判断
+    for(int i=0;i<len;i++){
+        int index = rgbstr.indexOf(txt.at(i));
+        if(index<0){
+            ui->rgbEdit->setStyleSheet("#rgbEdit{border:1px solid red;padding-left:18px}");
+            red = true;
+            break;
+        }
+    }
+    if(!red){
+        ui->rgbEdit->setStyleSheet("#rgbEdit{border-style: none;padding-left:18px}");
+    }
 }
 
 std::string btnTwoSlider::toHex(int num)
