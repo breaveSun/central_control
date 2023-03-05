@@ -5,6 +5,7 @@
 #include "verticaltxtunit.h"
 #include "verticalicontextbk.h"
 #include "equipment.h"
+#include "vicontxt.h"
 #include <QScrollBar>
 
 roomCard::roomCard(QWidget *parent) :
@@ -14,7 +15,7 @@ roomCard::roomCard(QWidget *parent) :
     ui->setupUi(this);
     ui->deviceNum->setText("0");
     ui->enabledNum->setText("0");
-    ui->checkDevice->setTxt("查看设备");
+    ui->checkDevice->setTxt("查看");
     ui->checkDevice->setIcon("rightwards",5);
     Common::setButtonIcon(ui->slipLeft,icon::getIcon("slip_left"));
     Common::setButtonIcon(ui->slipRight,icon::getIcon("slip_right"));
@@ -146,7 +147,7 @@ void roomCard::setScenes(QVector<roomSceneStruct> scenes,QString current_scene){
 
     if(scenesWidgetSize<scenesSize){
         while(scenesSize>scenesWidgetSize){
-            verticalicontextBK* vitbk = new verticalicontextBK(ui->scrollAreaWidgetContents);
+            vIconTxt* vitbk = new vIconTxt(ui->scrollAreaWidgetContents);
             scenesWidgetList_.append(vitbk);
             ui->scrollAreaWidgetContents->layout()->addWidget(vitbk);
             scenesWidgetSize++;
@@ -163,7 +164,7 @@ void roomCard::setScenes(QVector<roomSceneStruct> scenes,QString current_scene){
     }
 
     for (int i=0;i<scenesSize;i++) {
-        verticalicontextBK * vit = scenesWidgetList_[i];
+        vIconTxt * vit = scenesWidgetList_[i];
 
         roomSceneStruct sceneM = scenes[i];
         vit->setId(sceneM.id);

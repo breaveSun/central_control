@@ -160,47 +160,7 @@
       <bool>true</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">/*horizontal ：水平QSlider*/
-QSlider::groove:horizontal {
-border: 0px solid #bbb;
-}
-
-/*1.滑动过的槽设计参数*/
-QSlider::sub-page:horizontal {
-background: rgb(210,170,116);
-/*外环大小0px就是不显示，默认也是0*/
-border: 0px solid #777;
- /*外环区域倒圆角度*/
-border-radius: 2px;
- /*上遮住区域高度*/
-margin-top:8px;
- /*下遮住区域高度*/
-margin-bottom:8px;
-/*width在这里无效，不写即可*/
-}
-
-/*2.未滑动过的槽设计参数*/
-QSlider::add-page:horizontal {
-background: rgb(188,188, 188);
-/*外环大小0px就是不显示，默认也是0*/
-border: 0px solid #777;
-/*外环区域倒圆角度*/
-border-radius: 2px;
- /*上遮住区域高度*/
-margin-top:8px;
- /*下遮住区域高度*/
-margin-bottom:8px;
-}
- 
-/*3.平时滑动的滑块设计参数*/
-QSlider::handle:horizontal {
-/*滑块颜色*/
-background: rgb(255,255,255);
-/*滑块的宽度*/
-width: 20px;
- /*滑块外环倒圆角度*/
-border-radius: 10px; 
-}</string>
+      <string notr="true"/>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>

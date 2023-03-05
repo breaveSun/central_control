@@ -168,7 +168,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>设备数：</string>
+               <string>设备：</string>
               </property>
              </widget>
             </item>
@@ -231,7 +231,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>已开启：</string>
+               <string>开启：</string>
               </property>
              </widget>
             </item>

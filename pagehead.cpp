@@ -6,7 +6,6 @@ pageHead::pageHead(QWidget *parent) :
     ui(new Ui::pageHead)
 {
     ui->setupUi(this);
-
     pTitleHLayout = new QHBoxLayout(ui->pageTitle);
     pTitleHLayout->setMargin(0);
     //添加返回按钮

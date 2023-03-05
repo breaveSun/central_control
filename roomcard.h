@@ -8,7 +8,7 @@ namespace Ui {
 class roomCard;
 }
 class verticalTxtUnit;
-class verticalicontextBK;
+class vIconTxt;
 struct roomParamStruct;
 struct roomSceneStruct;
 class roomCard : public QWidget
@@ -49,7 +49,7 @@ private slots:
 private:
     Ui::roomCard *ui;
     QVector<verticalTxtUnit *> paramsWidgetList_;
-    QVector<verticalicontextBK *> scenesWidgetList_;
+    QVector<vIconTxt *> scenesWidgetList_;
     roomStruct room_;
 };
 

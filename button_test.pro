@@ -54,6 +54,7 @@ SOURCES += \
     verticalicontext.cpp \
     verticalicontextbk.cpp \
     verticaltxtunit.cpp \
+    vicontxt.cpp \
     wsclient.cpp
 
 HEADERS += \
@@ -96,6 +97,7 @@ HEADERS += \
     verticalicontext.h \
     verticalicontextbk.h \
     verticaltxtunit.h \
+    vicontxt.h \
     wsclient.h
 
 FORMS += \
@@ -124,7 +126,8 @@ FORMS += \
     titleicon.ui \
     verticalicontext.ui \
     verticalicontextbk.ui \
-    verticaltxtunit.ui
+    verticaltxtunit.ui \
+    vicontxt.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
