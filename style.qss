@@ -30,10 +30,10 @@
 }
 
 #devicesInfo *,#sceneTitle *{
-    font:20px;
+    font:18px;
 }
 #sceneConf *{
-    font:17px;
+    font:16px;
 }
 #devicesInfo #icon{
     font:15px;
@@ -43,7 +43,7 @@
 }
 #checkDeviceWidget, #checkDeviceWidget *{
     background-color:#353638;
-    border-radius:20px;
+    border-radius:18px;
 }
 
 #sceneConf #vIconTxtBtn{
@@ -53,6 +53,17 @@
     font:30px;
     font-weight:bold;
 }
+
+#changeSpaceFrame #line{
+    background-color:#4C4C4C;
+}
+
+#spacesList QPushButton{
+    text-align:left;
+}
+
+
+
 QSlider{
     height:30px;
 }

@@ -44,7 +44,7 @@ void changeSpace::setData(QVector<houseStruct>* house,int houseId,int spaceId){
         connect(hlb,SIGNAL(btnClicked(int)),this,SLOT(btnHouseSlot(int)));
         if(hId == houseId){
             hlb->setStyleSheet("#pushButton{"
-                            "font-size:18pt;"
+                            "font-size:15pt;"
                             "padding:5px 20px;"
                             "background-color:#353638;"
                             "border-radius: 20px;}");
@@ -52,7 +52,7 @@ void changeSpace::setData(QVector<houseStruct>* house,int houseId,int spaceId){
             setSpaceData(spaces,spaceId);
         } else {
             hlb->setStyleSheet("#pushButton{"
-                               "font-size:18pt;"
+                               "font-size:15pt;"
                                "padding:5px 20px;"
                                "background-color:#171717;"
                                "border-radius: 20px;}");
@@ -64,7 +64,9 @@ void changeSpace::setData(QVector<houseStruct>* house,int houseId,int spaceId){
     int spacesContentHeight = ui->spacesContents->sizeHint().height();
     ui->housesContents->setFixedHeight(housesContentHeight);
     ui->spacesContents->setFixedHeight(spacesContentHeight);
-    ui->line->setFixedHeight(housesContentHeight<spacesContentHeight?housesContentHeight:spacesContentHeight);
+    qDebug()<<"housesContentHeight:"<<housesContentHeight;
+    qDebug()<<"spacesContentHeight:"<<spacesContentHeight;
+    ui->line->setFixedHeight(housesContentHeight<spacesContentHeight?spacesContentHeight:housesContentHeight);
 
 }
 
@@ -76,13 +78,13 @@ void changeSpace::btnHouseSlot(int houseId){
         labelBtn* lb = houseBtnList_[i];
         if(lb->id() == houseId){
             lb->setStyleSheet("#pushButton{"
-                            "font-size:18pt;"
+                            "font-size:15pt;"
                             "padding:5px 20px;"
                             "background-color:#353638;"
                             "border-radius: 20px;}");
         }else{
             lb->setStyleSheet("#pushButton{"
-                               "font-size:18pt;"
+                               "font-size:15pt;"
                                "padding:5px 20px;"
                                "background-color:#171717;"
                                "border-radius: 20px;}");
@@ -107,7 +109,9 @@ void changeSpace::btnHouseSlot(int houseId){
     int housesContentHeight = ui->housesContents->sizeHint().height();
     int spacesContentHeight = ui->spacesContents->sizeHint().height();
     ui->spacesContents->setFixedHeight(spacesContentHeight);
-    ui->line->setFixedHeight(housesContentHeight<spacesContentHeight?housesContentHeight:spacesContentHeight);
+    qDebug()<<"housesContentHeight:"<<housesContentHeight;
+    qDebug()<<"spacesContentHeight:"<<spacesContentHeight;
+    ui->line->setFixedHeight(housesContentHeight<spacesContentHeight?spacesContentHeight:housesContentHeight);
     houseId_ = houseId;
 }
 
@@ -135,12 +139,12 @@ void changeSpace::setSpaceData(QVector<spaceStruct> spaces,int spaceId){
 
         if(sId == spaceId){
             slb->setStyleSheet("#pushButton{"
-                            "font-size:18pt;"
+                            "font-size:15pt;"
                             "padding:5px 20px;"
                             "color:#D2AA74}");
         } else {
             slb->setStyleSheet("#pushButton{"
-                            "font-size:18pt;"
+                            "font-size:15pt;"
                             "padding:5px 20px;"
                             "color:#BCBCBC}");
         }

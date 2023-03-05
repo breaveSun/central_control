@@ -45,7 +45,7 @@
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>20</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
@@ -141,10 +141,10 @@
            <number>30</number>
           </property>
           <property name="topMargin">
-           <number>20</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>15</number>
+           <number>30</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
@@ -164,6 +164,9 @@
         <property name="layoutDirection">
          <enum>Qt::RightToLeft</enum>
         </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <property name="locale">
          <locale language="Church" country="Russia"/>
         </property>
@@ -175,7 +178,7 @@
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>20</number>
+          <number>0</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
@@ -262,6 +265,9 @@
         <property name="acceptDrops">
          <bool>true</bool>
         </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <property name="verticalScrollBarPolicy">
          <enum>Qt::ScrollBarAlwaysOff</enum>
         </property>
@@ -315,13 +321,13 @@
            <number>20</number>
           </property>
           <property name="leftMargin">
-           <number>50</number>
+           <number>30</number>
           </property>
           <property name="topMargin">
-           <number>20</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>15</number>
+           <number>30</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>

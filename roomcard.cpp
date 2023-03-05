@@ -165,7 +165,6 @@ void roomCard::setScenes(QVector<roomSceneStruct> scenes,QString current_scene){
 
     for (int i=0;i<scenesSize;i++) {
         vIconTxt * vit = scenesWidgetList_[i];
-
         roomSceneStruct sceneM = scenes[i];
         vit->setId(sceneM.id);
         //名称
@@ -180,6 +179,7 @@ void roomCard::setScenes(QVector<roomSceneStruct> scenes,QString current_scene){
         }
         connect(vit,SIGNAL(btnPressed(QString)),this,SLOT(changeScene(QString)));
     }
+
     ui->scrollAreaWidgetContents->setFixedWidth(ui->scrollAreaWidgetContents->sizeHint().width());
     if(scenesSize<5){
         ui->slipLeft->setStyleSheet("color:#353638");
@@ -188,6 +188,7 @@ void roomCard::setScenes(QVector<roomSceneStruct> scenes,QString current_scene){
         ui->slipLeft->setStyleSheet("color:#BCBCBC");
         ui->slipRight->setStyleSheet("color:#353638");
     }
+
 }
 
 void roomCard::slipLeft(){
