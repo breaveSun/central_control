@@ -20,12 +20,12 @@ btnTwoSlider::btnTwoSlider(QWidget *parent) :
     ui->lightNumSlider->setTitle("亮度");
     ui->lightNumSlider->setUnit("%");
     ui->lightNumSlider->setRange(10,100);
-    ui->lightNumSlider->setTitleWidth(40);
+    ui->lightNumSlider->setTitleWidth(40,40);
     connect(ui->lightNumSlider, SIGNAL(sliderReleased()), SLOT(brightnessValueChanged()));
     ui->temNumSlider->setTitle("色温");
     ui->temNumSlider->setUnit("K");
     ui->temNumSlider->setPageStep(100);
-    ui->temNumSlider->setTitleWidth(40);
+    ui->temNumSlider->setTitleWidth(40,40);
     connect(ui->temNumSlider, SIGNAL(sliderReleased()), SLOT(colorTemperatureValueChanged()));
 
     pColorTextPreFix_ = new QLabel;

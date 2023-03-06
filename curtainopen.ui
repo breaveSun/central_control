@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>281</width>
-    <height>172</height>
+    <height>202</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -48,24 +48,24 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="spacing">
-       <number>0</number>
+       <number>20</number>
       </property>
       <property name="leftMargin">
-       <number>14</number>
+       <number>20</number>
       </property>
       <property name="topMargin">
-       <number>5</number>
+       <number>20</number>
       </property>
       <property name="rightMargin">
-       <number>14</number>
+       <number>20</number>
       </property>
       <property name="bottomMargin">
-       <number>5</number>
+       <number>20</number>
       </property>
       <item>
        <widget class="QWidget" name="curtainTitleList" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -86,17 +86,20 @@
          <string notr="true"/>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="spacing">
+          <number>0</number>
+         </property>
          <property name="leftMargin">
-          <number>20</number>
+          <number>0</number>
          </property>
          <property name="topMargin">
-          <number>30</number>
+          <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>20</number>
+          <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>30</number>
+          <number>0</number>
          </property>
          <item>
           <widget class="titleIcon" name="curtainTitle" native="true">
@@ -120,24 +123,14 @@
            </property>
           </widget>
          </item>
-         <item>
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
         </layout>
        </widget>
       </item>
       <item>
        <widget class="QWidget" name="curtainButtonW" native="true">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <property name="spacing">
           <number>0</number>
@@ -262,7 +255,7 @@
           <number>20</number>
          </property>
          <property name="bottomMargin">
-          <number>30</number>
+          <number>0</number>
          </property>
          <item>
           <widget class="mySlider" name="openCloseSlider" native="true">

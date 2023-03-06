@@ -63,8 +63,9 @@ void mySlider::setPageStep(int step){
 }
 
 
-void mySlider::setTitleWidth(int width){
-    ui->sliderTitle->setFixedWidth(width);
+void mySlider::setTitleWidth(int titleWidth,int numWidth){
+    ui->sliderTitle->setFixedWidth(titleWidth);
+    ui->sliderNum->setFixedWidth(numWidth);
 }
 
 int mySlider::getNum(){

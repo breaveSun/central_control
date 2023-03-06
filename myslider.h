@@ -20,7 +20,7 @@ public:
     void setUnit(QString unit);
     void setRange(int min,int max);
     void setPageStep(int step);
-    void setTitleWidth(int width = 30);
+    void setTitleWidth(int titleWidth = 30,int numWidth = 30);
 
     int getNum();
     int max();

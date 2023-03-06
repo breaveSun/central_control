@@ -9,10 +9,12 @@ curtainPage::curtainPage(QWidget *parent) :
     ui(new Ui::curtainPage)
 {
     ui->setupUi(this);
-    //给返回按钮设置图标
-    Common::setButtonIcon(ui->curtainBack,icon::getIcon("return"));
-    connect(ui->curtainBack,&QPushButton::clicked,this,&curtainPage::goBackSlot);
-    connect(ui->closeAll,&QPushButton::clicked,this,&curtainPage::closeAllSlot);
+
+    ui->title->setTitle("遮光控制");
+    ui->title->addBackBtn();
+    ui->title->addListBtn("一键关闭");
+    connect(ui->title,SIGNAL(backClick()),this,SLOT(goBackSlot()));
+    connect(ui->title,SIGNAL(listClick()),this,SLOT(goBackSlot()));
 
 
 }

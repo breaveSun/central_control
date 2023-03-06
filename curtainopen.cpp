@@ -19,10 +19,10 @@ curtainOpen::curtainOpen(QWidget *parent) :
     ui->stop->setIcon(icon::getIcon("pause"));
     ui->openCloseSlider->setTitle("开合度");
     ui->openCloseSlider->setUnit("%");
-    ui->openCloseSlider->setTitleWidth(40);
+    ui->openCloseSlider->setTitleWidth(50,30);
     ui->angleSlider->setTitle("角度");
     ui->angleSlider->setUnit("°");
-    ui->angleSlider->setTitleWidth(40);
+    ui->angleSlider->setTitleWidth(50,30);
     connect(ui->open, SIGNAL(btnPressed()), this, SLOT(startOpen()));
     connect(ui->close, SIGNAL(btnPressed()), this, SLOT(startClose()));
     connect(ui->stop, SIGNAL(btnPressed()), this, SLOT(stopPressed()));
