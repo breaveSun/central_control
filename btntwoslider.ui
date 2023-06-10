@@ -68,21 +68,6 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_6">
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <property name="leftMargin">
-       <number>15</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>15</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
       <item>
        <widget class="QWidget" name="lightTitleList" native="true">
         <property name="sizePolicy">
@@ -366,56 +351,9 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="rgbEdit">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>100</width>
-                   <height>30</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>100</width>
-                   <height>30</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>11</pointsize>
-                  </font>
-                 </property>
-                 <property name="tabletTracking">
-                  <bool>true</bool>
-                 </property>
-                 <property name="toolTipDuration">
-                  <number>0</number>
-                 </property>
-                 <property name="autoFillBackground">
-                  <bool>false</bool>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true"/>
-                 </property>
-                 <property name="inputMask">
-                  <string/>
-                 </property>
+                <widget class="QLabel" name="rgbEdit">
                  <property name="text">
-                  <string>353638</string>
-                 </property>
-                 <property name="cursorPosition">
-                  <number>6</number>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                 </property>
-                 <property name="placeholderText">
-                  <string>FFFFFF</string>
+                  <string>353637</string>
                  </property>
                 </widget>
                </item>

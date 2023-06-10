@@ -28,18 +28,10 @@ btnTwoSlider::btnTwoSlider(QWidget *parent) :
     ui->temNumSlider->setTitleWidth(40,40);
     connect(ui->temNumSlider, SIGNAL(sliderReleased()), SLOT(colorTemperatureValueChanged()));
 
-    pColorTextPreFix_ = new QLabel;
-    pColorTextPreFix_->setObjectName("colorTextPreFix");
-    pColorTextPreFix_->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Expanding);
-    pColorTextPreFix_->setText("#");
-    pLayoutInfoComing_ = new QVBoxLayout(ui->rgbEdit);
-    pLayoutInfoComing_->addWidget(pColorTextPreFix_);
-    ui->rgbEdit->setAlignment( Qt::AlignVCenter);
-    ui->rgbEdit->setStyleSheet("#rgbEdit{padding-left:18px;background-color: rgb(53,54,56);}#colorTextPreFix{background-color: rgb(53,54,56);}");
-    connect(ui->rgbEdit,SIGNAL(editingFinished()),this,SLOT(editingFinished()));
-//    connect(ui->rgbEdit,SIGNAL(returnPressed()),this,SLOT(returnPressed()));
-//    connect(ui->rgbEdit,SIGNAL(textChanged(QString)),this,SLOT(textChanged(QString)));//文本改变发送信号，setText也会发送
-    connect(ui->rgbEdit,SIGNAL(textEdited(QString)),this,SLOT(textEdited(QString)));//文本改变发送信号，setText不会发送
+//    pLayoutInfoComing_ = new QVBoxLayout(ui->rgbEdit);
+//    pLayoutInfoComing_->addWidget(pColorTextPreFix_);
+    ui->rgbEdit->setStyleSheet("#rgbEdit{padding-left:5px;padding-right:5px;border-radius:10px;background-color: rgb(53,54,56);}");
+
 
     ui->rSlider_2->setRange(0,255);
     ui->rSlider_2->setTitle("R");
@@ -53,7 +45,6 @@ btnTwoSlider::btnTwoSlider(QWidget *parent) :
     connect(ui->rSlider_2, SIGNAL(sliderReleased()), SLOT(rgbValueChanged()));
     connect(ui->gSlider_2, SIGNAL(sliderReleased()), SLOT(rgbValueChanged()));
     connect(ui->bSlider_2, SIGNAL(sliderReleased()), SLOT(rgbValueChanged()));
-
 
 }
 
@@ -95,7 +86,7 @@ void btnTwoSlider::setData(lightingStruct lighting){
         //todo::默认值应该在读取数据的时候确认
         QString hueValue = equipment::getDeviceValue(lighting_.hue_feedback);
         if (hueValue.isEmpty()) hueValue = "000000";
-        ui->rgbEdit->setText(hueValue);
+        ui->rgbEdit->setText("#"+hueValue);
         txtSetColor(hueValue);
     }
 
@@ -162,7 +153,7 @@ void btnTwoSlider::setColorTemperature(QString num){
 }
 
 void btnTwoSlider::setColor(QString color){
-    ui->rgbEdit->setText(color);
+    ui->rgbEdit->setText("#"+color);
     ui->preColorBox->setStyleSheet("background-color:#"+color+";");
     //字符串拆分 两两为一组16进制 转10进制赋值给rgb
     int red,green,blue;
@@ -216,15 +207,11 @@ QString btnTwoSlider::getGroupId(FUNCTION_TYPE ft){
     }
 }
 
-void btnTwoSlider::setFocusIn(){
-    qDebug()<<__FUNCTION__;
-    ui->rgbEdit->activateWindow();
-    ui->rgbEdit->setFocus();
-}
 
 QString btnTwoSlider::getName(){
     return lighting_.name;
 }
+
 void btnTwoSlider::statusChanged(qint16 id,bool checked)
 {
 #ifndef _PRODUCT_
@@ -257,7 +244,7 @@ void btnTwoSlider::rgbValueChanged(){
     int b = ui->bSlider_2->value();
     QString rgbString = QString::fromStdString(toHex(r)+toHex(g)+toHex(b));
     ui->preColorBox->setStyleSheet("background-color:#"+rgbString+";");
-    ui->rgbEdit->setText(rgbString);
+    ui->rgbEdit->setText("#"+rgbString);
     //发送请求
     QVariantMap lightMap;
     lightMap["group_id"] = lighting_.hue;
@@ -290,66 +277,6 @@ void btnTwoSlider::colorTemperatureValueChanged(){
     data.append(lightMap);
     QString jsonStr = Common::ListToString(data);
     equipment::lightControl(jsonStr);
-}
-
-void btnTwoSlider::editingFinished(){
-    QString txt = ui->rgbEdit->text();
-    qDebug()<<__FUNCTION__<<txt;
-    //判断字符串是否合法
-    int len = txt.length();
-    //字符判断
-    bool enable = true;
-    if (len != 6){
-        enable = false;
-    }
-    for(int i=0;i<len;i++){
-        int index = rgbstr.indexOf(txt.at(i));
-        if(index<0){
-            //有非法字符
-            enable = false;
-            break;
-        }
-    }
-    if(enable){
-        //合法保存
-        txtSetColor(txt);
-        rgbValueChanged();
-    }else {
-        //数据回滚
-        QString hueValue = equipment::getDeviceValue(lighting_.hue_feedback);
-        setColor(hueValue);
-
-    }
-    ui->rgbEdit->setStyleSheet("#rgbEdit{border-style: none;padding-left:18px}");
-
-}
-
-//void btnTwoSlider::returnPressed(){
-//    qDebug()<<__FUNCTION__;
-//}
-
-void btnTwoSlider::textEdited(QString txt){
-    qDebug()<<__FUNCTION__<<txt;
-    //判断字符串是否合法
-    int len = txt.length();
-    //长度限制6个字符
-    if(len>6){
-        txt = txt.left(6);
-        ui->rgbEdit->setText(txt);
-    }
-    bool red = false;
-    //字符判断
-    for(int i=0;i<len;i++){
-        int index = rgbstr.indexOf(txt.at(i));
-        if(index<0){
-            ui->rgbEdit->setStyleSheet("#rgbEdit{border:1px solid red;padding-left:18px}");
-            red = true;
-            break;
-        }
-    }
-    if(!red){
-        ui->rgbEdit->setStyleSheet("#rgbEdit{border-style: none;padding-left:18px}");
-    }
 }
 
 std::string btnTwoSlider::toHex(int num)

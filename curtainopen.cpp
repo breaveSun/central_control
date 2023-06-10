@@ -14,8 +14,11 @@ curtainOpen::curtainOpen(QWidget *parent) :
     ui->setupUi(this);
     ui->curtainFrame->setStyleSheet("background-color:#222222;");
     ui->open->setTxt("打开");
+    ui->open->setHeight();
     ui->stop->setTxt("停止");
+    ui->stop->setHeight();
     ui->close->setTxt("关闭");
+    ui->close->setHeight();
     ui->stop->setIcon(icon::getIcon("pause"));
     ui->openCloseSlider->setTitle("开合度");
     ui->openCloseSlider->setUnit("%");
@@ -23,9 +26,9 @@ curtainOpen::curtainOpen(QWidget *parent) :
     ui->angleSlider->setTitle("角度");
     ui->angleSlider->setUnit("°");
     ui->angleSlider->setTitleWidth(50,30);
-    connect(ui->open, SIGNAL(btnPressed()), this, SLOT(startOpen()));
-    connect(ui->close, SIGNAL(btnPressed()), this, SLOT(startClose()));
-    connect(ui->stop, SIGNAL(btnPressed()), this, SLOT(stopPressed()));
+    connect(ui->open, SIGNAL(btnPressed(QString)), this, SLOT(startOpen()));
+    connect(ui->close, SIGNAL(btnPressed(QString)), this, SLOT(startClose()));
+    connect(ui->stop, SIGNAL(btnPressed(QString)), this, SLOT(stopPressed()));
     connect(ui->openCloseSlider,SIGNAL(sliderReleased()),this,SLOT(openCloseSliderReleased()));
     connect(ui->angleSlider,SIGNAL(sliderReleased()),this,SLOT(angleSliderReleased()));
 

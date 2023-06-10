@@ -128,27 +128,33 @@
       </item>
       <item>
        <widget class="QWidget" name="curtainButtonW" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <property name="spacing">
-          <number>0</number>
+          <number>30</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>10</number>
          </property>
          <property name="topMargin">
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>20</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
          </property>
          <item>
-          <widget class="verticalIconText" name="open" native="true">
+          <widget class="vIconTxt" name="open" native="true">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
              <horstretch>0</horstretch>
@@ -158,35 +164,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QFrame" name="curtainW1">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>1</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>1</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="verticalIconText" name="stop" native="true">
+          <widget class="vIconTxt" name="stop" native="true">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
              <horstretch>0</horstretch>
@@ -196,35 +174,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QFrame" name="curtainW2">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>1</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>1</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="verticalIconText" name="close" native="true">
+          <widget class="vIconTxt" name="close" native="true">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
              <horstretch>0</horstretch>
@@ -287,21 +237,21 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>mySlider</class>
-   <extends>QWidget</extends>
-   <header>myslider.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>titleIcon</class>
    <extends>QWidget</extends>
    <header>titleicon.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>verticalIconText</class>
+   <class>mySlider</class>
    <extends>QWidget</extends>
-   <header>verticalicontext.h</header>
+   <header>myslider.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>vIconTxt</class>
+   <extends>QWidget</extends>
+   <header>vicontxt.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

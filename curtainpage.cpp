@@ -47,7 +47,7 @@ void curtainPage::setData(int houseId,int spaceId,int roomId)
             ui->scrollAreaWidgetContents->layout()->removeWidget(curtainWidgetList_[curtainWidgetSize-1]);
             curtainWidgetSize--;
         }
-        curtainWidgetList_.remove(curtainSize-1,removeNum);
+        curtainWidgetList_.remove(curtainSize,removeNum);
     }
 
     for (int i=0;i<curtainSize;i++) {

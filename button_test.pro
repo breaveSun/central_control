@@ -9,7 +9,7 @@ CONFIG += c++11
 # depend on your compiler). Please consult the documentation of the
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
-
+LIBS += -LQt5VirtualKeyboard
 # You can also make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
@@ -130,10 +130,12 @@ FORMS += \
     vicontxt.ui
 
 # Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+#qnx: target.path = /tmp/$${TARGET}/bin
+#else: unix: target.path = /opt/$${TARGET}/bin
+#!isEmpty(target.path): INSTALLS += target
 
+target.path = /opt/button_test/bin
+INSTALLS += target
 
 DISTFILES += \
     json/CMakeLists.txt

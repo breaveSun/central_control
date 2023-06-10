@@ -79,7 +79,6 @@
 #lightFrame{
     border-radius:10px;
 }
-
 #lightTitle #titleName{
     color:#FFFFFF;
     font:20px;
@@ -116,24 +115,23 @@
 #curtainButtonW #icon{
     font:30px;
 }
-#curtainFrame #close #verticalIconTextFrame{
-    border-left:1px solid #1F1F1F;
-    border-top:1px solid #1F1F1F;
-    border-bottom:1px solid #1F1F1F;
-}
-#curtainFrame #open #verticalIconTextFrame{
-    border-right:1px solid #1F1F1F;
-    border-top:1px solid #1F1F1F;
-    border-bottom:1px solid #1F1F1F;
-}
-#curtainFrame #stop #verticalIconTextFrame{
-    border-top:1px solid #1F1F1F;
+
+#close QToolButton{
+    border-left:2px solid #1F1F1F;
+    border-top:2px solid #1F1F1F;
     border-bottom:1px solid #1F1F1F;
 }
 
+#open QToolButton{
+    border-right:2px solid #1F1F1F;
+    border-top:2px solid #1F1F1F;
+    border-bottom:2px solid #1F1F1F;
+}
 
-
-
+#curtainFrame #stop QToolButton{
+    border-top:2px solid #1F1F1F;
+    border-bottom:2px solid #1F1F1F;
+}
 
 
 QSlider{

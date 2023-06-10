@@ -45,13 +45,19 @@ void roomCard::setIcon(int icon,int size){
 
 void roomCard::setData(roomStruct room){
     room_ = room;
+    qDebug()<<"----------------1";
     setName(room_.name);
+    qDebug()<<"----------------2";
     setIcon(icon::getIcon(room_.icon),35);
+    qDebug()<<"----------------3";
     setParams(room.params);
+    qDebug()<<"----------------4";
     setScenes(room.scenes,room.current_scene);
+    qDebug()<<"----------------5";
     int deviceNum = 0;
     int enabledNum = 0;
-
+qDebug()<<"lights:"<<room_.lights.size();
+qDebug()<<"curtains:"<<room_.curtains.size();
     for (int i=0;i<room_.lights.size();i++){
         deviceNum = deviceNum+1;
 
@@ -120,7 +126,7 @@ void roomCard::setParams(QVector<roomParamStruct> params){
             ui->scrollAreaWidgetContents->layout()->removeWidget(paramsWidgetList_[paramsWidgetSize-1]);
             paramsWidgetSize--;
         }
-        paramsWidgetList_.remove(paramsSize-1,removeNum);
+        paramsWidgetList_.remove(paramsSize,removeNum);
     }
 
     for (int i=0;i<paramsSize;i++) {
@@ -144,7 +150,6 @@ void roomCard::setScenes(QVector<roomSceneStruct> scenes,QString current_scene){
 
     int scenesSize = scenes.size();
     int scenesWidgetSize = scenesWidgetList_.size();
-
     if(scenesWidgetSize<scenesSize){
         while(scenesSize>scenesWidgetSize){
             vIconTxt* vitbk = new vIconTxt(ui->scrollAreaWidgetContents);
@@ -160,9 +165,8 @@ void roomCard::setScenes(QVector<roomSceneStruct> scenes,QString current_scene){
             ui->scrollAreaWidgetContents->layout()->removeWidget(scenesWidgetList_[scenesWidgetSize-1]);
             scenesWidgetSize--;
         }
-        scenesWidgetList_.remove(scenesSize-1,removeNum);
+        scenesWidgetList_.remove(scenesSize,removeNum);
     }
-
     for (int i=0;i<scenesSize;i++) {
         vIconTxt * vit = scenesWidgetList_[i];
         roomSceneStruct sceneM = scenes[i];
@@ -177,6 +181,8 @@ void roomCard::setScenes(QVector<roomSceneStruct> scenes,QString current_scene){
         }else{
             vit->setTwoColor("#BCBCBC","#353638");
         }
+        vit->setWidth();
+        vit->setHeight();
         connect(vit,SIGNAL(btnPressed(QString)),this,SLOT(changeScene(QString)));
     }
 

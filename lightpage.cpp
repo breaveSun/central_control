@@ -54,7 +54,7 @@ void lightPage::setData(int houseId,int spaceId,int roomId)
             ui->scrollAreaWidgetContents->layout()->removeWidget(lightWidgetList_[lightWidgetSize-1]);
             lightWidgetSize--;
         }
-        lightWidgetList_.remove(lightSize-1,removeNum);
+        lightWidgetList_.remove(lightSize,removeNum);
     }
 
     for (int i=0;i<lightSize;i++) {
@@ -65,7 +65,7 @@ void lightPage::setData(int houseId,int spaceId,int roomId)
         lightingStruct lighting = lightings_[i];
         light->setData(lighting);
     }
-    ui->scrollAreaWidgetContents->setFixedHeight(ui->scrollAreaWidgetContents->sizeHint().height());
+    ui->scrollAreaWidgetContents->setFixedHeight(ui->scrollAreaWidgetContents->sizeHint().height()+30);
 
     qDebug()<<"room_.build_id:"<<room_.build_id
     <<"room_.space_id:"<<room_.space_id
@@ -124,7 +124,7 @@ void lightPage::acceptPush(deviceDataStruct data){
                 switch (data.functionType) {
                 case FT_SWITCH:
                     light->setSwitch(data.value == "1",true);
-                    ui->scrollAreaWidgetContents->setFixedHeight(ui->scrollAreaWidgetContents->sizeHint().height());
+                    ui->scrollAreaWidgetContents->setFixedHeight(ui->scrollAreaWidgetContents->sizeHint().height()+30);
 
                 case FT_BRIGHTNESS:
                     //约定亮度=0不改变样式

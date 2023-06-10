@@ -9,13 +9,10 @@ messageCenterItem::messageCenterItem(QWidget *parent) :
     ui->frame->setStyleSheet("background-color:#222222;");
     ui->frame->setStyleSheet("#frame{border-radius:8px;}");
 
-    ui->frame->setStyleSheet("border: 1px solid red");
-
     pRedPoint_ = new QLabel;
     pRedPoint_->setObjectName("redPoint");
     pRedPoint_->setFixedSize(QSize(10,10));
     pRedPoint_->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-//        pRedPoint_->setAlignment(Qt::AlignRight);
     pRedPoint_->setStyleSheet("background-color:#EB4D3C;border-radius:5px;");
 
     pRedPointBrother_ = new QLabel;
@@ -35,7 +32,6 @@ messageCenterItem::~messageCenterItem()
 }
 
 void messageCenterItem::setData(messageStruct message){
-    qDebug()<<__FUNCTION__<<"---"<<message.id<<":"<<message.status;
     message_ = message;
     ui->title->setText(message_.title);
     Common::setButtonIcon(ui->icon,icon::getIcon(message_.icon));

@@ -30,6 +30,7 @@ private slots:
     void updateRooms(int houseId,int spaceId);
     /*void closeAllDevices(bool checked);*/
     void messageList(bool checked);
+    void quit();
     //接收服务器推送
     void acceptPush(deviceDataStruct data);
 private:

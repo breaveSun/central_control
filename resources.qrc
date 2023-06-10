@@ -5,5 +5,6 @@
         <file>resource/iconfont.ttf</file>
         <file>resource/message.json</file>
         <file>style.qss</file>
+        <file>resource/msyh.ttf</file>
     </qresource>
 </RCC>

@@ -1,6 +1,7 @@
 #include "mylineedit.h"
 #include <qdebug.h>
 #include <QKeyEvent>
+#include <QGuiApplication>
 myLineEdit::myLineEdit(QWidget *parent) : QLineEdit(parent)
 {
 
@@ -29,6 +30,8 @@ void myLineEdit::mouseDoubleClickEvent(QMouseEvent *event){
 
 void myLineEdit::focusInEvent(QFocusEvent *event)
 {
+
+    qDebug()<<__FUNCTION__;
     QLineEdit::focusInEvent(event);
     emit focusIn();
 

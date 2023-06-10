@@ -50,5 +50,9 @@ signals:
 
 private slots:
 
+
+private:
+    int clickCount = 0;
+    QTimer *timer = nullptr;
 };
 #endif // MAINWINDOW_H

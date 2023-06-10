@@ -37,6 +37,7 @@ homePage::homePage(QWidget *parent) :
     //消息列表
     connect(ui->msg,SIGNAL(clicked(bool)),this,SLOT(messageList(bool)));
 
+    connect(ui->personalCenter,SIGNAL(clicked(bool)),this,SLOT(quit()));
 
 
 }
@@ -67,6 +68,7 @@ void homePage::setData(int houseId,int spaceId)
         if(houseId == house.id){
             houseName = house.name;
             houseId_ = house.id;
+
             QVector<spaceStruct> spaces = house.spaces;
             if(spaceId == 0){
                 spaceId_ = spaces[0].id;
@@ -74,7 +76,7 @@ void homePage::setData(int houseId,int spaceId)
                 break;
             }
             for(int j =0;j<spaces.size();j++){
-                spaceStruct space = spaces[i];
+                spaceStruct space = spaces[j];
                 if(spaceId == space.id){
                     spaceName = space.name;
                     spaceId_ = space.id;
@@ -87,10 +89,14 @@ void homePage::setData(int houseId,int spaceId)
 
     //给下拉菜单按钮设置文字
     ui->spaceChanged->setTxt(houseName+spaceName);
-
     //获取房间数据 更新房间列表
     QVector<roomStruct> rooms = spaceData_.rooms;
     int roomSize = rooms.size();
+
+    for(int i=0;i<roomSize;i++){
+        qDebug()<<"room name ="<<rooms[i].name<<" i="<<i;
+    }
+
     int roomWidgetSize = roomCardWidgetList_.size();
 
     if(roomWidgetSize<roomSize){
@@ -102,13 +108,14 @@ void homePage::setData(int houseId,int spaceId)
         }
     }
 
+
     if(roomSize<roomWidgetSize){
         int removeNum = roomWidgetSize-roomSize;
         while(roomWidgetSize>roomSize){
             ui->scrollAreaWidgetContents->layout()->removeWidget(roomCardWidgetList_[roomWidgetSize-1]);
             roomWidgetSize--;
         }
-        roomCardWidgetList_.remove(roomSize-1,removeNum);
+        roomCardWidgetList_.remove(roomSize,removeNum);
     }
 
     for (int i=0;i<roomSize;i++) {
@@ -116,6 +123,7 @@ void homePage::setData(int houseId,int spaceId)
         roomStruct roomS = rooms[i];
         //名称
         room->setData(roomS);
+        qDebug()<<"---"<<roomS.name;
         connect(room,SIGNAL(goPage(PageBack,int,int,int)),this,SIGNAL(goPage(PageBack,int,int,int)));
 
     }
@@ -198,6 +206,10 @@ void homePage::closeAllDevices(bool checked){
 */
 void homePage::messageList(bool checked){
     emit goPage(PB_GO_MESSAGE_CENTER,0,0,0);
+}
+void homePage::quit(){
+    qDebug()<<"out";
+    QApplication::quit();
 }
 void homePage::acceptPush(deviceDataStruct data){
     qDebug()<<__FUNCTION__;

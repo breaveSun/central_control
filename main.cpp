@@ -10,11 +10,10 @@
 int main(int argc, char *argv[])
 {
     //虚拟键盘调用
-    qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
-    qputenv("QT_VIRTUALKEYBOARD_STYLE",QByteArray("huhu"));
+//    qputenv("QT_VIRTUALKEYBOARD_STYLE",QByteArray("huhu"));
 
     QApplication a(argc, argv);
-
+    QFontDatabase::addApplicationFont(":/resource/DejaVuSans.ttf");
     //qss加载
     LoadQss::loadQss(":/style.qss");
 
@@ -24,7 +23,7 @@ int main(int argc, char *argv[])
     }
 
     MainWindow w;
-
+    w.showFullScreen();
     //展示页面
     w.show();
 

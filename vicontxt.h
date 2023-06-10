@@ -18,12 +18,14 @@ public:
     void setId(QString id);
     void setTxt(QString txt);
     void setIcon(int icon);
-//    void setIconColor(QString color);
+    void setIconColor(QString color);
 //    void setTxtColor(QString color);
 //    void setBGColor(QString color);
     void setTwoColor(QString color,QString bgColor);
-private:
-        void resize();
+
+    void setWidth(int width=80);
+    void setHeight(int height=80);
+
 
 signals:
     void btnPressed(QString id);

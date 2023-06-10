@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     //隐藏默认页面头部样式
-    this->setWindowFlags(Qt::FramelessWindowHint);
+//    this->setWindowFlags(Qt::FramelessWindowHint);
     ui->setupUi(this);
     //隐藏鼠标光标
 //    QApplication::setOverrideCursor(Qt::BlankCursor);
@@ -49,7 +49,7 @@ MainWindow::MainWindow(QWidget *parent)
     pCurtainPage_ = new curtainPage;
     pMessageCenter_ = new messageCenter;
     startWS(Common::getHostMacAddress());
-
+//    ui->stackedWidget->setStyleSheet("border:2px solid #ff0000;");
 //    ui->stackedWidget->addWidget(pMainPage_);
     ui->stackedWidget->addWidget(pHomePage_);
     ui->stackedWidget->addWidget(pCtrlListPage_);
@@ -120,10 +120,14 @@ void MainWindow::startWS(QString mac){
     //创建长链接
     pWSClient_ = new wsClient(this);
 
-    QString ADRESS_STR="//192.168.2.2:8888";
+    QString ADRESS_STR="//192.168.16.104:8888";
     pWSClient_->ConnectTo("ws:"+ADRESS_STR+"/socket.io/"+mac);
     connect(pWSClient_,SIGNAL(notices(deviceDataStruct)),pHomePage_,SLOT(acceptPush(deviceDataStruct)));
     connect(pWSClient_,SIGNAL(notices(deviceDataStruct)),pLightPage_,SLOT(acceptPush(deviceDataStruct)));
     connect(pWSClient_,SIGNAL(notices(deviceDataStruct)),pCurtainPage_,SLOT(acceptPush(deviceDataStruct)));
     connect(pWSClient_,SIGNAL(notices(messageStruct)),pMessageCenter_,SLOT(acceptPush(messageStruct)));
 }
+
+
+
+

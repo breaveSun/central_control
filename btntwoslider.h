@@ -63,11 +63,12 @@ public:
     //获取灯查询数据的groupId
     QString getGroupId(FUNCTION_TYPE ft);
 
-    void setFocusIn();
 
     QString getName();
 //    mySlider *brightness;
 //    mySlider *colorTem;
+
+
 signals:
     void lightSwitch();
     void colorTxtMouseReleased();
@@ -94,11 +95,6 @@ private slots:
     void rgbValueChanged();
     void brightnessValueChanged();
     void colorTemperatureValueChanged();
-
-    //颜色文本编辑
-    void editingFinished();
-//    void returnPressed();
-    void textEdited(QString txt);
 
 };
 

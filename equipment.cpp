@@ -11,7 +11,7 @@
 #include <errno.h>
 #include <httpserver.h>
 
-QString ADRESS_STR="//192.168.2.2:8888";
+QString ADRESS_STR="//192.168.16.104:8888";
 QVector<houseStruct> equipment::houses_ = {};
 QMap<QString,deviceDataStruct> equipment::deviceDataStructs_ = {};
 equipment::equipment()
@@ -300,10 +300,11 @@ bool equipment::init()
 
                     QVariantList roomList = spaceV["rooms"].toList();
                     QVector<roomStruct> roomListS = {};
-                    roomList.append(roomList[0]);
+                    qDebug()<<"roomList.size()="<<roomList.size();
                     for(int r=0;r<roomList.size();r++){
-
                         QVariantMap roomV = roomList[r].toMap();
+                        qDebug()<<"room.name="<<roomV["name"].toString();
+                        qDebug()<<"==============";
                         roomStruct roomS = {};
 
                         if(roomV.find("id") != roomV.end()){
@@ -334,33 +335,6 @@ bool equipment::init()
                             roomS.current_scene = roomV["current_scene"].toString();
                         }
 
-                        /*if(roomV.find("param") != roomV.end()){
-                            QVariantList params = roomV["param"].toList();
-                            QVector<roomParamStruct> roomParamList;
-                            for(int p=0;p<params.size();p++){
-                                QVariantMap roomParamV = params[p].toMap();
-                                roomParamStruct roomParamS = {};
-
-                                if(roomParamV.find("name") != roomParamV.end()){
-                                    roomParamS.name = roomParamV["name"].toString();
-                                }
-
-                                if(roomParamV.find("title") != roomParamV.end()){
-                                    roomParamS.title = roomParamV["title"].toString();
-                                }
-
-                                if(roomParamV.find("value") != roomParamV.end()){
-                                    roomParamS.value = roomParamV["value"].toString();
-                                }
-
-                                if(roomParamV.find("unit") != roomParamV.end()){
-                                    roomParamS.unit = roomParamV["unit"].toString();
-                                }
-                                roomParamList.push_back(roomParamS);
-                            }
-
-                            roomS.params = roomParamList;
-                        }*/
                         QVector<roomParamStruct> roomParamList;
                             roomParamStruct roomParamS2 = {};
                             roomParamS2.name = "temp";
